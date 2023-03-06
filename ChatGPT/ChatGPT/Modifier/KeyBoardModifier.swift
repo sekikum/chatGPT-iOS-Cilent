@@ -8,23 +8,32 @@
 import Foundation
 import SwiftUI
 
-struct ResignKeyboardOnDragAndTapGesture: ViewModifier {
-  var gestureDrag = DragGesture().onChanged { _ in
-    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-  }
-  
-  var gestureTap = TapGesture().onEnded { _ in
+struct ResignKeyboardOnDrag: ViewModifier {
+  var gesture = DragGesture().onChanged { _ in
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
   
   func body(content: Content) -> some View {
-    content.gesture(gestureDrag)
-    content.gesture(gestureTap)
+    content.gesture(gesture)
+  }
+}
+
+struct ResignKeyboardOnTap: ViewModifier {
+  var gesture = TapGesture().onEnded { _ in
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+  }
+  
+  func body(content: Content) -> some View {
+    content.gesture(gesture)
   }
 }
 
 extension View {
-  func dismissKeyboard() -> some View {
-    return modifier(ResignKeyboardOnDragAndTapGesture())
+  func dismissKeyboardByDrag() -> some View {
+    return modifier(ResignKeyboardOnDrag())
+  }
+  
+  func dismissKeyboardByTap() -> some View {
+    return modifier(ResignKeyboardOnTap())
   }
 }
