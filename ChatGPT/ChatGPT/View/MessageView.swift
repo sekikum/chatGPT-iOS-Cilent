@@ -10,8 +10,6 @@ import SwiftUI
 
 struct MessageView: View {
   let message: MessageModel
-  let grayColor = Color(red: 232/255, green: 232/255, blue: 233/255)
-  let blueColor = Color(red: 207/255, green: 230/255, blue: 253/255)
   let avatarSize: CGFloat = 50
   let textCornerRadius: CGFloat = 10
 
@@ -21,7 +19,7 @@ struct MessageView: View {
         Spacer()
         Text(message.message)
           .padding()
-          .background(blueColor)
+          .background(Color("Blue-Color"))
           .cornerRadius(10)
         Image("Profile-Diu")
           .resizable()
@@ -34,7 +32,7 @@ struct MessageView: View {
           .frame(width: avatarSize, height: avatarSize)
         Text(message.message)
           .padding()
-          .background(grayColor)
+          .background(Color("Gray-Color"))
           .cornerRadius(textCornerRadius)
         Spacer()
       }
