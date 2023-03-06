@@ -15,12 +15,12 @@ struct InputView: View {
     HStack {
       TextField("", text: $textfieldText)
         .textFieldStyle(RoundedBorderTextFieldStyle())
+        .keyboardType(.default)
       Button("send") {
         print(textfieldText)
       }
       .buttonStyle(.borderedProminent)
     }
-    .padding()
   }
 }
 
