@@ -15,7 +15,7 @@
 		846729FD29B5DF4600B85594 /* ColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846729FC29B5DF4600B85594 /* ColorAssets.xcassets */; };
 		8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */; };
 		8492CD7729B1D93C00187E3C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7629B1D93C00187E3C /* ContentView.swift */; };
-		8492CD7929B1D93E00187E3C /* ProfileAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7829B1D93E00187E3C /* ProfileAssets.xcassets */; };
+		8492CD7929B1D93E00187E3C /* ImageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7829B1D93E00187E3C /* ImageAssets.xcassets */; };
 		8492CD7C29B1D93E00187E3C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7B29B1D93E00187E3C /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +29,7 @@
 		8492CD7129B1D93C00187E3C /* ChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTApp.swift; sourceTree = "<group>"; };
 		8492CD7629B1D93C00187E3C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		8492CD7829B1D93E00187E3C /* ProfileAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ProfileAssets.xcassets; sourceTree = "<group>"; };
+		8492CD7829B1D93E00187E3C /* ImageAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImageAssets.xcassets; sourceTree = "<group>"; };
 		8492CD7B29B1D93E00187E3C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,7 +94,7 @@
 				846729EA29B57ECD00B85594 /* View */,
 				8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */,
 				8492CD7629B1D93C00187E3C /* ContentView.swift */,
-				8492CD7829B1D93E00187E3C /* ProfileAssets.xcassets */,
+				8492CD7829B1D93E00187E3C /* ImageAssets.xcassets */,
 				846729FC29B5DF4600B85594 /* ColorAssets.xcassets */,
 				8492CD7A29B1D93E00187E3C /* Preview Content */,
 			);
@@ -169,7 +169,7 @@
 			files = (
 				8492CD7C29B1D93E00187E3C /* Preview Assets.xcassets in Resources */,
 				846729FD29B5DF4600B85594 /* ColorAssets.xcassets in Resources */,
-				8492CD7929B1D93E00187E3C /* ProfileAssets.xcassets in Resources */,
+				8492CD7929B1D93E00187E3C /* ImageAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
