@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		846729EC29B57EEA00B85594 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846729EB29B57EEA00B85594 /* InputView.swift */; };
 		8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */; };
 		8492CD7729B1D93C00187E3C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7629B1D93C00187E3C /* ContentView.swift */; };
 		8492CD7929B1D93E00187E3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7829B1D93E00187E3C /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		846729EB29B57EEA00B85594 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		8492CD7129B1D93C00187E3C /* ChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTApp.swift; sourceTree = "<group>"; };
 		8492CD7629B1D93C00187E3C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +34,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		846729EA29B57ECD00B85594 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				846729EB29B57EEA00B85594 /* InputView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		8492CD6829B1D93C00187E3C = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +61,7 @@
 		8492CD7329B1D93C00187E3C /* ChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				846729EA29B57ECD00B85594 /* View */,
 				8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */,
 				8492CD7629B1D93C00187E3C /* ContentView.swift */,
 				8492CD7829B1D93E00187E3C /* Assets.xcassets */,
@@ -137,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846729EC29B57EEA00B85594 /* InputView.swift in Sources */,
 				8492CD7729B1D93C00187E3C /* ContentView.swift in Sources */,
 				8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */,
 			);
