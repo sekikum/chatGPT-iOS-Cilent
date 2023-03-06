@@ -13,6 +13,13 @@ struct ChatView: View {
     ScrollView {
       
     }
-    .dismissKeyboard()
+    .dismissKeyboardByDrag()
+    .dismissKeyboardByTap()
+  }
+}
+
+struct ChatView_Previews: PreviewProvider {
+  static var previews: some View {
+    ChatView()
   }
 }
