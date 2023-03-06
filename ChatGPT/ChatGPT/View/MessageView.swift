@@ -19,7 +19,7 @@ struct MessageView: View {
         Spacer()
         Text(message.message)
           .padding()
-          .background(Color("Blue-Color"))
+          .background(Color("Blue"))
           .cornerRadius(10)
         Image("Profile-Diu")
           .resizable()
@@ -32,7 +32,7 @@ struct MessageView: View {
           .frame(width: avatarSize, height: avatarSize)
         Text(message.message)
           .padding()
-          .background(Color("Gray-Color"))
+          .background(Color("Gray"))
           .cornerRadius(textCornerRadius)
         Spacer()
       }
