@@ -9,12 +9,21 @@ import Foundation
 import SwiftUI
 
 struct ChatView: View {
+  @StateObject var viewModel = MessageViewModel()
+  let messageBottomPadding: CGFloat = 15
+  
   var body: some View {
-    ScrollView {
-      
+    ScrollView() {
+      ForEach(viewModel.messageItems) { message in
+        MessageView(message: message)
+          .padding(.bottom, messageBottomPadding)
+      }
     }
     .dismissKeyboardByDrag()
     .dismissKeyboardByTap()
+    .onAppear {
+      viewModel.loadMessage()
+    }
   }
 }
 
