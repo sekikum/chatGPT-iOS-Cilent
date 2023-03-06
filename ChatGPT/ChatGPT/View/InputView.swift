@@ -18,6 +18,7 @@ struct InputView: View {
       Button("send") {
         print(textfieldText)
       }
+      .buttonStyle(.borderedProminent)
     }
     .padding()
   }
