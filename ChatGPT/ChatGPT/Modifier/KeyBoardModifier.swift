@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ResignKeyboardOnDragGesture: ViewModifier {
+struct ResignKeyboardOnDragAndTapGesture: ViewModifier {
   var gestureDrag = DragGesture().onChanged { _ in
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
@@ -25,6 +25,6 @@ struct ResignKeyboardOnDragGesture: ViewModifier {
 
 extension View {
   func dismissKeyboard() -> some View {
-    return modifier(ResignKeyboardOnDragGesture())
+    return modifier(ResignKeyboardOnDragAndTapGesture())
   }
 }
