@@ -22,8 +22,7 @@ struct ChatView: View {
             .id(message.id)
         }
       }
-      .dismissKeyboardByDrag()
-      .dismissKeyboardByTap()
+      .scrollDismissesKeyboard(.immediately)
       .onAppear {
         viewModel.loadMessage()
         DispatchQueue.main.async() {
