@@ -12,6 +12,7 @@ struct MessageView: View {
   let message: MessageModel
   let avatarSize: CGFloat = 50
   let textCornerRadius: CGFloat = 10
+  let padding: CGFloat = 15
 
   var body: some View {
     HStack(alignment: .top) {
@@ -21,19 +22,23 @@ struct MessageView: View {
           .padding()
           .background(Color("Blue"))
           .cornerRadius(10)
+          .padding(.leading, padding)
         Image("Profile-Diu")
           .resizable()
           .scaledToFit()
           .frame(width: avatarSize, height: avatarSize)
+          .padding(.trailing, padding)
       } else {
         Image("Profile-ChatGPT")
           .resizable()
           .scaledToFit()
           .frame(width: avatarSize, height: avatarSize)
+          .padding(.leading, padding)
         Text(message.message)
           .padding()
           .background(Color("Gray"))
           .cornerRadius(textCornerRadius)
+          .padding(.trailing, padding)
         Spacer()
       }
     }
