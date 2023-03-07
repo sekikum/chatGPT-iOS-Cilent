@@ -13,16 +13,22 @@ struct ChatView: View {
   let messageBottomPadding: CGFloat = 15
   
   var body: some View {
-    ScrollView() {
-      ForEach(viewModel.messageItems) { message in
-        MessageView(message: message)
-          .padding(.bottom, messageBottomPadding)
+    ScrollViewReader { proxy in
+      ScrollView() {
+        ForEach(viewModel.messageItems) { message in
+          MessageView(message: message)
+            .padding(.bottom, messageBottomPadding)
+            .id(message.id)
+        }
       }
-    }
-    .dismissKeyboardByDrag()
-    .dismissKeyboardByTap()
-    .onAppear {
-      viewModel.loadMessage()
+      .dismissKeyboardByDrag()
+      .dismissKeyboardByTap()
+      .onAppear {
+        viewModel.loadMessage()
+        DispatchQueue.main.async() {
+          proxy.scrollTo(viewModel.messageItems[viewModel.messageItems.count - 1].id)
+        }
+      }
     }
   }
 }
