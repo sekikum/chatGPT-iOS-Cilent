@@ -17,6 +17,7 @@ struct ChatView: View {
       ScrollView() {
         ForEach(viewModel.messageItems) { message in
           MessageView(message: message)
+            .frame(width: UIScreen.main.bounds.size.width)
             .padding(.bottom, messageBottomPadding)
             .id(message.id)
         }
