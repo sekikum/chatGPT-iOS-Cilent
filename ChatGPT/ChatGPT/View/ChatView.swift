@@ -29,6 +29,9 @@ struct ChatView: View {
         }
       }
       .scrollDismissesKeyboard(.immediately)
+      .onTapGesture {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+      }
       .onAppear {
         viewModel.loadMessage()
         DispatchQueue.main.async() {
