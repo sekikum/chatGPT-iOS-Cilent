@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct ChatView: View {
   @StateObject var viewModel = MessageViewModel()
@@ -22,11 +23,16 @@ struct ChatView: View {
             .id(message.id)
         }
       }
+      .onReceive(keyboardPublisher) { value in
+        if value {
+          proxy.scrollTo(viewModel.messageItems.last?.id, anchor: .bottom)
+        }
+      }
       .scrollDismissesKeyboard(.immediately)
       .onAppear {
         viewModel.loadMessage()
         DispatchQueue.main.async() {
-          proxy.scrollTo(viewModel.messageItems[viewModel.messageItems.count - 1].id)
+          proxy.scrollTo(viewModel.messageItems.last?.id)
         }
       }
     }

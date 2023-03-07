@@ -13,6 +13,7 @@
 		846729F829B5B78100B85594 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846729F729B5B78100B85594 /* MessageView.swift */; };
 		846729FD29B5DF4600B85594 /* ColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846729FC29B5DF4600B85594 /* ColorAssets.xcassets */; };
 		846729FF29B5EBCF00B85594 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846729FE29B5EBCF00B85594 /* MessageViewModel.swift */; };
+		847A26E729B71BF4006F6B34 /* KeyBoardPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A26E629B71BF4006F6B34 /* KeyBoardPublisher.swift */; };
 		8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */; };
 		8492CD7729B1D93C00187E3C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7629B1D93C00187E3C /* ContentView.swift */; };
 		8492CD7929B1D93E00187E3C /* ImageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7829B1D93E00187E3C /* ImageAssets.xcassets */; };
@@ -29,6 +30,7 @@
 		846729F729B5B78100B85594 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		846729FC29B5DF4600B85594 /* ColorAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ColorAssets.xcassets; sourceTree = "<group>"; };
 		846729FE29B5EBCF00B85594 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		847A26E629B71BF4006F6B34 /* KeyBoardPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardPublisher.swift; sourceTree = "<group>"; };
 		8492CD7129B1D93C00187E3C /* ChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTApp.swift; sourceTree = "<group>"; };
 		8492CD7629B1D93C00187E3C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				8492CD7829B1D93E00187E3C /* ImageAssets.xcassets */,
 				846729FC29B5DF4600B85594 /* ColorAssets.xcassets */,
 				8492CD7A29B1D93E00187E3C /* Preview Content */,
+				847A26E629B71BF4006F6B34 /* KeyBoardPublisher.swift */,
 			);
 			path = ChatGPT;
 			sourceTree = "<group>";
@@ -144,7 +147,6 @@
 				8492CD6D29B1D93C00187E3C /* Sources */,
 				8492CD6E29B1D93C00187E3C /* Frameworks */,
 				8492CD6F29B1D93C00187E3C /* Resources */,
-				25BAEAB7744A047CED5A5944 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -224,23 +226,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		25BAEAB7744A047CED5A5944 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChatGPT/Pods-ChatGPT-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChatGPT/Pods-ChatGPT-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatGPT/Pods-ChatGPT-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -249,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				846729EE29B592FC00B85594 /* ChatView.swift in Sources */,
+				847A26E729B71BF4006F6B34 /* KeyBoardPublisher.swift in Sources */,
 				846729EC29B57EEA00B85594 /* InputView.swift in Sources */,
 				846729FF29B5EBCF00B85594 /* MessageViewModel.swift in Sources */,
 				846729F629B5B62800B85594 /* MessageModel.swift in Sources */,
