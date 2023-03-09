@@ -10,6 +10,8 @@ import SwiftUI
 
 struct InputView: View {
   @State var textfieldText: String = ""
+  @State var isShowAlert: Bool = false
+  let sendCallback: (String) -> Void
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   
@@ -20,16 +22,29 @@ struct InputView: View {
         .background(Color("Gray"))
         .cornerRadius(cornerRadius)
         .keyboardType(.default)
-      Button("send") {
-        print(textfieldText)
-      }
+        .submitLabel(.done)
+        .onSubmit(sendMessageAction)
+      Button("send", action: sendMessageAction)
       .buttonStyle(.borderedProminent)
+      .alert("message cannot be empty", isPresented: $isShowAlert) {
+        Button("OK", role: .cancel) { }
+      }
     }
+  }
+  
+  func sendMessageAction() {
+    if textfieldText.isEmpty {
+      isShowAlert = true
+      return
+    }
+    sendCallback(textfieldText)
+    textfieldText = ""
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
 }
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView()
+    InputView(sendCallback: {_ in })
   }
 }
