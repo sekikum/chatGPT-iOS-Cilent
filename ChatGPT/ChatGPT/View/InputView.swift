@@ -10,6 +10,7 @@ import SwiftUI
 
 struct InputView: View {
   @State var textfieldText: String = ""
+  let sendCallback: (String) -> Void
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   
@@ -21,7 +22,7 @@ struct InputView: View {
         .cornerRadius(cornerRadius)
         .keyboardType(.default)
       Button("send") {
-        print(textfieldText)
+        sendCallback(textfieldText)
       }
       .buttonStyle(.borderedProminent)
     }
@@ -30,6 +31,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView()
+    InputView(sendCallback: {_ in })
   }
 }
