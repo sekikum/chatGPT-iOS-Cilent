@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ProfileMainView: View {
   @EnvironmentObject var homeViewModel: HomeViewModel
+  @State var selection: String = ""
   
   var body: some View {
     List {
@@ -18,17 +19,27 @@ struct ProfileMainView: View {
       }
       
       Section {
-        ForEach(homeViewModel.user.tokenList, id: \.self) { token in
-          Text(token)
-            .lineLimit(1)
+        if homeViewModel.user.tokenList.isEmpty {
+          Text("No token added")
+        } else {
+          Picker(selection: $selection, label: Text("")) {
+            ForEach(homeViewModel.user.tokenList, id: \.self) { token in
+              Text(token)
+            }
+          }
+          .labelsHidden()
         }
       }
     }
   }
+  
+  func setSelectedToken() {
+    homeViewModel.user.tokenSelect = selection
+  }
 }
 
 struct ProfileMainView_Previews: PreviewProvider {
-    static var previews: some View {
-      ProfileMainView()
-    }
+  static var previews: some View {
+    ProfileMainView()
+  }
 }

@@ -8,5 +8,5 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
-  @Published var user: UserModel = UserModel(avatar: "Profile-Diu", nickname: "sekikum", tokenList: ["fake"])
+  @Published var user: UserModel = UserModel(avatar: "Profile-Diu", nickname: "sekikum", tokenList: [])
 }
