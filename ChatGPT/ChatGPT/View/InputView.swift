@@ -23,6 +23,8 @@ struct InputView: View {
         .keyboardType(.default)
       Button("send") {
         sendCallback(textfieldText)
+        textfieldText = ""
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
       }
       .buttonStyle(.borderedProminent)
     }
