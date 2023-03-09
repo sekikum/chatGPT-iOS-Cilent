@@ -16,6 +16,7 @@
 		847A26E729B71BF4006F6B34 /* KeyBoardPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A26E629B71BF4006F6B34 /* KeyBoardPublisher.swift */; };
 		847A26EA29B74024006F6B34 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 847A26E929B74024006F6B34 /* OpenAISwift */; };
 		847A26F429B9B35A006F6B34 /* ChatMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A26F329B9B35A006F6B34 /* ChatMainView.swift */; };
+		847A26F729B9B592006F6B34 /* ProfileMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A26F629B9B592006F6B34 /* ProfileMainView.swift */; };
 		8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */; };
 		8492CD7729B1D93C00187E3C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7629B1D93C00187E3C /* HomeView.swift */; };
 		8492CD7929B1D93E00187E3C /* ImageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7829B1D93E00187E3C /* ImageAssets.xcassets */; };
@@ -34,6 +35,7 @@
 		846729FE29B5EBCF00B85594 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		847A26E629B71BF4006F6B34 /* KeyBoardPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBoardPublisher.swift; sourceTree = "<group>"; };
 		847A26F329B9B35A006F6B34 /* ChatMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMainView.swift; sourceTree = "<group>"; };
+		847A26F629B9B592006F6B34 /* ProfileMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMainView.swift; sourceTree = "<group>"; };
 		8492CD7129B1D93C00187E3C /* ChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTApp.swift; sourceTree = "<group>"; };
 		8492CD7629B1D93C00187E3C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,14 @@
 			path = KeyBoard;
 			sourceTree = "<group>";
 		};
+		847A26F529B9B580006F6B34 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				847A26F629B9B592006F6B34 /* ProfileMainView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		8492CD6829B1D93C00187E3C = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +164,7 @@
 		8492CD7329B1D93C00187E3C /* ChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				847A26F529B9B580006F6B34 /* Profile */,
 				847A26F229B9B1AF006F6B34 /* KeyBoard */,
 				847A26F129B9B19F006F6B34 /* Assets */,
 				847A26F029B9B165006F6B34 /* Chat */,
@@ -293,6 +304,7 @@
 				8492CD7729B1D93C00187E3C /* HomeView.swift in Sources */,
 				846729F829B5B78100B85594 /* MessageView.swift in Sources */,
 				8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */,
+				847A26F729B9B592006F6B34 /* ProfileMainView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

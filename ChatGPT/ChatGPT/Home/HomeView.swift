@@ -17,6 +17,11 @@ struct HomeView: View {
           Label("Chat", systemImage: "message.fill")
         }
         .tag(HomeTab.chat)
+      ProfileMainView()
+        .tabItem {
+          Label("Me", systemImage: "person.fill")
+        }
+        .tag(HomeTab.me)
     }
   }
 }
