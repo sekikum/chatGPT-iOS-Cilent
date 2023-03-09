@@ -21,13 +21,21 @@ struct InputView: View {
         .background(Color("Gray"))
         .cornerRadius(cornerRadius)
         .keyboardType(.default)
+        .submitLabel(.done)
+        .onSubmit {
+          sendMessageAction()
+        }
       Button("send") {
-        sendCallback(textfieldText)
-        textfieldText = ""
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        sendMessageAction()
       }
       .buttonStyle(.borderedProminent)
     }
+  }
+  
+  func sendMessageAction() {
+    sendCallback(textfieldText)
+    textfieldText = ""
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
 }
 
