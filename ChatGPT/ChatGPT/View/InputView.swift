@@ -37,7 +37,7 @@ struct InputView: View {
   }
   
   func sendMessageAction() {
-    if textfieldText == "" {
+    if textfieldText.isEmpty {
       isShowAlert = true
       return
     }
