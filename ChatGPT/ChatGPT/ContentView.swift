@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+  @StateObject var viewModel = MessageViewModel()
+  
   var body: some View {
     VStack {
-      ChatView()
-      InputView()
+      ChatView(messageItems: viewModel.messageItems)
+      InputView(sendCallback: viewModel.sendMessage(_:))
     }
     .padding()
   }

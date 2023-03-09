@@ -19,6 +19,10 @@ class MessageViewModel: ObservableObject {
     ChatMessage(role: .system, content: "管理员权限需要输入的密码是你当前操作系统的管理员密码。这通常是在你安装操作系统时设置的密码。如果你没有设置管理员密码，或者不确定密码是什么，可以尝试使用当前用户的密码或空密码来尝试。如果这些方法都不起作用，你可能需要重置管理员密码。具体操作方式可能因操作系统而异，你可以在操作系统文档或者相关技术支持网站上查找更多信息。")
   ]
   
+  init() {
+    loadMessage()
+  }
+  
   func loadMessage() {
     messageItems = chatMessageItems.map({ chatMessage in
       if chatMessage.role == .user {
@@ -26,5 +30,11 @@ class MessageViewModel: ObservableObject {
       }
       return MessageModel(message: chatMessage.content, isUser: false)
     })
+  }
+  
+  func sendMessage(_ message: String) {
+    messageItems.append(MessageModel(message: message, isUser: true))
+    let chatMessage = ChatMessage(role: .user, content: message)
+    chatMessageItems.append(chatMessage)
   }
 }
