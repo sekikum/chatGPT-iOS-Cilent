@@ -23,12 +23,8 @@ struct InputView: View {
         .cornerRadius(cornerRadius)
         .keyboardType(.default)
         .submitLabel(.done)
-        .onSubmit {
-          sendMessageAction()
-        }
-      Button("send") {
-        sendMessageAction()
-      }
+        .onSubmit(sendMessageAction)
+      Button("send", action: sendMessageAction)
       .buttonStyle(.borderedProminent)
       .alert("message cannot be empty", isPresented: $isShowAlert) {
         Button("OK", role: .cancel) { }
