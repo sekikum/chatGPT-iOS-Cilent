@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ProfileHeaderView: View {
-  @EnvironmentObject var homeViewModel: HomeViewModel
+  let avatar: String
+  let nickname: String
   let avatarSize: CGFloat = 70
   let padding: CGFloat = 15
   let fontSize: CGFloat = 20
@@ -17,14 +18,14 @@ struct ProfileHeaderView: View {
   
   var body: some View {
     HStack {
-      Image(homeViewModel.user.avatar)
+      Image(avatar)
         .resizable()
         .scaledToFit()
         .cornerRadius(conrnerRadius)
         .frame(width: avatarSize, height: avatarSize)
         .padding(.trailing, padding)
         .padding(.leading, padding)
-      Text(homeViewModel.user.nickname)
+      Text(nickname)
         .font(.system(size: fontSize))
         .lineLimit(nickNameLineLimit)
     }
@@ -33,7 +34,6 @@ struct ProfileHeaderView: View {
 
 struct ProfileHeaderView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileHeaderView()
-      .environmentObject(HomeViewModel())
+    ProfileHeaderView(avatar: "Profile-Diu", nickname: "sekikum")
   }
 }
