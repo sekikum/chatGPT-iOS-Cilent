@@ -13,7 +13,7 @@ struct ContentView: View {
   var body: some View {
     VStack {
       ChatView(messageItems: viewModel.messageItems)
-      InputView(sendCallback: viewModel.sendMessage(_:))
+      InputView(sendCallback: viewModel.sendMessage)
     }
     .padding()
   }
