@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct HomeView: View {
+  @State var selectionTab: HomeTab = .chat
+  
   var body: some View {
-    ChatMainView()
+    TabView(selection: $selectionTab) {
+      ChatMainView()
+        .tabItem {
+          Label("Chat", systemImage: "message.fill")
+        }
+        .tag(HomeTab.chat)
+    }
   }
+}
+
+enum HomeTab {
+  case chat
+  case me
 }
 
 struct HomeView_Previews: PreviewProvider {
