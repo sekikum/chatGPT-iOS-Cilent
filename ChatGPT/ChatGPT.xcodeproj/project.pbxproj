@@ -14,6 +14,7 @@
 		846729FD29B5DF4600B85594 /* ColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 846729FC29B5DF4600B85594 /* ColorAssets.xcassets */; };
 		846729FF29B5EBCF00B85594 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846729FE29B5EBCF00B85594 /* MessageViewModel.swift */; };
 		847A26E729B71BF4006F6B34 /* KeyBoardPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A26E629B71BF4006F6B34 /* KeyBoardPublisher.swift */; };
+		847A26EA29B74024006F6B34 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 847A26E929B74024006F6B34 /* OpenAISwift */; };
 		8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7429B1D93C00187E3C /* ChatGPTApp.swift */; };
 		8492CD7729B1D93C00187E3C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492CD7629B1D93C00187E3C /* ContentView.swift */; };
 		8492CD7929B1D93E00187E3C /* ImageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7829B1D93E00187E3C /* ImageAssets.xcassets */; };
@@ -44,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847A26EA29B74024006F6B34 /* OpenAISwift in Frameworks */,
 				BD23DAD78F36F6C5F5D57035 /* Pods_ChatGPT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +155,9 @@
 			dependencies = (
 			);
 			name = ChatGPT;
+			packageProductDependencies = (
+				847A26E929B74024006F6B34 /* OpenAISwift */,
+			);
 			productName = ChatGPT;
 			productReference = 8492CD7129B1D93C00187E3C /* ChatGPT.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +186,9 @@
 				Base,
 			);
 			mainGroup = 8492CD6829B1D93C00187E3C;
+			packageReferences = (
+				847A26E829B74024006F6B34 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
+			);
 			productRefGroup = 8492CD7229B1D93C00187E3C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -441,6 +449,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		847A26E829B74024006F6B34 /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamrushy/OpenAISwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		847A26E929B74024006F6B34 /* OpenAISwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847A26E829B74024006F6B34 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
+			productName = OpenAISwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8492CD6929B1D93C00187E3C /* Project object */;
 }
