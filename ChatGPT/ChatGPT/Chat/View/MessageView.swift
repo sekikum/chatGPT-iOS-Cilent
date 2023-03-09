@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct MessageView: View {
+  @EnvironmentObject var homeViewModel: HomeViewModel
   let message: MessageModel
   let avatarSize: CGFloat = 50
   let textCornerRadius: CGFloat = 10
@@ -23,7 +24,7 @@ struct MessageView: View {
           .background(Color("Blue"))
           .cornerRadius(10)
           .padding(.leading, padding)
-        Image("Profile-Diu")
+        Image(homeViewModel.user.avatar)
           .resizable()
           .scaledToFit()
           .frame(width: avatarSize, height: avatarSize)

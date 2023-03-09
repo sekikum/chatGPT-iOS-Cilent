@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
   @State var selectionTab: HomeTab = .chat
+  @StateObject var viewModel: HomeViewModel = HomeViewModel()
   
   var body: some View {
     TabView(selection: $selectionTab) {
@@ -23,6 +24,7 @@ struct HomeView: View {
         }
         .tag(HomeTab.me)
     }
+    .environmentObject(viewModel)
   }
 }
 
