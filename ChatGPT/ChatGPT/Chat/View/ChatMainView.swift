@@ -10,10 +10,11 @@ import SwiftUI
 
 struct ChatMainView: View {
   @StateObject var viewModel = MessageViewModel()
+  let avatar: String
   
   var body: some View {
     VStack {
-      ChatView(messageItems: viewModel.messageItems)
+      ChatView(avatar: avatar, messageItems: viewModel.messageItems)
       InputView(sendCallback: viewModel.sendMessage)
     }
     .padding()
@@ -22,6 +23,6 @@ struct ChatMainView: View {
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView()
+    ChatMainView(avatar: "Profile-Diu")
   }
 }

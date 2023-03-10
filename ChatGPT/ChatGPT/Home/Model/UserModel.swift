@@ -11,5 +11,5 @@ struct UserModel {
   var avatar: String
   var nickname: String
   var tokenList: [String]
-  var tokenSelect: String?
+  var tokenSelect: String
 }
