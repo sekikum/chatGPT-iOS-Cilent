@@ -24,7 +24,6 @@ struct HomeView: View {
         }
         .tag(HomeTab.me)
     }
-    .environmentObject(viewModel)
   }
 }
 
