@@ -13,6 +13,7 @@ struct ProfileMainView: View {
   @State var selection: String = ""
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
+  let tokenLineLimit: Int = 1
   
   var body: some View {
     List {
@@ -24,12 +25,13 @@ struct ProfileMainView: View {
         if homeViewModel.user.tokenList.isEmpty {
           Text("No token added")
         } else {
-          Picker(selection: $selection, label: Text("")) {
+          Picker(selection: $selection, label: Text("Choose a token")) {
             ForEach(homeViewModel.user.tokenList, id: \.self) { token in
               Text(token)
+                .lineLimit(tokenLineLimit)
             }
           }
-          .labelsHidden()
+          .pickerStyle(.inline)
         }
       }
       
@@ -39,7 +41,7 @@ struct ProfileMainView: View {
             .keyboardType(.default)
             .submitLabel(.done)
             .onSubmit(addNewToken)
-          Button("send", action: addNewToken)
+          Button("add", action: addNewToken)
             .buttonStyle(.borderedProminent)
             .alert("token cannot be empty", isPresented: $isShowAlert) {
               Button("OK", role: .cancel) { }
