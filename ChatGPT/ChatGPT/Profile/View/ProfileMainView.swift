@@ -31,6 +31,9 @@ struct ProfileMainView: View {
             }
           }
           .pickerStyle(.inline)
+          .onChange(of: viewModel.user.tokenSelect) { _ in
+            viewModel.storeUserWith(user: viewModel.user)
+          }
         }
       }
       
@@ -58,6 +61,7 @@ struct ProfileMainView: View {
     viewModel.user.tokenList.append(textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    viewModel.storeUserWith(user: viewModel.user)
   }
 }
 
