@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct HomeView: View {
+  @StateObject var viewModel: UserViewModel = UserViewModel()
   @State var selectionTab: HomeTab = .chat
-  @StateObject var viewModel: HomeViewModel = HomeViewModel()
   
   var body: some View {
     TabView(selection: $selectionTab) {
-      ChatMainView()
+      ChatMainView(avatar: viewModel.user.avatar)
         .tabItem {
           Label("Chat", systemImage: "message.fill")
         }
         .tag(HomeTab.chat)
-      ProfileMainView()
+      ProfileMainView(viewModel: viewModel)
         .tabItem {
           Label("Me", systemImage: "person.fill")
         }

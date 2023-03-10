@@ -9,8 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ProfileMainView: View {
-  @EnvironmentObject var homeViewModel: HomeViewModel
-  @State var selection: String = ""
+  @StateObject var viewModel: UserViewModel
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
   let tokenLineLimit: Int = 1
@@ -18,15 +17,15 @@ struct ProfileMainView: View {
   var body: some View {
     List {
       Section {
-        ProfileHeaderView(avatar: homeViewModel.user.avatar, nickname: homeViewModel.user.nickname)
+        ProfileHeaderView(avatar: viewModel.user.avatar, nickname: viewModel.user.nickname)
       }
       
       Section {
-        if homeViewModel.user.tokenList.isEmpty {
+        if viewModel.user.tokenList.isEmpty {
           Text("No token added")
         } else {
-          Picker(selection: $selection, label: Text("Choose a token")) {
-            ForEach(homeViewModel.user.tokenList, id: \.self) { token in
+          Picker(selection: $viewModel.user.tokenSelect, label: Text("Choose a token").foregroundColor(.blue)) {
+            ForEach(viewModel.user.tokenList, id: \.self) { token in
               Text(token)
                 .lineLimit(tokenLineLimit)
             }
@@ -56,7 +55,7 @@ struct ProfileMainView: View {
       isShowAlert = true
       return
     }
-    homeViewModel.user.tokenList.append(textfieldText)
+    viewModel.user.tokenList.append(textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
@@ -64,6 +63,6 @@ struct ProfileMainView: View {
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView()
+    ProfileMainView(viewModel: UserViewModel())
   }
 }
