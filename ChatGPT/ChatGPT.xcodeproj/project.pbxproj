@@ -26,6 +26,7 @@
 		8492CD7C29B1D93E00187E3C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8492CD7B29B1D93E00187E3C /* Preview Assets.xcassets */; };
 		849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C653F29C00C4800AC8E68 /* ProfileViewModel.swift */; };
 		849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */; };
+		849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C655729C078CA00AC8E68 /* StoreManager.swift */; };
 		BD23DAD78F36F6C5F5D57035 /* Pods_ChatGPT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 811B46CE83845303EA049BE5 /* Pods_ChatGPT.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		849C653F29C00C4800AC8E68 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		849C654529C0137100AC8E68 /* ChatGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTest.swift; sourceTree = "<group>"; };
+		849C655729C078CA00AC8E68 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		8AE6CD8D403D9BDA62EFC9CE /* Pods-ChatGPT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatGPT.release.xcconfig"; path = "Target Support Files/Pods-ChatGPT/Pods-ChatGPT.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +232,7 @@
 		8492CD7329B1D93C00187E3C /* ChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				849C655529C0785600AC8E68 /* Foundation */,
 				847A26F529B9B580006F6B34 /* Profile */,
 				847A26F229B9B1AF006F6B34 /* KeyBoard */,
 				847A26F129B9B19F006F6B34 /* Assets */,
@@ -279,6 +282,22 @@
 				849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		849C655529C0785600AC8E68 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				849C655629C0786500AC8E68 /* Store */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		849C655629C0786500AC8E68 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				849C655729C078CA00AC8E68 /* StoreManager.swift */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 		C938D37C4F2CB353FB3C9812 /* Pods */ = {
@@ -435,6 +454,7 @@
 				847A270129B9BD1F006F6B34 /* UserViewModel.swift in Sources */,
 				846729F829B5B78100B85594 /* MessageView.swift in Sources */,
 				8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */,
+				849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */,
 				847A26F729B9B592006F6B34 /* ProfileMainView.swift in Sources */,
 				847A26FF29B9BCEB006F6B34 /* UserModel.swift in Sources */,
 			);
