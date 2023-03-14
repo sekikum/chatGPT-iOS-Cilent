@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserViewModel: ObservableObject {
+@MainActor class UserViewModel: ObservableObject {
   @Published var user: UserModel = UserModel(avatar: "Profile-Diu", nickname: "sekikum", tokenList: [], tokenSelect: "")
   
   private static var UsersURL: URL {
@@ -16,27 +16,19 @@ class UserViewModel: ObservableObject {
   }
   
   init() {
-    DispatchQueue.global().async {
-      if let data = try? Data(contentsOf: UserViewModel.UsersURL, options: []) {
-        let user = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! UserModel
-        DispatchQueue.main.async {
-          self.user = user
-        }
-      }
+    guard let data = UserDefaults.standard.data(forKey: "USER") else {
+      return
     }
+    guard let userStored = try? PropertyListDecoder().decode(UserModel.self, from: data) else {
+      return
+    }
+    user = userStored
   }
   
-  func storeUserWith(user: UserModel) {
-    DispatchQueue.global().async {
-      do {
-        let data = try NSKeyedArchiver.archivedData(withRootObject: self.user, requiringSecureCoding: false)
-        try data.write(to: UserViewModel.UsersURL)
-        DispatchQueue.main.async {
-          self.user = user
-        }
-      } catch {
-        
-      }
+  func storeUser(_ user: UserModel) async {
+    guard let data = try? PropertyListEncoder().encode(user) else {
+      return
     }
+    UserDefaults.standard.set(data, forKey: "USER")
   }
 }
