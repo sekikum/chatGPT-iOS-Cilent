@@ -12,6 +12,7 @@ struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
+  let profileViewModel: ProfileViewModel = ProfileViewModel()
   let tokenLineLimit: Int = 1
   
   var body: some View {
@@ -26,7 +27,7 @@ struct ProfileMainView: View {
         } else {
           Picker(selection: $viewModel.user.tokenSelect, label: Text("Choose a token").foregroundColor(.blue)) {
             ForEach(viewModel.user.tokenList, id: \.self) { token in
-              Text(token)
+              Text(profileViewModel.maskToken(token))
                 .lineLimit(tokenLineLimit)
             }
           }
