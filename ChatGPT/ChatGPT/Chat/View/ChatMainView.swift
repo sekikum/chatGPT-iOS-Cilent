@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ChatMainView: View {
-  @StateObject var viewModel = MessageViewModel()
+  @StateObject var viewModel: MessageViewModel
   let avatar: String
   
   var body: some View {
@@ -23,6 +23,6 @@ struct ChatMainView: View {
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(avatar: "Profile-Diu")
+    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-Diu")
   }
 }
