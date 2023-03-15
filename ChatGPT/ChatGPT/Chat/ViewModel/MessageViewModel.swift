@@ -10,11 +10,12 @@ import OpenAISwift
 
 class MessageViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
+  @Published var isShowAlert: Bool = false
+  @Published var alertInfo: String = ""
   var openAI = OpenAISwift(authToken: "")
   var chatMessageItems: [ChatMessage] = []
   
   init() {
-    loadMessage()
     openAI = OpenAISwift(authToken: StorageManager.restoreUser().tokenSelect)
   }
   
@@ -22,24 +23,24 @@ class MessageViewModel: ObservableObject {
     openAI = OpenAISwift(authToken: token)
   }
   
-  func loadMessage() {
-    messageItems = chatMessageItems.map({ chatMessage in
-      if chatMessage.role == .user {
-        return MessageModel(message: chatMessage.content, isUser: true)
-      }
-      return MessageModel(message: chatMessage.content, isUser: false)
-    })
-  }
-  
   func sendMessage(_ message: String) {
+    if message.isEmpty {
+      isShowAlert = true
+      alertInfo = "Message cannot be empty"
+      return
+    }
+    
     messageItems.append(MessageModel(message: message, isUser: true))
     let chatMessageUser = ChatMessage(role: .user, content: message)
     chatMessageItems.append(chatMessageUser)
-
+    
     openAI.sendChat(with: chatMessageItems) { result in
       switch(result) {
-      case .failure(let failure):
-        print(failure.localizedDescription)
+      case .failure:
+        DispatchQueue.main.async {
+          self.isShowAlert = true
+          self.alertInfo = "Please choose the correct token"
+        }
       case .success(let success):
         DispatchQueue.main.async {
           guard let chatMessageSystem = success.choices.first?.message else {
