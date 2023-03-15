@@ -10,7 +10,8 @@ import SwiftUI
 
 struct InputView: View {
   @State var textfieldText: String = ""
-  @State var isShowAlert: Bool = false
+  @Binding var isShowAlert: Bool
+  let alertInfo: String
   let sendCallback: (String) -> Void
   let clearCallback: () -> Void
   let padding: CGFloat = 6
@@ -27,7 +28,7 @@ struct InputView: View {
         .onSubmit(sendMessageAction)
       Button("send", action: sendMessageAction)
         .buttonStyle(.borderedProminent)
-        .alert("message cannot be empty", isPresented: $isShowAlert) {
+        .alert(alertInfo, isPresented: $isShowAlert) {
           Button("OK", role: .cancel) { }
         }
       Button("clear", action: clearCallback)
@@ -36,10 +37,6 @@ struct InputView: View {
   }
   
   func sendMessageAction() {
-    if textfieldText.isEmpty {
-      isShowAlert = true
-      return
-    }
     sendCallback(textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -48,6 +45,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(sendCallback: {_ in }, clearCallback: { })
+    InputView(isShowAlert: .constant(false), alertInfo: "", sendCallback: {_ in }, clearCallback: { })
   }
 }
