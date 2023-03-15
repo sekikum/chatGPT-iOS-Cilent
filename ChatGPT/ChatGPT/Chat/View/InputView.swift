@@ -16,10 +16,12 @@ struct InputView: View {
   let clearCallback: () -> Void
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
+  let textFieldLimit = 4
   
   var body: some View {
     HStack {
-      TextField("", text: $textfieldText)
+      TextField("", text: $textfieldText, axis: .vertical)
+        .lineLimit(textFieldLimit)
         .padding(padding)
         .background(Color("Gray"))
         .cornerRadius(cornerRadius)
