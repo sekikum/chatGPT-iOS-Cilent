@@ -12,6 +12,7 @@ struct InputView: View {
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
   let sendCallback: (String) -> Void
+  let clearCallback: () -> Void
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   
@@ -25,10 +26,12 @@ struct InputView: View {
         .submitLabel(.done)
         .onSubmit(sendMessageAction)
       Button("send", action: sendMessageAction)
-      .buttonStyle(.borderedProminent)
-      .alert("message cannot be empty", isPresented: $isShowAlert) {
-        Button("OK", role: .cancel) { }
-      }
+        .buttonStyle(.borderedProminent)
+        .alert("message cannot be empty", isPresented: $isShowAlert) {
+          Button("OK", role: .cancel) { }
+        }
+      Button("clear", action: clearCallback)
+        .buttonStyle(.borderedProminent)
     }
   }
   
@@ -45,6 +48,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(sendCallback: {_ in })
+    InputView(sendCallback: {_ in }, clearCallback: { })
   }
 }

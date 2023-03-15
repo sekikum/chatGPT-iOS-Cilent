@@ -52,4 +52,9 @@ class MessageViewModel: ObservableObject {
       }
     }
   }
+  
+  func clearContext() {
+    chatMessageItems = []
+    messageItems = []
+  }
 }
