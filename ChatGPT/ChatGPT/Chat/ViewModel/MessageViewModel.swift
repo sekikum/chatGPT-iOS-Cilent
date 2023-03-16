@@ -16,7 +16,7 @@ class MessageViewModel: ObservableObject {
   var chatMessageItems: [ChatMessage] = []
   
   init() {
-    openAI = OpenAISwift(authToken: StorageManager.restoreUser().tokenSelect)
+    initOpenAI(StorageManager.restoreUser().tokenSelect)
   }
   
   func initOpenAI(_ token: String) {
