@@ -11,7 +11,7 @@ import SwiftUI
 struct InputView: View {
   @State var textfieldText: String = ""
   @Binding var isShowAlert: Bool
-  @Binding var noTokenAdded: Bool
+  let noTokenAdded: Bool
   let alertInfo: String
   let send: (String) -> Void
   let clear: () -> Void
@@ -49,6 +49,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), noTokenAdded: .constant(false), alertInfo: "", send: {_ in }, clear: { })
+    InputView(isShowAlert: .constant(false), noTokenAdded: false, alertInfo: "", send: {_ in }, clear: { })
   }
 }
