@@ -9,8 +9,10 @@ import Foundation
 
 class UserViewModel: ObservableObject {
   @Published var user: UserModel
+  @Published var noTokenAdded: Bool
   
   init() {
     user = StorageManager.restoreUser()
+    noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
   }
 }

@@ -11,6 +11,7 @@ import SwiftUI
 struct InputView: View {
   @State var textfieldText: String = ""
   @Binding var isShowAlert: Bool
+  @Binding var noTokenAdded: Bool
   let alertInfo: String
   let send: (String) -> Void
   let clear: () -> Void
@@ -20,7 +21,8 @@ struct InputView: View {
   
   var body: some View {
     HStack {
-      TextField("", text: $textfieldText, axis: .vertical)
+      TextField(noTokenAdded ? "Please add token on 'me'" : "", text: $textfieldText, axis: .vertical)
+        .disabled(noTokenAdded)
         .lineLimit(textFieldLimit)
         .padding(padding)
         .background(Color("Gray"))
@@ -47,6 +49,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_ in }, clear: { })
+    InputView(isShowAlert: .constant(false), noTokenAdded: .constant(false), alertInfo: "", send: {_ in }, clear: { })
   }
 }

@@ -12,6 +12,7 @@ struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
+  @Binding var noTokenAdded: Bool
   let profileViewModel: ProfileViewModel = ProfileViewModel()
   let initToken: (String) -> Void
   let tokenLineLimit: Int = 1
@@ -69,11 +70,12 @@ struct ProfileMainView: View {
     Task {
       await StorageManager.storeUser(viewModel.user)
     }
+    noTokenAdded = false
   }
 }
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView(viewModel: UserViewModel(), initToken: {_ in})
+    ProfileMainView(viewModel: UserViewModel(), noTokenAdded: .constant(false), initToken: {_ in})
   }
 }
