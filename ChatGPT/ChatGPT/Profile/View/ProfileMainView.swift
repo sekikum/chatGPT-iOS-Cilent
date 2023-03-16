@@ -13,7 +13,7 @@ struct ProfileMainView: View {
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
-  let initTokenCallback: (String) -> Void
+  let initToken: (String) -> Void
   let tokenLineLimit: Int = 1
   
   var body: some View {
@@ -36,7 +36,7 @@ struct ProfileMainView: View {
           .onChange(of: viewModel.user.tokenSelect) { _ in
             Task {
               await StorageManager.storeUser(viewModel.user)
-              initTokenCallback(viewModel.user.tokenSelect)
+              initToken(viewModel.user.tokenSelect)
             }
           }
         }
@@ -74,6 +74,6 @@ struct ProfileMainView: View {
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView(viewModel: UserViewModel(), initTokenCallback: {_ in})
+    ProfileMainView(viewModel: UserViewModel(), initToken: {_ in})
   }
 }
