@@ -46,7 +46,7 @@ class MessageViewModel: ObservableObject {
           guard let chatMessageSystem = success.choices.first?.message else {
             return
           }
-          let message = MessageModel(message: chatMessageSystem.content, isUser: false)
+          let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
           self.chatMessageItems.append(chatMessageSystem)
           self.messageItems.append(message)
         }
@@ -57,5 +57,11 @@ class MessageViewModel: ObservableObject {
   func clearContext() {
     chatMessageItems = []
     messageItems = []
+  }
+  
+  func trimMessage(_ message: String) -> String {
+    var resultMessage = message.trimmingCharacters(in: CharacterSet.whitespaces)
+    resultMessage = resultMessage.trimmingCharacters(in: CharacterSet.newlines)
+    return resultMessage
   }
 }
