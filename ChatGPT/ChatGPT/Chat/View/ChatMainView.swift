@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct ChatMainView: View {
-  @StateObject var viewModel = MessageViewModel()
+  @StateObject var viewModel: MessageViewModel
   let avatar: String
   
   var body: some View {
     VStack {
       ChatView(avatar: avatar, messageItems: viewModel.messageItems)
-      InputView(sendCallback: viewModel.sendMessage)
+      InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, sendCallback: viewModel.sendMessage, clearCallback: viewModel.clearContext)
     }
     .padding()
   }
@@ -23,6 +23,6 @@ struct ChatMainView: View {
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(avatar: "Profile-Diu")
+    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-Diu")
   }
 }
