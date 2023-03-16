@@ -12,6 +12,8 @@ struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
+  let profileViewModel: ProfileViewModel = ProfileViewModel()
+  let initTokenCallback: (String) -> Void
   let tokenLineLimit: Int = 1
   
   var body: some View {
@@ -26,13 +28,16 @@ struct ProfileMainView: View {
         } else {
           Picker(selection: $viewModel.user.tokenSelect, label: Text("Choose a token").foregroundColor(.blue)) {
             ForEach(viewModel.user.tokenList, id: \.self) { token in
-              Text(token)
+              Text(profileViewModel.maskToken(token))
                 .lineLimit(tokenLineLimit)
             }
           }
           .pickerStyle(.inline)
           .onChange(of: viewModel.user.tokenSelect) { _ in
-            viewModel.storeUserWith(user: viewModel.user)
+            Task {
+              await StorageManager.storeUser(viewModel.user)
+              initTokenCallback(viewModel.user.tokenSelect)
+            }
           }
         }
       }
@@ -61,12 +66,14 @@ struct ProfileMainView: View {
     viewModel.user.tokenList.append(textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    viewModel.storeUserWith(user: viewModel.user)
+    Task {
+      await StorageManager.storeUser(viewModel.user)
+    }
   }
 }
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView(viewModel: UserViewModel())
+    ProfileMainView(viewModel: UserViewModel(), initTokenCallback: {_ in})
   }
 }

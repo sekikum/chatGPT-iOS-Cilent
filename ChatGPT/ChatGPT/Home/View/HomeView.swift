@@ -9,22 +9,22 @@ import SwiftUI
 
 struct HomeView: View {
   @StateObject var viewModel: UserViewModel = UserViewModel()
+  @StateObject var messageViewModel: MessageViewModel = MessageViewModel()
   @State var selectionTab: HomeTab = .chat
   
   var body: some View {
     TabView(selection: $selectionTab) {
-      ChatMainView(avatar: viewModel.user.avatar)
+      ChatMainView(viewModel: messageViewModel, avatar: viewModel.user.avatar)
         .tabItem {
           Label("Chat", systemImage: "message.fill")
         }
         .tag(HomeTab.chat)
-      ProfileMainView(viewModel: viewModel)
+      ProfileMainView(viewModel: viewModel, initTokenCallback: messageViewModel.initOpenAI)
         .tabItem {
           Label("Me", systemImage: "person.fill")
         }
         .tag(HomeTab.me)
     }
-    .environmentObject(viewModel)
   }
 }
 
