@@ -19,7 +19,7 @@ struct HomeView: View {
           Label("Chat", systemImage: "message.fill")
         }
         .tag(HomeTab.chat)
-      ProfileMainView(viewModel: viewModel, initTokenCallback: messageViewModel.initOpenAI)
+      ProfileMainView(viewModel: viewModel, initToken: messageViewModel.initOpenAI)
         .tabItem {
           Label("Me", systemImage: "person.fill")
         }
