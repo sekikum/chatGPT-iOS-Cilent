@@ -40,6 +40,7 @@ class MessageViewModel: ObservableObject {
       switch(result) {
       case .failure:
         DispatchQueue.main.async {
+          self.isShowLoading = false
           self.isShowAlert = true
           self.alertInfo = "Please choose the correct token"
         }
