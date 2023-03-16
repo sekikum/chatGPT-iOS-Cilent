@@ -12,6 +12,7 @@ class MessageViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
+  @Published var isShowLoading: Bool = false
   var openAI = OpenAISwift(authToken: "")
   var chatMessageItems: [ChatMessage] = []
   
@@ -33,6 +34,7 @@ class MessageViewModel: ObservableObject {
     messageItems.append(MessageModel(message: message, isUser: true))
     let chatMessageUser = ChatMessage(role: .user, content: message)
     chatMessageItems.append(chatMessageUser)
+    isShowLoading = true
     
     openAI.sendChat(with: chatMessageItems) { result in
       switch(result) {
@@ -49,6 +51,7 @@ class MessageViewModel: ObservableObject {
           let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
           self.chatMessageItems.append(chatMessageSystem)
           self.messageItems.append(message)
+          self.isShowLoading = false
         }
       }
     }
