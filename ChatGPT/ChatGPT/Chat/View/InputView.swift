@@ -13,6 +13,7 @@ struct InputView: View {
   let alertInfo: String
   let send: (String) -> Void
   let clear: () -> Void
+  let isShowLoading: Bool
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   let textFieldLimit = 4
@@ -32,6 +33,12 @@ struct InputView: View {
         .alert(alertInfo, isPresented: $isShowAlert) {
           Button("OK", role: .cancel) { }
         }
+        .overlay() {
+          if isShowLoading {
+            ProgressView()
+          }
+        }
+        .disabled(isShowLoading)
       Button("clear", action: clear)
         .buttonStyle(.borderedProminent)
     }
@@ -46,6 +53,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_ in }, clear: { })
+    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_ in }, clear: { }, isShowLoading: false)
   }
 }
