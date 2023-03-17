@@ -27,8 +27,6 @@ struct InputView: View {
         .background(Color("Gray"))
         .cornerRadius(cornerRadius)
         .keyboardType(.default)
-        .submitLabel(.done)
-        .onSubmit(sendMessageAction)
       Button("send", action: sendMessageAction)
         .buttonStyle(.borderedProminent)
         .alert(alertInfo, isPresented: $isShowAlert) {
