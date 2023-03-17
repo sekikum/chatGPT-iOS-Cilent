@@ -13,11 +13,11 @@ struct SplashCodeSyntaxHighlighter: CodeSyntaxHighlighter {
   private let syntaxHighlighter: SyntaxHighlighter<TextOutputFormat>
 
   init(theme: Splash.Theme) {
-    self.syntaxHighlighter = SyntaxHighlighter(format: TextOutputFormat(theme: theme))
+    syntaxHighlighter = SyntaxHighlighter(format: TextOutputFormat(theme: theme))
   }
 
   func highlightCode(_ content: String, language: String?) -> Text {
-    return self.syntaxHighlighter.highlight(content)
+    return syntaxHighlighter.highlight(content)
   }
 }
 
