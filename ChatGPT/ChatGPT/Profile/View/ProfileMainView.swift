@@ -21,22 +21,19 @@ struct ProfileMainView: View {
         ProfileHeaderView(avatar: viewModel.user.avatar, nickname: viewModel.user.nickname)
       }
       
-      Section {
-        if viewModel.user.tokenList.isEmpty {
-          Text("No token added")
-        } else {
-          Picker(selection: $viewModel.user.tokenSelect, label: Text("Choose a token").foregroundColor(.blue)) {
-            ForEach(viewModel.user.tokenList, id: \.self) { token in
-              Text(profileViewModel.maskToken(token))
-                .lineLimit(tokenLineLimit)
-            }
+      Section(viewModel.user.tokenList.isEmpty ? "No token added" : "Choose a token") {
+        Picker("", selection: $viewModel.user.tokenSelect) {
+          ForEach(viewModel.user.tokenList, id: \.self) { token in
+            Text(profileViewModel.maskToken(token))
+              .lineLimit(tokenLineLimit)
           }
-          .pickerStyle(.inline)
-          .onChange(of: viewModel.user.tokenSelect) { _ in
-            Task {
-              await StorageManager.storeUser(viewModel.user)
-              initToken(viewModel.user.tokenSelect)
-            }
+        }
+        .labelsHidden()
+        .pickerStyle(.inline)
+        .onChange(of: viewModel.user.tokenSelect) { _ in
+          Task {
+            await StorageManager.storeUser(viewModel.user)
+            initToken(viewModel.user.tokenSelect)
           }
         }
       }
