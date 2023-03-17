@@ -5,41 +5,40 @@
 //  Created by Wenyan Zhao on 2023/3/6.
 //
 
-import Foundation
 import SwiftUI
 
 struct InputView: View {
   @State var textfieldText: String = ""
   @Binding var isShowAlert: Bool
   let alertInfo: String
-  let sendCallback: (String) -> Void
-  let clearCallback: () -> Void
+  let send: (String) -> Void
+  let clear: () -> Void
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   let textFieldLimit = 4
+  let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
   
   var body: some View {
     HStack {
-      TextField("", text: $textfieldText, axis: .vertical)
+      TextField(noTokenAdded ? "Please add token on 'me'" : "", text: $textfieldText, axis: .vertical)
+        .disabled(noTokenAdded)
         .lineLimit(textFieldLimit)
         .padding(padding)
         .background(Color("Gray"))
         .cornerRadius(cornerRadius)
         .keyboardType(.default)
-        .submitLabel(.done)
-        .onSubmit(sendMessageAction)
       Button("send", action: sendMessageAction)
         .buttonStyle(.borderedProminent)
         .alert(alertInfo, isPresented: $isShowAlert) {
           Button("OK", role: .cancel) { }
         }
-      Button("clear", action: clearCallback)
+      Button("clear", action: clear)
         .buttonStyle(.borderedProminent)
     }
   }
   
   func sendMessageAction() {
-    sendCallback(textfieldText)
+    send(textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
@@ -47,6 +46,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), alertInfo: "", sendCallback: {_ in }, clearCallback: { })
+    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_ in }, clear: { })
   }
 }
