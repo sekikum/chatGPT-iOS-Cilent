@@ -10,13 +10,13 @@ import SwiftUI
 struct InputView: View {
   @State var textfieldText: String = ""
   @Binding var isShowAlert: Bool
-  let noTokenAdded: Bool
   let alertInfo: String
   let send: (String) -> Void
   let clear: () -> Void
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   let textFieldLimit = 4
+  let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
   
   var body: some View {
     HStack {
@@ -46,6 +46,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), noTokenAdded: false, alertInfo: "", send: {_ in }, clear: { })
+    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_ in }, clear: { })
   }
 }
