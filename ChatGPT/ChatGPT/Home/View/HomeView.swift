@@ -14,7 +14,7 @@ struct HomeView: View {
   
   var body: some View {
     TabView(selection: $selectionTab) {
-      ChatMainView(viewModel: messageViewModel, noTokenAdded: userViewModel.noTokenAdded, avatar: userViewModel.user.avatar)
+      ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
         .tabItem {
           Label("Chat", systemImage: "message.fill")
         }
