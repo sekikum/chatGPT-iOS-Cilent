@@ -13,8 +13,8 @@ struct ChatMainView: View {
   
   var body: some View {
     VStack {
-      ChatView(avatar: avatar, messageItems: viewModel.messageItems, isShowLoading: viewModel.isShowLoading)
-      InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, clear: viewModel.clearContext)
+      ChatView(avatar: avatar, messageItems: viewModel.messageItems)
+      InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, clear: viewModel.clearContext, isShowLoading: viewModel.isShowLoading)
     }
     .padding()
   }
