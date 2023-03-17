@@ -5,7 +5,6 @@
 //  Created by Wenyan Zhao on 2023/3/9.
 //
 
-import Foundation
 import SwiftUI
 
 struct ProfileMainView: View {
@@ -13,7 +12,7 @@ struct ProfileMainView: View {
   @State var textfieldText: String = ""
   @State var isShowAlert: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
-  let initTokenCallback: (String) -> Void
+  let initToken: (String) -> Void
   let tokenLineLimit: Int = 1
   
   var body: some View {
@@ -36,7 +35,7 @@ struct ProfileMainView: View {
           .onChange(of: viewModel.user.tokenSelect) { _ in
             Task {
               await StorageManager.storeUser(viewModel.user)
-              initTokenCallback(viewModel.user.tokenSelect)
+              initToken(viewModel.user.tokenSelect)
             }
           }
         }
@@ -63,17 +62,14 @@ struct ProfileMainView: View {
       isShowAlert = true
       return
     }
-    viewModel.user.tokenList.append(textfieldText)
+    viewModel.addToken(textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    Task {
-      await StorageManager.storeUser(viewModel.user)
-    }
   }
 }
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView(viewModel: UserViewModel(), initTokenCallback: {_ in})
+    ProfileMainView(viewModel: UserViewModel(), initToken: {_ in})
   }
 }

@@ -8,12 +8,8 @@
 import Foundation
 
 struct StorageManager {
-  private static var UsersURL: URL {
-    let path = NSHomeDirectory() + "/users.data"
-    return URL(fileURLWithPath: path)
-  }
   static let defaultStand = UserDefaults.standard
-  static let USER_KEY = "USER_KEY"
+  static let USER_KEY = "USER"
 
   static func restoreUser() -> UserModel {
     guard let data = defaultStand.data(forKey: USER_KEY) else {

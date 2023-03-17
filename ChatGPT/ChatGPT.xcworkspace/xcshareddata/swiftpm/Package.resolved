@@ -8,6 +8,24 @@
         "revision" : "aeb19b0d5739fd6e3f568ccdb93376827e3cde0e",
         "version" : "1.2.0"
       }
+    },
+    {
+      "identity" : "splash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/Splash",
+      "state" : {
+        "branch" : "master",
+        "revision" : "2e3f17c2d09689c8bf175c4a84ff7f2ad3353301"
+      }
+    },
+    {
+      "identity" : "swift-markdown-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4392c3cefd08db10f13ffb019d7c7a4a622824f5"
+      }
     }
   ],
   "version" : 2

@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct HomeView: View {
-  @StateObject var viewModel: UserViewModel = UserViewModel()
+  @StateObject var userViewModel: UserViewModel = UserViewModel()
   @StateObject var messageViewModel: MessageViewModel = MessageViewModel()
   @State var selectionTab: HomeTab = .chat
   
   var body: some View {
     TabView(selection: $selectionTab) {
-      ChatMainView(viewModel: messageViewModel, avatar: viewModel.user.avatar)
+      ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
         .tabItem {
           Label("Chat", systemImage: "message.fill")
         }
         .tag(HomeTab.chat)
-      ProfileMainView(viewModel: viewModel, initTokenCallback: messageViewModel.initOpenAI)
+      ProfileMainView(viewModel: userViewModel, initToken: messageViewModel.initOpenAI)
         .tabItem {
           Label("Me", systemImage: "person.fill")
         }

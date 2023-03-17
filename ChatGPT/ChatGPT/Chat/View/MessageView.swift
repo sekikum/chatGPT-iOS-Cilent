@@ -5,25 +5,28 @@
 //  Created by Wenyan Zhao on 2023/3/6.
 //
 
-import Foundation
 import SwiftUI
+import Splash
+import MarkdownUI
 
 struct MessageView: View {
+  @Environment(\.colorScheme) private var colorScheme
   let userAvatar: String
   let message: MessageModel
   let avatarSize: CGFloat = 50
   let textCornerRadius: CGFloat = 10
   let padding: CGFloat = 15
-
+  
   var body: some View {
     HStack(alignment: .top) {
       if message.isUser == true {
         Spacer()
-        Text(message.message)
+        Markdown(message.message)
           .padding()
           .background(Color("Blue"))
           .cornerRadius(10)
           .padding(.leading, padding)
+          .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         Image(userAvatar)
           .resizable()
           .scaledToFit()
@@ -35,13 +38,23 @@ struct MessageView: View {
           .scaledToFit()
           .frame(width: avatarSize, height: avatarSize)
           .padding(.leading, padding)
-        Text(message.message)
+        Markdown(message.message)
           .padding()
           .background(Color("Gray"))
           .cornerRadius(textCornerRadius)
           .padding(.trailing, padding)
+          .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         Spacer()
       }
+    }
+  }
+  
+  private var theme: Splash.Theme {
+    switch self.colorScheme {
+    case .dark:
+      return .wwdc17(withFont: .init(size: 16))
+    default:
+      return .sunset(withFont: .init(size: 16))
     }
   }
 }
