@@ -38,7 +38,7 @@ struct InputView: View {
             ProgressView()
           }
         }
-        .disabled(isShowLoading)
+        .disabled(isShowLoading || noTokenAdded)
       Button("clear", action: clear)
         .buttonStyle(.borderedProminent)
     }
