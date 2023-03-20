@@ -26,6 +26,7 @@ struct MessageView: View {
           .background(Color("Blue"))
           .cornerRadius(10)
           .padding(.leading, padding)
+          .textSelection(.enabled)
           .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         Image(userAvatar)
           .resizable()
@@ -43,6 +44,7 @@ struct MessageView: View {
           .background(Color("Gray"))
           .cornerRadius(textCornerRadius)
           .padding(.trailing, padding)
+          .textSelection(.enabled)
           .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         Spacer()
       }
