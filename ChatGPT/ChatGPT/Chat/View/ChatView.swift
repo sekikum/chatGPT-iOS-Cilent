@@ -24,6 +24,7 @@ struct ChatView: View {
               .id(message.id)
           }
         }
+        .frame(width: UIScreen.main.bounds.size.width)
       }
       .onReceive(keyboardPublisher) { value in
         if value {
