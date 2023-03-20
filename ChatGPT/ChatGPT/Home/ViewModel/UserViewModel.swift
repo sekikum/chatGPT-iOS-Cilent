@@ -23,4 +23,18 @@ class UserViewModel: ObservableObject {
       await StorageManager.storeUser(user)
     }
   }
+  
+  func deleteToken(_ token: String) {
+    user.tokenList = user.tokenList.filter { $0 != token }
+    if user.tokenSelect == token {
+      if user.tokenList.count == 0 {
+        user.tokenSelect = ""
+      } else {
+        user.tokenSelect = user.tokenList[0]
+      }
+    }
+    Task {
+      await StorageManager.storeUser(user)
+    }
+  }
 }
