@@ -15,7 +15,9 @@ struct MessageView: View {
   let message: MessageModel
   let avatarSize: CGFloat = 50
   let textCornerRadius: CGFloat = 10
+  let avatarCornerRadius: CGFloat = 5
   let padding: CGFloat = 15
+  let fontSize: Double = 16
   
   var body: some View {
     HStack(alignment: .top) {
@@ -24,18 +26,21 @@ struct MessageView: View {
         Markdown(message.message)
           .padding()
           .background(Color("Blue"))
-          .cornerRadius(10)
+          .cornerRadius(textCornerRadius)
           .padding(.leading, padding)
+          .textSelection(.enabled)
           .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         Image(userAvatar)
           .resizable()
           .scaledToFit()
+          .cornerRadius(avatarCornerRadius)
           .frame(width: avatarSize, height: avatarSize)
           .padding(.trailing, padding)
       } else {
         Image("Profile-ChatGPT")
           .resizable()
           .scaledToFit()
+          .cornerRadius(avatarCornerRadius)
           .frame(width: avatarSize, height: avatarSize)
           .padding(.leading, padding)
         Markdown(message.message)
@@ -43,6 +48,7 @@ struct MessageView: View {
           .background(Color("Gray"))
           .cornerRadius(textCornerRadius)
           .padding(.trailing, padding)
+          .textSelection(.enabled)
           .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         Spacer()
       }
@@ -52,9 +58,9 @@ struct MessageView: View {
   private var theme: Splash.Theme {
     switch self.colorScheme {
     case .dark:
-      return .wwdc17(withFont: .init(size: 16))
+      return .wwdc17(withFont: .init(size: fontSize))
     default:
-      return .sunset(withFont: .init(size: 16))
+      return .sunset(withFont: .init(size: fontSize))
     }
   }
 }
