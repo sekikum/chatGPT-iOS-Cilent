@@ -23,11 +23,22 @@ class MessageViewModel: ObservableObject {
     openAI = OpenAIServer(authToken: token)
   }
   
-  func sendMessage(_ message: String) {
+  func sendMessage(_ message: String, _ modelString: String) {
+    var model: OpenAIModel
+    
     if message.isEmpty {
       isShowAlert = true
       alertInfo = "Message cannot be empty"
       return
+    }
+    
+    switch(modelString) {
+    case "gpt-3.5-0310":
+      model = .chat(.chatgpt0301)
+    case "gpt-3.5":
+      model = .chat(.chatgpt)
+    default:
+      model = .chat(.chatgpt)
     }
     
     messageItems.append(MessageModel(message: message, isUser: true))
@@ -35,7 +46,7 @@ class MessageViewModel: ObservableObject {
     chatMessageItems.append(chatMessageUser)
     isShowLoading = true
     
-    openAI.sendChat(with: chatMessageItems) { result in
+    openAI.sendChat(with: chatMessageItems, model: model) { result in
       switch(result) {
       case .failure:
         DispatchQueue.main.async {

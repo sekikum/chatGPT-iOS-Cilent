@@ -13,10 +13,10 @@ struct StorageManager {
 
   static func restoreUser() -> UserModel {
     guard let data = defaultStand.data(forKey: USER_KEY) else {
-      return UserModel(avatar: "Profile-Diu", nickname: "sekikum", tokenList: [], tokenSelect: "")
+      return UserModel(avatar: "Profile-Diu", nickname: "sekikum", tokenList: [], tokenSelect: "", modelSelect: "")
     }
     guard let user = try? PropertyListDecoder().decode(UserModel.self, from: data) else {
-      return UserModel(avatar: "Profile-Diu", nickname: "sekikum", tokenList: [], tokenSelect: "")
+      return UserModel(avatar: "Profile-Diu", nickname: "sekikum", tokenList: [], tokenSelect: "", modelSelect: "")
     }
     return user
   }
