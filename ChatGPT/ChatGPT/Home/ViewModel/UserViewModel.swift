@@ -15,9 +15,13 @@ class UserViewModel: ObservableObject {
   }
   
   func addToken(_ token: String) {
-    user.tokenList.append(token)
-    if user.tokenList.count == 1 {
-      user.tokenSelect = user.tokenList[0]
+    if user.tokenList.contains(token) {
+      user.tokenSelect = token
+    } else {
+      user.tokenList.append(token)
+      if user.tokenList.count == 1 {
+        user.tokenSelect = user.tokenList[0]
+      }
     }
     Task {
       await StorageManager.storeUser(user)
