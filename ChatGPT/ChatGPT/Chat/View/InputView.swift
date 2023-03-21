@@ -22,7 +22,7 @@ struct InputView: View {
   
   var body: some View {
     HStack {
-      TextField(noTokenAdded ? "Please add token on 'me'" : "", text: $textfieldText, axis: .vertical)
+      TextField(noTokenAdded ? "Please add token on 'me'" : "Input your message", text: $textfieldText, axis: .vertical)
         .disabled(noTokenAdded)
         .lineLimit(textFieldLimit)
         .padding(padding)
