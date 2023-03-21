@@ -6,14 +6,13 @@
 //
 
 import Foundation
-import OpenAISwift
 
 class MessageViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
-  var openAI = OpenAISwift(authToken: "")
+  var openAI = OpenAIServer(authToken: "")
   var chatMessageItems: [ChatMessage] = []
   
   init() {
@@ -21,7 +20,7 @@ class MessageViewModel: ObservableObject {
   }
   
   func initOpenAI(_ token: String) {
-    openAI = OpenAISwift(authToken: token)
+    openAI = OpenAIServer(authToken: token)
   }
   
   func sendMessage(_ message: String) {

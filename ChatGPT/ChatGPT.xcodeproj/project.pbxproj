@@ -28,6 +28,13 @@
 		849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C653F29C00C4800AC8E68 /* ProfileViewModel.swift */; };
 		849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */; };
 		849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C655729C078CA00AC8E68 /* StoreManager.swift */; };
+		84E8457829C970B00049D5FA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 84E8457729C970B00049D5FA /* Alamofire */; };
+		84E8457A29C970CF0049D5FA /* OpenAIServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457929C970CF0049D5FA /* OpenAIServer.swift */; };
+		84E8457C29C970F80049D5FA /* OpenAIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */; };
+		84E8457E29C977CB0049D5FA /* OpenAIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457D29C977CB0049D5FA /* OpenAIModel.swift */; };
+		84E8458029C980BF0049D5FA /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457F29C980BF0049D5FA /* Command.swift */; };
+		84E8458229C981420049D5FA /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8458129C981420049D5FA /* OpenAI.swift */; };
+		84E8458429C981940049D5FA /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8458329C981940049D5FA /* ChatMessage.swift */; };
 		84F9670129C3FC9B006DD8A3 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 84F9670029C3FC9B006DD8A3 /* MarkdownUI */; };
 		84F9670429C3FCEF006DD8A3 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = 84F9670329C3FCEF006DD8A3 /* Splash */; };
 		84F9670629C3FCEF006DD8A3 /* SplashMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = 84F9670529C3FCEF006DD8A3 /* SplashMarkdown */; };
@@ -72,6 +79,12 @@
 		849C654529C0137100AC8E68 /* ChatGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTest.swift; sourceTree = "<group>"; };
 		849C655729C078CA00AC8E68 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		84E8457929C970CF0049D5FA /* OpenAIServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIServer.swift; sourceTree = "<group>"; };
+		84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEndpoint.swift; sourceTree = "<group>"; };
+		84E8457D29C977CB0049D5FA /* OpenAIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIModel.swift; sourceTree = "<group>"; };
+		84E8457F29C980BF0049D5FA /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		84E8458129C981420049D5FA /* OpenAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
+		84E8458329C981940049D5FA /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		84F9670829C3FD5A006DD8A3 /* SplashCodeSyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCodeSyntaxHighlighter.swift; sourceTree = "<group>"; };
 		84F9670A29C3FD68006DD8A3 /* TextOutputFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOutputFormat.swift; sourceTree = "<group>"; };
 		8AE6CD8D403D9BDA62EFC9CE /* Pods-ChatGPT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatGPT.release.xcconfig"; path = "Target Support Files/Pods-ChatGPT/Pods-ChatGPT.release.xcconfig"; sourceTree = "<group>"; };
@@ -85,6 +98,7 @@
 				84F9670629C3FCEF006DD8A3 /* SplashMarkdown in Frameworks */,
 				84F9670129C3FC9B006DD8A3 /* MarkdownUI in Frameworks */,
 				84F9670429C3FCEF006DD8A3 /* Splash in Frameworks */,
+				84E8457829C970B00049D5FA /* Alamofire in Frameworks */,
 				847A26EA29B74024006F6B34 /* OpenAISwift in Frameworks */,
 				BD23DAD78F36F6C5F5D57035 /* Pods_ChatGPT.framework in Frameworks */,
 			);
@@ -172,6 +186,7 @@
 		847A26F029B9B165006F6B34 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				84E8457529C96E160049D5FA /* Server */,
 				84F9670729C3FD30006DD8A3 /* SyntaxHighlighter */,
 				846729EA29B57ECD00B85594 /* View */,
 				846729F229B5B60800B85594 /* Model */,
@@ -332,6 +347,27 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		84E8457529C96E160049D5FA /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				84E8458529C9912B0049D5FA /* Model */,
+				84E8457929C970CF0049D5FA /* OpenAIServer.swift */,
+				84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		84E8458529C9912B0049D5FA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84E8458329C981940049D5FA /* ChatMessage.swift */,
+				84E8458129C981420049D5FA /* OpenAI.swift */,
+				84E8457F29C980BF0049D5FA /* Command.swift */,
+				84E8457D29C977CB0049D5FA /* OpenAIModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		84F9670729C3FD30006DD8A3 /* SyntaxHighlighter */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +408,7 @@
 				84F9670029C3FC9B006DD8A3 /* MarkdownUI */,
 				84F9670329C3FCEF006DD8A3 /* Splash */,
 				84F9670529C3FCEF006DD8A3 /* SplashMarkdown */,
+				84E8457729C970B00049D5FA /* Alamofire */,
 			);
 			productName = ChatGPT;
 			productReference = 8492CD7129B1D93C00187E3C /* ChatGPT.app */;
@@ -427,6 +464,7 @@
 				847A26E829B74024006F6B34 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
 				84F966FF29C3FC9B006DD8A3 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				84F9670229C3FCEF006DD8A3 /* XCRemoteSwiftPackageReference "Splash" */,
+				84E8457629C970B00049D5FA /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 8492CD7229B1D93C00187E3C /* Products */;
 			projectDirPath = "";
@@ -489,22 +527,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				847A26F429B9B35A006F6B34 /* ChatMainView.swift in Sources */,
+				84E8457C29C970F80049D5FA /* OpenAIEndpoint.swift in Sources */,
 				846729EE29B592FC00B85594 /* ChatView.swift in Sources */,
 				847A26E729B71BF4006F6B34 /* KeyBoardPublisher.swift in Sources */,
 				84F9670B29C3FD68006DD8A3 /* TextOutputFormat.swift in Sources */,
 				846729EC29B57EEA00B85594 /* InputView.swift in Sources */,
 				846729FF29B5EBCF00B85594 /* MessageViewModel.swift in Sources */,
+				84E8458429C981940049D5FA /* ChatMessage.swift in Sources */,
+				84E8457A29C970CF0049D5FA /* OpenAIServer.swift in Sources */,
 				846729F629B5B62800B85594 /* MessageModel.swift in Sources */,
 				849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */,
 				847A270629B9C125006F6B34 /* ProfileHeaderView.swift in Sources */,
+				84E8458029C980BF0049D5FA /* Command.swift in Sources */,
 				84F9670929C3FD5A006DD8A3 /* SplashCodeSyntaxHighlighter.swift in Sources */,
 				8492CD7729B1D93C00187E3C /* HomeView.swift in Sources */,
+				84E8457E29C977CB0049D5FA /* OpenAIModel.swift in Sources */,
 				847A270129B9BD1F006F6B34 /* UserViewModel.swift in Sources */,
 				846729F829B5B78100B85594 /* MessageView.swift in Sources */,
 				8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */,
 				849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */,
 				847A26F729B9B592006F6B34 /* ProfileMainView.swift in Sources */,
 				847A26FF29B9BCEB006F6B34 /* UserModel.swift in Sources */,
+				84E8458229C981420049D5FA /* OpenAI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +825,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		84E8457629C970B00049D5FA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		84F966FF29C3FC9B006DD8A3 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
@@ -804,6 +856,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 847A26E829B74024006F6B34 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
 			productName = OpenAISwift;
+		};
+		84E8457729C970B00049D5FA /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84E8457629C970B00049D5FA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		84F9670029C3FC9B006DD8A3 /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;
