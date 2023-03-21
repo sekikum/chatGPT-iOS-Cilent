@@ -14,6 +14,7 @@ struct ProfileMainView: View {
   @State var isShowDeleteAlert: Bool = false
   @State var deletedToken: String = ""
   let profileViewModel: ProfileViewModel = ProfileViewModel()
+  let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
   let initToken: (String) -> Void
   let tokenLineLimit: Int = 1
   
@@ -21,6 +22,19 @@ struct ProfileMainView: View {
     List {
       Section {
         ProfileHeaderView(avatar: viewModel.user.avatar, nickname: viewModel.user.nickname)
+      }
+      
+      Section {
+        Picker("chose gpt model", selection: $viewModel.user.modelSelect) {
+          ForEach(models, id: \.self) { model in
+            Text(model)
+          }
+        }
+        .onChange(of: viewModel.user.modelSelect) { _ in
+          Task {
+            await StorageManager.storeUser(viewModel.user)
+          }
+        }
       }
       
       Section(viewModel.user.tokenList.isEmpty ? "No token added" : "Choose a token\n(Long press token to delete)") {
