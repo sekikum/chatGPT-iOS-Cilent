@@ -11,7 +11,8 @@ struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
   @State var tokenText: String = ""
   @State var baseURLText: String = ""
-  @State var isShowEmptyAlert: Bool = false
+  @State var isShowTokenEmptyAlert: Bool = false
+  @State var isShowBaseURLEmptyAlert: Bool = false
   @State var isShowDeleteAlert: Bool = false
   @State var deletedToken: String = ""
   let profileViewModel: ProfileViewModel = ProfileViewModel()
@@ -43,7 +44,7 @@ struct ProfileMainView: View {
           TextField(viewModel.user.baseURL.isEmpty ?  "input your baseURL" : viewModel.user.baseURL, text: $baseURLText)
           Button("Done", action: addBaseURL)
           .buttonStyle(.borderedProminent)
-          .alert("token cannot be empty", isPresented: $isShowEmptyAlert) {
+          .alert("baseURL cannot be empty", isPresented: $isShowBaseURLEmptyAlert) {
             Button("OK", role: .cancel) { }
           }
         }
@@ -89,7 +90,7 @@ struct ProfileMainView: View {
             .onSubmit(addNewToken)
           Button("add", action: addNewToken)
             .buttonStyle(.borderedProminent)
-            .alert("token cannot be empty", isPresented: $isShowEmptyAlert) {
+            .alert("token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
               Button("OK", role: .cancel) { }
             }
         }
@@ -100,7 +101,7 @@ struct ProfileMainView: View {
   
   func addNewToken() {
     if profileViewModel.isWhitespaceString(tokenText) {
-      isShowEmptyAlert = true
+      isShowTokenEmptyAlert = true
       return
     }
     viewModel.addToken(tokenText)
@@ -115,7 +116,7 @@ struct ProfileMainView: View {
   
   func addBaseURL() {
     if profileViewModel.isWhitespaceString(baseURLText) {
-      isShowEmptyAlert = true
+      isShowBaseURLEmptyAlert = true
       return
     }
     viewModel.addBaseURL(baseURLText)
