@@ -10,16 +10,18 @@ import SwiftUI
 struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
   @State var tokenText: String = ""
-  @State var baseURLText: String = ""
+  @State var baseURLText: String = StorageManager.restoreUser().baseURL
   @State var isShowTokenEmptyAlert: Bool = false
   @State var isShowBaseURLAlert: Bool = false
   @State var isShowDeleteAlert: Bool = false
   @State var deletedToken: String = ""
   @State var urlAlertText: String = ""
+  @State var isToggleOn: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
   let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
   let initToken: (String) -> Void
   let tokenLineLimit: Int = 1
+  let toggleWidth: CGFloat = 50
   
   var body: some View {
     List {
@@ -42,16 +44,24 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField(viewModel.user.baseURL.isEmpty ?  "input your baseURL" : viewModel.user.baseURL, text: $baseURLText)
+          TextField("input your baseURL", text: $baseURLText)
             .disableAutocorrection(true)
             .autocapitalization(.none)
-          Button("Done", action: addBaseURL)
-            .buttonStyle(.borderedProminent)
+            .onTapGesture {
+              isToggleOn = false
+            }
+          Toggle("", isOn: $isToggleOn)
+            .onChange(of: isToggleOn) { isOn in
+              if isOn {
+                addBaseURL()
+              } else {
+                clearBaseURL()
+              }
+            }
             .alert(urlAlertText, isPresented: $isShowBaseURLAlert) {
               Button("OK", role: .cancel) { }
             }
-          Button("Clear", action: viewModel.clearBaseURL)
-            .buttonStyle(.borderedProminent)
+            .frame(width: toggleWidth)
         }
       }
       
@@ -126,15 +136,22 @@ extension ProfileMainView {
   
   func addBaseURL() {
     let url = profileViewModel.trimString(baseURLText)
-    if !profileViewModel.isValidURL(url) {
+    baseURLText = url
+    if url.isEmpty {
+      isToggleOn = false
+    } else if !profileViewModel.isValidURL(url) {
       isShowBaseURLAlert = true
+      isToggleOn = false
       urlAlertText = "baseURL illegal"
       baseURLText = ""
-      return
+    } else {
+      viewModel.addBaseURL(baseURLText)
     }
-    viewModel.addBaseURL(baseURLText)
-    baseURLText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+  }
+  
+  func clearBaseURL() {
+    viewModel.addBaseURL("")
   }
 }
 
