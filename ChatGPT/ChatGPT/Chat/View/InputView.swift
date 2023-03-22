@@ -12,7 +12,6 @@ struct InputView: View {
   @Binding var isShowAlert: Bool
   let alertInfo: String
   let send: (String, String) -> Void
-  let clear: () -> Void
   let isShowLoading: Bool
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
@@ -22,6 +21,7 @@ struct InputView: View {
   
   var body: some View {
     HStack {
+      Spacer()
       TextField(noTokenAdded ? "Please add token on 'me'" : "Input your message", text: $textfieldText, axis: .vertical)
         .disabled(noTokenAdded)
         .lineLimit(textFieldLimit)
@@ -42,8 +42,7 @@ struct InputView: View {
           }
         }
         .disabled(isShowLoading || noTokenAdded)
-      Button("clear", action: clear)
-        .buttonStyle(.borderedProminent)
+      Spacer()
     }
   }
   
@@ -56,6 +55,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_,_  in }, clear: { }, isShowLoading: false)
+    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_,_  in }, isShowLoading: false)
   }
 }
