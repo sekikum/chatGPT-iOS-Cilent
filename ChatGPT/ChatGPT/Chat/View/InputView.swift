@@ -29,6 +29,8 @@ struct InputView: View {
         .background(Color("Gray"))
         .cornerRadius(cornerRadius)
         .keyboardType(.default)
+        .disableAutocorrection(true)
+        .autocapitalization(.none)
       Button("send", action: sendMessageAction)
         .buttonStyle(.borderedProminent)
         .alert(alertInfo, isPresented: $isShowAlert) {
