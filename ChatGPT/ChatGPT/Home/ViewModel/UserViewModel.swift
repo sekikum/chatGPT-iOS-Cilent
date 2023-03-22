@@ -48,4 +48,11 @@ class UserViewModel: ObservableObject {
       await StorageManager.storeUser(user)
     }
   }
+  
+  func clearBaseURL() {
+    user.baseURL = ""
+    Task {
+      await StorageManager.storeUser(user)
+    }
+  }
 }
