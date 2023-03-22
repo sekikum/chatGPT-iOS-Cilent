@@ -47,6 +47,8 @@ struct ProfileMainView: View {
           .alert("baseURL cannot be empty", isPresented: $isShowBaseURLEmptyAlert) {
             Button("OK", role: .cancel) { }
           }
+          Button("Clear", action: viewModel.clearBaseURL)
+            .buttonStyle(.borderedProminent)
         }
       }
       
