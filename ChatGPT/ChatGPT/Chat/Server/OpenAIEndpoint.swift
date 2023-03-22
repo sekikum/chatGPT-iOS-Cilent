@@ -38,7 +38,11 @@ extension OpenAIEndpoint {
   func baseURL() -> String {
     switch self {
     case .completions, .edits, .chat, .image:
-      return "https://api.openai.com"
+      let baseURL = StorageManager.restoreUser().baseURL
+      if baseURL.isEmpty {
+        return "https://api.openai.com"
+      }
+      return baseURL
     }
   }
 }

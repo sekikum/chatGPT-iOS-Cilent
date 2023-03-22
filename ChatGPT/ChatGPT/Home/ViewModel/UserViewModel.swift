@@ -41,4 +41,11 @@ class UserViewModel: ObservableObject {
       await StorageManager.storeUser(user)
     }
   }
+  
+  func addBaseURL(_ url: String) {
+    user.baseURL = url
+    Task {
+      await StorageManager.storeUser(user)
+    }
+  }
 }

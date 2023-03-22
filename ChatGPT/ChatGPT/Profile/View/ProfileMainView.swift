@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
-  @State var textfieldText: String = ""
+  @State var tokenText: String = ""
+  @State var baseURLText: String = ""
   @State var isShowEmptyAlert: Bool = false
   @State var isShowDeleteAlert: Bool = false
   @State var deletedToken: String = ""
@@ -33,6 +34,17 @@ struct ProfileMainView: View {
         .onChange(of: viewModel.user.modelSelect) { _ in
           Task {
             await StorageManager.storeUser(viewModel.user)
+          }
+        }
+      }
+      
+      Section {
+        HStack {
+          TextField(viewModel.user.baseURL.isEmpty ?  "input your baseURL" : viewModel.user.baseURL, text: $baseURLText)
+          Button("Done", action: addBaseURL)
+          .buttonStyle(.borderedProminent)
+          .alert("token cannot be empty", isPresented: $isShowEmptyAlert) {
+            Button("OK", role: .cancel) { }
           }
         }
       }
@@ -71,7 +83,7 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField("input new token", text: $textfieldText)
+          TextField("input new token", text: $tokenText)
             .keyboardType(.default)
             .submitLabel(.done)
             .onSubmit(addNewToken)
@@ -87,18 +99,28 @@ struct ProfileMainView: View {
   }
   
   func addNewToken() {
-    if textfieldText.isEmpty {
+    if profileViewModel.isWhitespaceString(tokenText) {
       isShowEmptyAlert = true
       return
     }
-    viewModel.addToken(textfieldText)
-    textfieldText = ""
+    viewModel.addToken(tokenText)
+    tokenText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
   
   func deleteToken() {
     viewModel.deleteToken(deletedToken)
     deletedToken = ""
+  }
+  
+  func addBaseURL() {
+    if profileViewModel.isWhitespaceString(baseURLText) {
+      isShowEmptyAlert = true
+      return
+    }
+    viewModel.addBaseURL(baseURLText)
+    baseURLText = ""
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
 }
 
