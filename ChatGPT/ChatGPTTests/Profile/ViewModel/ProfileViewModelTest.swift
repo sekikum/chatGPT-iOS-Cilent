@@ -21,21 +21,19 @@ final class ProfileViewModelTests: XCTestCase {
     XCTAssertEqual(ProfileViewModel().maskToken("jklqwer"), "j****r")
   }
   
-  func test_given_string_only_have_whitespace_and_newline_when_call_isWhitespaceString_then_get_true() throws {
-    XCTAssertEqual(ProfileViewModel().isWhitespaceString("  \n  \n  "), true)
-  }
-  
-  func test_given_normal_string_when_call_isWhitespaceString_then_get_false() throws {
-    XCTAssertEqual(ProfileViewModel().isWhitespaceString("https:"), false)
-  }
-  
   func test_given_normal_url_string_when_call_isValidURL_then_get_true() throws {
     XCTAssertEqual(ProfileViewModel().isValidURL("https://sekikum.cc:8080"), true)
-
   }
   
   func test_given_illegal_url_string_when_call_isValidURL_then_get_false() throws {
     XCTAssertEqual(ProfileViewModel().isValidURL("https://sekikum.cc:808 0"), false)
-
+  }
+  
+  func test_given_normal_url_string_when_call_trimString_then_get_itself() throws {
+    XCTAssertEqual(ProfileViewModel().trimString("https://sekikum.cc:8080"), "https://sekikum.cc:8080")
+  }
+  
+  func test_given_whiteSpace_and_newline_begin_url_string_when_call_trimString_then_get_itself() throws {
+    XCTAssertEqual(ProfileViewModel().trimString("  \n https://sekikum.cc:8080  "), "https://sekikum.cc:8080")
   }
 }

@@ -21,9 +21,8 @@ struct ProfileViewModel {
     return maskToken
   }
   
-  func isWhitespaceString(_ str: String) -> Bool {
-    let whitespace = CharacterSet.whitespacesAndNewlines
-    return str.trimmingCharacters(in: whitespace).isEmpty
+  func trimString(_ string: String) -> String {
+    return string.trimmingCharacters(in: .whitespacesAndNewlines)
   }
   
   func isValidURL(_ url: String) -> Bool {

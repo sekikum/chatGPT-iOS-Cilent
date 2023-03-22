@@ -12,7 +12,7 @@ struct ProfileMainView: View {
   @State var tokenText: String = ""
   @State var baseURLText: String = ""
   @State var isShowTokenEmptyAlert: Bool = false
-  @State var isShowBaseURLEmptyAlert: Bool = false
+  @State var isShowBaseURLAlert: Bool = false
   @State var isShowDeleteAlert: Bool = false
   @State var deletedToken: String = ""
   @State var urlAlertText: String = ""
@@ -46,10 +46,10 @@ struct ProfileMainView: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
           Button("Done", action: addBaseURL)
-          .buttonStyle(.borderedProminent)
-          .alert(urlAlertText, isPresented: $isShowBaseURLEmptyAlert) {
-            Button("OK", role: .cancel) { }
-          }
+            .buttonStyle(.borderedProminent)
+            .alert(urlAlertText, isPresented: $isShowBaseURLAlert) {
+              Button("OK", role: .cancel) { }
+            }
           Button("Clear", action: viewModel.clearBaseURL)
             .buttonStyle(.borderedProminent)
         }
@@ -109,8 +109,9 @@ struct ProfileMainView: View {
 
 extension ProfileMainView {
   func addNewToken() {
-    if profileViewModel.isWhitespaceString(tokenText) {
+    if profileViewModel.trimString(tokenText).isEmpty {
       isShowTokenEmptyAlert = true
+      tokenText = ""
       return
     }
     viewModel.addToken(tokenText)
@@ -124,14 +125,9 @@ extension ProfileMainView {
   }
   
   func addBaseURL() {
-    if profileViewModel.isWhitespaceString(baseURLText) {
-      isShowBaseURLEmptyAlert = true
-      urlAlertText = "baseURL cannot be empty"
-      baseURLText = ""
-      return
-    }
-    if !profileViewModel.isValidURL(baseURLText) {
-      isShowBaseURLEmptyAlert = true
+    let url = profileViewModel.trimString(baseURLText)
+    if !profileViewModel.isValidURL(url) {
+      isShowBaseURLAlert = true
       urlAlertText = "baseURL illegal"
       baseURLText = ""
       return
