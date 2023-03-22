@@ -48,7 +48,7 @@ extension OpenAIServer {
         completionHandler(.failure(error))
         
       } else if let data = response.data {
-          completionHandler(.success(data))
+        completionHandler(.success(data))
       }
     }
   }
