@@ -98,7 +98,9 @@ struct ProfileMainView: View {
     }
     .scrollDismissesKeyboard(.immediately)
   }
-  
+}
+
+extension ProfileMainView {
   func addNewToken() {
     if profileViewModel.isWhitespaceString(tokenText) {
       isShowTokenEmptyAlert = true
