@@ -28,4 +28,14 @@ final class ProfileViewModelTests: XCTestCase {
   func test_given_normal_string_when_call_isWhitespaceString_then_get_false() throws {
     XCTAssertEqual(ProfileViewModel().isWhitespaceString("https:"), false)
   }
+  
+  func test_given_normal_url_string_when_call_isValidURL_then_get_true() throws {
+    XCTAssertEqual(ProfileViewModel().isValidURL("https://sekikum.cc:8080"), true)
+
+  }
+  
+  func test_given_illegal_url_string_when_call_isValidURL_then_get_false() throws {
+    XCTAssertEqual(ProfileViewModel().isValidURL("https://sekikum.cc:808 0"), false)
+
+  }
 }

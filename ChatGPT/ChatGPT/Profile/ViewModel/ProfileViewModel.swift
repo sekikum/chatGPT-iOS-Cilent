@@ -22,7 +22,13 @@ struct ProfileViewModel {
   }
   
   func isWhitespaceString(_ str: String) -> Bool {
-      let whitespace = CharacterSet.whitespacesAndNewlines
-      return str.trimmingCharacters(in: whitespace).isEmpty
+    let whitespace = CharacterSet.whitespacesAndNewlines
+    return str.trimmingCharacters(in: whitespace).isEmpty
+  }
+  
+  func isValidURL(_ url: String) -> Bool {
+    let urlRegex = #"^(https?|ftp)://[^\s/$.?#].[^\s]*$"# // 正则表达式
+    let predicate = NSPredicate(format:"SELF MATCHES %@", urlRegex)
+    return predicate.evaluate(with: url)
   }
 }
