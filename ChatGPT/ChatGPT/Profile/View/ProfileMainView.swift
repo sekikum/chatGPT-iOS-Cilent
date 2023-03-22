@@ -15,6 +15,7 @@ struct ProfileMainView: View {
   @State var isShowBaseURLEmptyAlert: Bool = false
   @State var isShowDeleteAlert: Bool = false
   @State var deletedToken: String = ""
+  @State var urlAlertText: String = ""
   let profileViewModel: ProfileViewModel = ProfileViewModel()
   let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
   let initToken: (String) -> Void
@@ -46,7 +47,7 @@ struct ProfileMainView: View {
             .autocapitalization(.none)
           Button("Done", action: addBaseURL)
           .buttonStyle(.borderedProminent)
-          .alert("baseURL cannot be empty", isPresented: $isShowBaseURLEmptyAlert) {
+          .alert(urlAlertText, isPresented: $isShowBaseURLEmptyAlert) {
             Button("OK", role: .cancel) { }
           }
           Button("Clear", action: viewModel.clearBaseURL)
@@ -125,6 +126,14 @@ extension ProfileMainView {
   func addBaseURL() {
     if profileViewModel.isWhitespaceString(baseURLText) {
       isShowBaseURLEmptyAlert = true
+      urlAlertText = "baseURL cannot be empty"
+      baseURLText = ""
+      return
+    }
+    if !profileViewModel.isValidURL(baseURLText) {
+      isShowBaseURLEmptyAlert = true
+      urlAlertText = "baseURL illegal"
+      baseURLText = ""
       return
     }
     viewModel.addBaseURL(baseURLText)
