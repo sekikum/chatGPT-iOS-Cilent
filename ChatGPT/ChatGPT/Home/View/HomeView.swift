@@ -23,6 +23,7 @@ struct HomeView: View {
         .tabItem {
           Label("Image", systemImage: "photo.circle.fill")
         }
+        .tag(HomeTab.image)
       ProfileMainView(viewModel: userViewModel, initToken: messageViewModel.initOpenAI)
         .tabItem {
           Label("Me", systemImage: "person.fill")
@@ -35,6 +36,7 @@ struct HomeView: View {
 enum HomeTab {
   case chat
   case me
+  case image
 }
 
 struct HomeView_Previews: PreviewProvider {
