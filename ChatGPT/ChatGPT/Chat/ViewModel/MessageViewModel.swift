@@ -6,14 +6,13 @@
 //
 
 import Foundation
-import OpenAISwift
 
 class MessageViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
-  var openAI = OpenAISwift(authToken: "")
+  var openAI = OpenAIServer(authToken: "")
   var chatMessageItems: [ChatMessage] = []
   
   init() {
@@ -21,14 +20,25 @@ class MessageViewModel: ObservableObject {
   }
   
   func initOpenAI(_ token: String) {
-    openAI = OpenAISwift(authToken: token)
+    openAI = OpenAIServer(authToken: token)
   }
   
-  func sendMessage(_ message: String) {
+  func sendMessage(_ message: String, _ modelString: String) {
+    var model: OpenAIModel
+    
     if message.isEmpty {
       isShowAlert = true
       alertInfo = "Message cannot be empty"
       return
+    }
+    
+    switch(modelString) {
+    case "gpt-3.5-0310":
+      model = .chat(.chatgpt0301)
+    case "gpt-3.5":
+      model = .chat(.chatgpt)
+    default:
+      model = .chat(.chatgpt)
     }
     
     messageItems.append(MessageModel(message: message, isUser: true))
@@ -36,13 +46,13 @@ class MessageViewModel: ObservableObject {
     chatMessageItems.append(chatMessageUser)
     isShowLoading = true
     
-    openAI.sendChat(with: chatMessageItems) { result in
+    openAI.sendChat(with: chatMessageItems, model: model) { result in
       switch(result) {
       case .failure:
         DispatchQueue.main.async {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = "Please choose the correct token"
+          self.alertInfo = "Please choose the correct token and baseURL"
         }
       case .success(let success):
         DispatchQueue.main.async {

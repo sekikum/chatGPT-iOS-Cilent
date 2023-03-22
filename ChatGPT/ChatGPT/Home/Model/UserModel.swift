@@ -12,4 +12,6 @@ struct UserModel: Codable {
   var nickname: String
   var tokenList: [String]
   var tokenSelect: String
+  var modelSelect: String
+  var baseURL: String
 }

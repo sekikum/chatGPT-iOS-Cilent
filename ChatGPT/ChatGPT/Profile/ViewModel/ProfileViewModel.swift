@@ -20,4 +20,15 @@ struct ProfileViewModel {
     let maskToken = String(token.prefix(number)) + format + String(token.suffix(number))
     return maskToken
   }
+  
+  func trimString(_ string: String) -> String {
+    return string.trimmingCharacters(in: .whitespacesAndNewlines)
+  }
+  
+  func isValidURL(_ url: String) -> Bool {
+    if let _ = URL(string: url) {
+      return true
+    }
+    return false
+  }
 }

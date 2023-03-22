@@ -9,18 +9,60 @@ import SwiftUI
 
 struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
-  @State var textfieldText: String = ""
-  @State var isShowEmptyAlert: Bool = false
+  @State var tokenText: String = ""
+  @State var baseURLText: String = StorageManager.restoreUser().baseURL
+  @State var isShowTokenEmptyAlert: Bool = false
+  @State var isShowBaseURLAlert: Bool = false
   @State var isShowDeleteAlert: Bool = false
   @State var deletedToken: String = ""
+  @State var urlAlertText: String = ""
+  @State var isToggleOn: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
+  let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
   let initToken: (String) -> Void
   let tokenLineLimit: Int = 1
+  let toggleWidth: CGFloat = 50
   
   var body: some View {
     List {
       Section {
         ProfileHeaderView(avatar: viewModel.user.avatar, nickname: viewModel.user.nickname)
+      }
+      
+      Section {
+        Picker("chose gpt model", selection: $viewModel.user.modelSelect) {
+          ForEach(models, id: \.self) { model in
+            Text(model)
+          }
+        }
+        .onChange(of: viewModel.user.modelSelect) { _ in
+          Task {
+            await StorageManager.storeUser(viewModel.user)
+          }
+        }
+      }
+      
+      Section {
+        HStack {
+          TextField("input your baseURL", text: $baseURLText)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .onTapGesture {
+              isToggleOn = false
+            }
+          Toggle("", isOn: $isToggleOn)
+            .onChange(of: isToggleOn) { isOn in
+              if isOn {
+                addBaseURL()
+              } else {
+                clearBaseURL()
+              }
+            }
+            .alert(urlAlertText, isPresented: $isShowBaseURLAlert) {
+              Button("OK", role: .cancel) { }
+            }
+            .frame(width: toggleWidth)
+        }
       }
       
       Section(viewModel.user.tokenList.isEmpty ? "No token added" : "Choose a token\n(Long press token to delete)") {
@@ -57,13 +99,15 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField("input new token", text: $textfieldText)
+          TextField("input new token", text: $tokenText)
             .keyboardType(.default)
             .submitLabel(.done)
             .onSubmit(addNewToken)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
           Button("add", action: addNewToken)
             .buttonStyle(.borderedProminent)
-            .alert("token cannot be empty", isPresented: $isShowEmptyAlert) {
+            .alert("token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
               Button("OK", role: .cancel) { }
             }
         }
@@ -71,20 +115,43 @@ struct ProfileMainView: View {
     }
     .scrollDismissesKeyboard(.immediately)
   }
-  
+}
+
+extension ProfileMainView {
   func addNewToken() {
-    if textfieldText.isEmpty {
-      isShowEmptyAlert = true
+    if profileViewModel.trimString(tokenText).isEmpty {
+      isShowTokenEmptyAlert = true
+      tokenText = ""
       return
     }
-    viewModel.addToken(textfieldText)
-    textfieldText = ""
+    viewModel.addToken(tokenText)
+    tokenText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
   
   func deleteToken() {
     viewModel.deleteToken(deletedToken)
     deletedToken = ""
+  }
+  
+  func addBaseURL() {
+    let url = profileViewModel.trimString(baseURLText)
+    baseURLText = url
+    if url.isEmpty {
+      isToggleOn = false
+    } else if !profileViewModel.isValidURL(url) {
+      isShowBaseURLAlert = true
+      isToggleOn = false
+      urlAlertText = "baseURL illegal"
+      baseURLText = ""
+    } else {
+      viewModel.addBaseURL(baseURLText)
+    }
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+  }
+  
+  func clearBaseURL() {
+    viewModel.addBaseURL("")
   }
 }
 
