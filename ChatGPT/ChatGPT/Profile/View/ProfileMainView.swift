@@ -42,6 +42,8 @@ struct ProfileMainView: View {
       Section {
         HStack {
           TextField(viewModel.user.baseURL.isEmpty ?  "input your baseURL" : viewModel.user.baseURL, text: $baseURLText)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
           Button("Done", action: addBaseURL)
           .buttonStyle(.borderedProminent)
           .alert("baseURL cannot be empty", isPresented: $isShowBaseURLEmptyAlert) {
@@ -90,6 +92,8 @@ struct ProfileMainView: View {
             .keyboardType(.default)
             .submitLabel(.done)
             .onSubmit(addNewToken)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
           Button("add", action: addNewToken)
             .buttonStyle(.borderedProminent)
             .alert("token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
