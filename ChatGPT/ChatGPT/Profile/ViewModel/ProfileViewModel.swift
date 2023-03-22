@@ -20,4 +20,9 @@ struct ProfileViewModel {
     let maskToken = String(token.prefix(number)) + format + String(token.suffix(number))
     return maskToken
   }
+  
+  func isWhitespaceString(_ str: String) -> Bool {
+      let whitespace = CharacterSet.whitespacesAndNewlines
+      return str.trimmingCharacters(in: whitespace).isEmpty
+  }
 }
