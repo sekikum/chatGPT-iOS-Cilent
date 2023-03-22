@@ -27,8 +27,9 @@ struct ProfileViewModel {
   }
   
   func isValidURL(_ url: String) -> Bool {
-    let urlRegex = #"^(https?|ftp)://[^\s/$.?#].[^\s]*$"#
-    let predicate = NSPredicate(format:"SELF MATCHES %@", urlRegex)
-    return predicate.evaluate(with: url)
+    if let _ = URL(string: url) {
+      return true
+    }
+    return false
   }
 }
