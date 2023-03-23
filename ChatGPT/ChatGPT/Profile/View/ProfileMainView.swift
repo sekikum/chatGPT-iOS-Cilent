@@ -31,7 +31,7 @@ struct ProfileMainView: View {
       }
       
       Section {
-        Picker("chose gpt model", selection: $viewModel.user.modelSelect) {
+        Picker("Chose GPT model", selection: $viewModel.user.modelSelect) {
           ForEach(models, id: \.self) { model in
             Text(model)
           }
@@ -45,7 +45,7 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField("input your baseURL", text: $baseURLText)
+          TextField("Input your BaseURL", text: $baseURLText)
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .onTapGesture {
@@ -66,7 +66,7 @@ struct ProfileMainView: View {
         }
       }
       
-      Section(viewModel.user.tokenList.isEmpty ? "No token added" : "Choose a token\n(Long press token to delete)") {
+      Section(viewModel.user.tokenList.isEmpty ? "No Token added" : "Choose a Token\n(Long press Token to delete)") {
         Picker("", selection: $viewModel.user.tokenSelect) {
           ForEach(viewModel.user.tokenList, id: \.self) { token in
             Text(profileViewModel.maskToken(token))
@@ -100,7 +100,7 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField("input new token", text: $tokenText)
+          TextField("Input new Token", text: $tokenText)
             .keyboardType(.default)
             .submitLabel(.done)
             .onSubmit(addNewToken)
@@ -111,7 +111,7 @@ struct ProfileMainView: View {
               .resizable()
               .frame(width: buttonSize, height: buttonSize)
           }
-          .alert("token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
+          .alert("Token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
             Button("OK", role: .cancel) { }
           }
         }
@@ -146,7 +146,7 @@ extension ProfileMainView {
     } else if !profileViewModel.isValidURL(url) {
       isShowBaseURLAlert = true
       isToggleOn = false
-      urlAlertText = "baseURL illegal"
+      urlAlertText = NSLocalizedString("BaseURL illegal", comment: "")
       baseURLText = ""
     } else {
       viewModel.addBaseURL(baseURLText)
