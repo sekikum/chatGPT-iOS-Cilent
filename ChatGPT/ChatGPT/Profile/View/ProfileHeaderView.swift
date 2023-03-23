@@ -34,6 +34,6 @@ struct ProfileHeaderView: View {
 
 struct ProfileHeaderView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileHeaderView(avatar: "Profile-Diu", nickname: "sekikum")
+    ProfileHeaderView(avatar: "Profile-User", nickname: "sekikum")
   }
 }

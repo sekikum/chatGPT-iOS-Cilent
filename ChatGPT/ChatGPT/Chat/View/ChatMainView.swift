@@ -14,14 +14,13 @@ struct ChatMainView: View {
   var body: some View {
     VStack {
       ChatView(avatar: avatar, messageItems: viewModel.messageItems)
-      InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, clear: viewModel.clearContext, isShowLoading: viewModel.isShowLoading)
+      InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
     }
-    .padding()
   }
 }
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-Diu")
+    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-User")
   }
 }
