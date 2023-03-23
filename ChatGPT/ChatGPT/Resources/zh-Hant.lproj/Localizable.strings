@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  ChatGPT
+
+  Created by Wenyan Zhao on 2023/3/23.
+  
+*/
+
+// Tap
+"Chat" = "聊天";
+"Me" = "我";
+
+// Placeholder
+"Please add token on 'me'" = "請在‘我’添加token";
+"Input your message" = "輸入您的訊息";
+"Input your baseURL" = "輸入您的baseURL";
+"Input new token" = "新增token";
+
+// Picker
+"Chose GPT model" = "選擇GPT模型";
+
+// Alert
+"Message cannot be empty" = "訊息不能為空";
+"Token cannot be empty" = "Token不能為空";
+"baseURL illegal" = "格式錯誤";
+"Please choose the correct token and baseURL" = "請選擇正確的Token或BaseURL";
+"Do you sure you want to delete this Token?" = "確定刪除此Token？";
+"There is no undo" = "無法撤回";
+
+// Button
+"Delete" = "刪除";
+"Clear" = "清除";
+
+// Section
+"No token added" = "未添加Token";
+"Choose a token\n(Long press token to delete)" = "選擇一個Token\n(長按Token刪除)";
