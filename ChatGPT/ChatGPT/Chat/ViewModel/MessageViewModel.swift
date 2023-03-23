@@ -52,7 +52,7 @@ class MessageViewModel: ObservableObject {
         DispatchQueue.main.async {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString("Please choose the correct token and baseURL", comment: "")
+          self.alertInfo = NSLocalizedString("Please choose the correct token and BaseURL", comment: "")
         }
       case .success(let success):
         DispatchQueue.main.async {
