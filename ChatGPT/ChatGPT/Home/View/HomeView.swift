@@ -14,16 +14,23 @@ struct HomeView: View {
   
   var body: some View {
     TabView(selection: $selectionTab) {
-      ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
-        .tabItem {
-          Label("Chat", systemImage: "message.fill")
-        }
-        .tag(HomeTab.chat)
-      ImageChatMainView()
-        .tabItem {
-          Label("Image", systemImage: "photo.circle.fill")
-        }
-        .tag(HomeTab.image)
+      NavigationView {
+        ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
+          .navigationBarItems(trailing: Menu {
+            Button(action: messageViewModel.clearContext) {
+              Text("Clear")
+              Image(systemName: "xmark.circle.fill")
+            }
+          } label: {
+            Image(systemName: "ellipsis")
+              .padding(.top, 1)
+          })
+      }
+      .tabItem {
+        Label("Chat", systemImage: "message.fill")
+      }
+      .tag(HomeTab.chat)
+      
       ProfileMainView(viewModel: userViewModel, initToken: messageViewModel.initOpenAI)
         .tabItem {
           Label("Me", systemImage: "person.fill")
@@ -36,7 +43,6 @@ struct HomeView: View {
 enum HomeTab {
   case chat
   case me
-  case image
 }
 
 struct HomeView_Previews: PreviewProvider {

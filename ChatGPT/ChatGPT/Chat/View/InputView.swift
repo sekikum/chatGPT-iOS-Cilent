@@ -12,16 +12,17 @@ struct InputView: View {
   @Binding var isShowAlert: Bool
   let alertInfo: String
   let send: (String, String) -> Void
-  let clear: () -> Void
   let isShowLoading: Bool
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   let textFieldLimit = 4
+  let buttonSize: CGFloat = 30
   let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
   let modelSelect = StorageManager.restoreUser().modelSelect
   
   var body: some View {
     HStack {
+      Spacer()
       TextField(noTokenAdded ? "Please add token on 'me'" : "Input your message", text: $textfieldText, axis: .vertical)
         .disabled(noTokenAdded)
         .lineLimit(textFieldLimit)
@@ -31,19 +32,21 @@ struct InputView: View {
         .keyboardType(.default)
         .disableAutocorrection(true)
         .autocapitalization(.none)
-      Button("send", action: sendMessageAction)
-        .buttonStyle(.borderedProminent)
-        .alert(alertInfo, isPresented: $isShowAlert) {
-          Button("OK", role: .cancel) { }
+      Button(action: sendMessageAction) {
+        Image(systemName: "paperplane.circle.fill")
+          .resizable()
+          .frame(width: buttonSize, height: buttonSize)
+      }
+      .alert(alertInfo, isPresented: $isShowAlert) {
+        Button("OK", role: .cancel) { }
+      }
+      .overlay() {
+        if isShowLoading {
+          ProgressView()
         }
-        .overlay() {
-          if isShowLoading {
-            ProgressView()
-          }
-        }
-        .disabled(isShowLoading || noTokenAdded)
-      Button("clear", action: clear)
-        .buttonStyle(.borderedProminent)
+      }
+      .disabled(isShowLoading || noTokenAdded)
+      Spacer()
     }
   }
   
@@ -56,6 +59,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_,_  in }, clear: { }, isShowLoading: false)
+    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_,_  in }, isShowLoading: false)
   }
 }
