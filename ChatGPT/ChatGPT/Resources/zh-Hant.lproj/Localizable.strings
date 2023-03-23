@@ -11,20 +11,20 @@
 "Me" = "我";
 
 // Placeholder
-"Please add token on 'me'" = "請在‘我’添加token";
+"Please add Token on 'me'" = "請在‘我’添加 Token";
 "Input your message" = "輸入您的訊息";
-"Input your baseURL" = "輸入您的baseURL";
-"Input new token" = "新增token";
+"Input your BaseURL" = "輸入您的 BaseURL";
+"Input new Token" = "新增 Token";
 
 // Picker
-"Chose GPT model" = "選擇GPT模型";
+"Chose GPT model" = "選擇 GPT 模型";
 
 // Alert
 "Message cannot be empty" = "訊息不能為空";
-"Token cannot be empty" = "Token不能為空";
-"baseURL illegal" = "格式錯誤";
-"Please choose the correct token and baseURL" = "請選擇正確的Token或BaseURL";
-"Do you sure you want to delete this Token?" = "確定刪除此Token？";
+"Token cannot be empty" = "Token 不能為空";
+"BaseURL illegal" = "格式錯誤";
+"Please choose the correct Token and BaseURL" = "請選擇正確的 Token 或 BaseURL";
+"Do you sure you want to delete this Token?" = "確定刪除此 Token？";
 "There is no undo" = "無法撤回";
 
 // Button
@@ -32,5 +32,5 @@
 "Clear" = "清除";
 
 // Section
-"No token added" = "未添加Token";
-"Choose a token\n(Long press token to delete)" = "選擇一個Token\n(長按Token刪除)";
+"No Token added" = "Token 未添加";
+"Choose a Token\n(Long press Token to delete)" = "選擇一個 Token\n(長按 Token 刪除)";
