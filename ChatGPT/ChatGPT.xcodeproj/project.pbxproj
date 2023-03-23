@@ -35,7 +35,6 @@
 		84E8458029C980BF0049D5FA /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457F29C980BF0049D5FA /* Command.swift */; };
 		84E8458229C981420049D5FA /* OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8458129C981420049D5FA /* OpenAI.swift */; };
 		84E8458429C981940049D5FA /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8458329C981940049D5FA /* ChatMessage.swift */; };
-		84E8458829C9B1300049D5FA /* ImageChatMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8458729C9B1300049D5FA /* ImageChatMainView.swift */; };
 		84F9670129C3FC9B006DD8A3 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 84F9670029C3FC9B006DD8A3 /* MarkdownUI */; };
 		84F9670429C3FCEF006DD8A3 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = 84F9670329C3FCEF006DD8A3 /* Splash */; };
 		84F9670629C3FCEF006DD8A3 /* SplashMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = 84F9670529C3FCEF006DD8A3 /* SplashMarkdown */; };
@@ -86,7 +85,6 @@
 		84E8457F29C980BF0049D5FA /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		84E8458129C981420049D5FA /* OpenAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAI.swift; sourceTree = "<group>"; };
 		84E8458329C981940049D5FA /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
-		84E8458729C9B1300049D5FA /* ImageChatMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChatMainView.swift; sourceTree = "<group>"; };
 		84F9670829C3FD5A006DD8A3 /* SplashCodeSyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCodeSyntaxHighlighter.swift; sourceTree = "<group>"; };
 		84F9670A29C3FD68006DD8A3 /* TextOutputFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOutputFormat.swift; sourceTree = "<group>"; };
 		8AE6CD8D403D9BDA62EFC9CE /* Pods-ChatGPT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatGPT.release.xcconfig"; path = "Target Support Files/Pods-ChatGPT/Pods-ChatGPT.release.xcconfig"; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 		8492CD7329B1D93C00187E3C /* ChatGPT */ = {
 			isa = PBXGroup;
 			children = (
-				84E8458629C9B10C0049D5FA /* Image */,
 				8469E2B029C318C800A54B97 /* Info.plist */,
 				849C655529C0785600AC8E68 /* Foundation */,
 				847A26F529B9B580006F6B34 /* Profile */,
@@ -369,14 +366,6 @@
 				84E8457D29C977CB0049D5FA /* OpenAIModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		84E8458629C9B10C0049D5FA /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				84E8458729C9B1300049D5FA /* ImageChatMainView.swift */,
-			);
-			path = Image;
 			sourceTree = "<group>";
 		};
 		84F9670729C3FD30006DD8A3 /* SyntaxHighlighter */ = {
@@ -542,7 +531,6 @@
 				846729EE29B592FC00B85594 /* ChatView.swift in Sources */,
 				847A26E729B71BF4006F6B34 /* KeyBoardPublisher.swift in Sources */,
 				84F9670B29C3FD68006DD8A3 /* TextOutputFormat.swift in Sources */,
-				84E8458829C9B1300049D5FA /* ImageChatMainView.swift in Sources */,
 				846729EC29B57EEA00B85594 /* InputView.swift in Sources */,
 				846729FF29B5EBCF00B85594 /* MessageViewModel.swift in Sources */,
 				84E8458429C981940049D5FA /* ChatMessage.swift in Sources */,
