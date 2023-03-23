@@ -1,0 +1,36 @@
+/* 
+  Localizable.strings
+  ChatGPT
+
+  Created by Wenyan Zhao on 2023/3/23.
+  
+*/
+
+// Tap
+"Chat" = "Chat";
+"Me" = "Me";
+
+// Placeholder
+"Please add token on 'me'" = "Please add token on 'me'";
+"Input your message" = "Input your message";
+"Input your baseURL" = "Input your baseURL";
+"Input new token" = "Input new token";
+
+// Picker
+"Chose GPT model" = "Chose GPT model";
+
+// Alert
+"Message cannot be empty" = "Message cannot be empty";
+"Token cannot be empty" = "Token cannot be empty";
+"baseURL illegal" = "baseURL illegal";
+"Please choose the correct token and baseURL" = "Please choose the correct token and baseURL";
+"Do you sure you want to delete this Token?" = "Do you sure you want to delete this Token?";
+"There is no undo" = "There is no undo";
+
+// Button
+"Delete" = "Delete";
+"Clear" = "Clear";
+
+// Section
+"No token added" = "No token added";
+"Choose a token\n(Long press token to delete)" = "Choose a token\n(Long press token to delete)";
