@@ -16,6 +16,7 @@ struct InputView: View {
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   let textFieldLimit = 4
+  let buttonSize: CGFloat = 30
   let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
   let modelSelect = StorageManager.restoreUser().modelSelect
   
@@ -31,17 +32,20 @@ struct InputView: View {
         .keyboardType(.default)
         .disableAutocorrection(true)
         .autocapitalization(.none)
-      Button("send", action: sendMessageAction)
-        .buttonStyle(.borderedProminent)
-        .alert(alertInfo, isPresented: $isShowAlert) {
-          Button("OK", role: .cancel) { }
+      Button(action: sendMessageAction) {
+        Image(systemName: "paperplane.circle.fill")
+          .resizable()
+          .frame(width: buttonSize, height: buttonSize)
+      }
+      .alert(alertInfo, isPresented: $isShowAlert) {
+        Button("OK", role: .cancel) { }
+      }
+      .overlay() {
+        if isShowLoading {
+          ProgressView()
         }
-        .overlay() {
-          if isShowLoading {
-            ProgressView()
-          }
-        }
-        .disabled(isShowLoading || noTokenAdded)
+      }
+      .disabled(isShowLoading || noTokenAdded)
       Spacer()
     }
   }

@@ -22,6 +22,7 @@ struct ProfileMainView: View {
   let initToken: (String) -> Void
   let tokenLineLimit: Int = 1
   let toggleWidth: CGFloat = 50
+  let buttonSize: CGFloat = 30
   
   var body: some View {
     List {
@@ -105,11 +106,14 @@ struct ProfileMainView: View {
             .onSubmit(addNewToken)
             .disableAutocorrection(true)
             .autocapitalization(.none)
-          Button("add", action: addNewToken)
-            .buttonStyle(.borderedProminent)
-            .alert("token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
-              Button("OK", role: .cancel) { }
-            }
+          Button(action: addNewToken) {
+            Image(systemName: "plus.circle.fill")
+              .resizable()
+              .frame(width: buttonSize, height: buttonSize)
+          }
+          .alert("token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
+            Button("OK", role: .cancel) { }
+          }
         }
       }
     }
