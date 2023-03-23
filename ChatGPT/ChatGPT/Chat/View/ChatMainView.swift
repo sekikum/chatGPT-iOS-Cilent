@@ -21,6 +21,6 @@ struct ChatMainView: View {
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-Diu")
+    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-User")
   }
 }
