@@ -17,8 +17,9 @@ struct HomeView: View {
       NavigationView {
         ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
           .navigationBarItems(trailing: Menu {
-            Button("clear context") {
-              messageViewModel.clearContext()
+            Button(action: messageViewModel.clearContext) {
+              Text("clear")
+              Image(systemName: "xmark.circle.fill")
             }
           } label: {
             Image(systemName: "ellipsis")
