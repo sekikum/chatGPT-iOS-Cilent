@@ -31,7 +31,7 @@ struct ProfileMainView: View {
       }
       
       Section {
-        Picker("chose gpt model", selection: $viewModel.user.modelSelect) {
+        Picker("Chose GPT model", selection: $viewModel.user.modelSelect) {
           ForEach(models, id: \.self) { model in
             Text(model)
           }
@@ -45,7 +45,7 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField("input your baseURL", text: $baseURLText)
+          TextField("Input your baseURL", text: $baseURLText)
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .onTapGesture {
@@ -100,7 +100,7 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField("input new token", text: $tokenText)
+          TextField("Input new token", text: $tokenText)
             .keyboardType(.default)
             .submitLabel(.done)
             .onSubmit(addNewToken)
@@ -111,7 +111,7 @@ struct ProfileMainView: View {
               .resizable()
               .frame(width: buttonSize, height: buttonSize)
           }
-          .alert("token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
+          .alert("Token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
             Button("OK", role: .cancel) { }
           }
         }
@@ -146,7 +146,7 @@ extension ProfileMainView {
     } else if !profileViewModel.isValidURL(url) {
       isShowBaseURLAlert = true
       isToggleOn = false
-      urlAlertText = "baseURL illegal"
+      urlAlertText = NSLocalizedString("baseURL illegal", comment: "")
       baseURLText = ""
     } else {
       viewModel.addBaseURL(baseURLText)

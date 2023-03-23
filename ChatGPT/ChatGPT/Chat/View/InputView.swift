@@ -23,7 +23,7 @@ struct InputView: View {
   var body: some View {
     HStack {
       Spacer()
-      TextField(noTokenAdded ? "Please add token on 'me'" : "Input your message", text: $textfieldText, axis: .vertical)
+      TextField(noTokenAdded ? NSLocalizedString("Please add token on 'me'", comment: "") : NSLocalizedString("Input your message", comment: ""), text: $textfieldText, axis: .vertical)
         .disabled(noTokenAdded)
         .lineLimit(textFieldLimit)
         .padding(padding)

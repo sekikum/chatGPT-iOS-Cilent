@@ -27,6 +27,7 @@
 		849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C653F29C00C4800AC8E68 /* ProfileViewModel.swift */; };
 		849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */; };
 		849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C655729C078CA00AC8E68 /* StoreManager.swift */; };
+		84C7B72029CC4837003FAD02 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C7B72229CC4837003FAD02 /* Localizable.strings */; };
 		84E8457829C970B00049D5FA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 84E8457729C970B00049D5FA /* Alamofire */; };
 		84E8457A29C970CF0049D5FA /* OpenAIServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457929C970CF0049D5FA /* OpenAIServer.swift */; };
 		84E8457C29C970F80049D5FA /* OpenAIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */; };
@@ -75,6 +76,8 @@
 		849C654529C0137100AC8E68 /* ChatGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTest.swift; sourceTree = "<group>"; };
 		849C655729C078CA00AC8E68 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		84C7B72129CC4837003FAD02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		84C7B72329CC483F003FAD02 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		84E8457929C970CF0049D5FA /* OpenAIServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIServer.swift; sourceTree = "<group>"; };
 		84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEndpoint.swift; sourceTree = "<group>"; };
 		84E8457D29C977CB0049D5FA /* OpenAIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIModel.swift; sourceTree = "<group>"; };
@@ -260,6 +263,7 @@
 		8492CD7329B1D93C00187E3C /* ChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				84C7B72429CC4FC4003FAD02 /* Resources */,
 				8469E2B029C318C800A54B97 /* Info.plist */,
 				849C655529C0785600AC8E68 /* Foundation */,
 				847A26F529B9B580006F6B34 /* Profile */,
@@ -328,6 +332,14 @@
 				849C655729C078CA00AC8E68 /* StoreManager.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		84C7B72429CC4FC4003FAD02 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				84C7B72229CC4837003FAD02 /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		84E8457529C96E160049D5FA /* Server */ = {
@@ -430,6 +442,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 8492CD6829B1D93C00187E3C;
 			packageReferences = (
@@ -453,6 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8492CD7C29B1D93E00187E3C /* Preview Assets.xcassets in Resources */,
+				84C7B72029CC4837003FAD02 /* Localizable.strings in Resources */,
 				846729FD29B5DF4600B85594 /* ColorAssets.xcassets in Resources */,
 				8492CD7929B1D93E00187E3C /* ImageAssets.xcassets in Resources */,
 			);
@@ -516,6 +531,18 @@
 			targetProxy = 849C654929C0137100AC8E68 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		84C7B72229CC4837003FAD02 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84C7B72129CC4837003FAD02 /* en */,
+				84C7B72329CC483F003FAD02 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		8492CD7D29B1D93E00187E3C /* Debug */ = {

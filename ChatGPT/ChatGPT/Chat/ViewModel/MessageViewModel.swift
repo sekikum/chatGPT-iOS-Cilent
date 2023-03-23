@@ -28,7 +28,7 @@ class MessageViewModel: ObservableObject {
     
     if message.isEmpty {
       isShowAlert = true
-      alertInfo = "Message cannot be empty"
+      alertInfo = NSLocalizedString("Message cannot be empty", comment: "")
       return
     }
     
@@ -52,7 +52,7 @@ class MessageViewModel: ObservableObject {
         DispatchQueue.main.async {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = "Please choose the correct token and baseURL"
+          self.alertInfo = NSLocalizedString("Please choose the correct token and baseURL", comment: "")
         }
       case .success(let success):
         DispatchQueue.main.async {
