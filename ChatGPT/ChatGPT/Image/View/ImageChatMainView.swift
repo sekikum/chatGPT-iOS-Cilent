@@ -10,6 +10,7 @@ import SwiftUI
 struct ImageChatMainView: View {
   @State var textField: String = ""
   let avatar: String
+  let number: Int
   let buttonSize: CGFloat = 30
   let textFieldLimit: Int = 4
   let cornerRadius: CGFloat = 6
@@ -18,7 +19,9 @@ struct ImageChatMainView: View {
   
   var body: some View {
     VStack {
+      Spacer()
       HStack {
+        Spacer()
         Image(avatar)
         TextField(noTokenAdded ? "Please add Token on 'me'" : "Input your message", text: $textField, axis: .vertical)
           .disabled(noTokenAdded)
@@ -35,14 +38,20 @@ struct ImageChatMainView: View {
             .frame(width: buttonSize, height: buttonSize)
         }
         .disabled(noTokenAdded)
+        Spacer()
       }
+      ImageView(number: number)
+        .scrollDismissesKeyboard(.immediately)
+        .onTapGesture {
+          UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
       Spacer()
     }
   }
 }
 
-struct ImageView_Previews: PreviewProvider {
+struct ImageChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageChatMainView(avatar: "Profile-User")
+    ImageChatMainView(avatar: "Profile-User", number: 3)
   }
 }
