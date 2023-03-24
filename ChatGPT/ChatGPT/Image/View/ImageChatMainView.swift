@@ -14,23 +14,29 @@ struct ImageChatMainView: View {
   let textFieldLimit: Int = 4
   let cornerRadius: CGFloat = 6
   let padding: CGFloat = 6
+  let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
   
   var body: some View {
-    HStack {
-      Image(avatar)
-      TextField("", text: $textField, axis: .vertical)
-        .lineLimit(textFieldLimit)
-        .padding(padding)
-        .background(Color("Gray"))
-        .cornerRadius(cornerRadius)
-        .keyboardType(.default)
-        .disableAutocorrection(true)
-        .autocapitalization(.none)
-      Button(action: {}) {
-        Image(systemName: "paperplane.circle.fill")
-          .resizable()
-          .frame(width: buttonSize, height: buttonSize)
+    VStack {
+      HStack {
+        Image(avatar)
+        TextField(noTokenAdded ? "Please add Token on 'me'" : "Input your message", text: $textField, axis: .vertical)
+          .disabled(noTokenAdded)
+          .lineLimit(textFieldLimit)
+          .padding(padding)
+          .background(Color("Gray"))
+          .cornerRadius(cornerRadius)
+          .keyboardType(.default)
+          .disableAutocorrection(true)
+          .autocapitalization(.none)
+        Button(action: {}) {
+          Image(systemName: "paperplane.circle.fill")
+            .resizable()
+            .frame(width: buttonSize, height: buttonSize)
+        }
+        .disabled(noTokenAdded)
       }
+      Spacer()
     }
   }
 }
