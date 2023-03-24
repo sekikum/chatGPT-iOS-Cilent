@@ -11,6 +11,10 @@ struct HomeView: View {
   @StateObject var userViewModel: UserViewModel = UserViewModel()
   @StateObject var messageViewModel: MessageViewModel = MessageViewModel()
   @State var selectionTab: HomeTab = .chat
+  @State var number: Int = 1
+  @State var size: String = "256x256"
+  let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
   
   var body: some View {
     TabView(selection: $selectionTab) {
@@ -23,7 +27,6 @@ struct HomeView: View {
             }
           } label: {
             Image(systemName: "ellipsis")
-              .padding(.top, 1)
           })
       }
       .tabItem {
@@ -31,11 +34,29 @@ struct HomeView: View {
       }
       .tag(HomeTab.chat)
       
-      ImageChatMainView(avatar: userViewModel.user.avatar)
-        .tabItem {
-          Label("Image", systemImage: "photo.circle.fill")
-        }
-        .tag(HomeTab.image)
+      NavigationView {
+        ImageChatMainView(avatar: userViewModel.user.avatar)
+          .navigationBarItems(trailing: Menu {
+            Picker("Number: \(number)", selection: $number) {
+              ForEach(numberList, id: \.self) { num in
+                Text("\(num)")
+              }
+            }
+            .pickerStyle(.menu)
+            Picker("Size: \(size)", selection: $size) {
+              ForEach(sizeList, id: \.self) { str in
+                Text("\(str)")
+              }
+            }
+            .pickerStyle(.menu)
+          } label: {
+            Image(systemName: "ellipsis")
+          })
+      }
+      .tabItem {
+        Label("Image", systemImage: "photo.circle.fill")
+      }
+      .tag(HomeTab.image)
       
       ProfileMainView(viewModel: userViewModel, initToken: messageViewModel.initOpenAI)
         .tabItem {
