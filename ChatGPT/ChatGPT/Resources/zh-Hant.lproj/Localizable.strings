@@ -9,6 +9,7 @@
 // Tap
 "Chat" = "聊天";
 "Me" = "我";
+"Image" = "圖片";
 
 // Placeholder
 "Please add Token on 'me'" = "請在‘我’添加 Token";
