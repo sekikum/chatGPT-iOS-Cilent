@@ -9,6 +9,7 @@
 // Tap
 "Chat" = "Chat";
 "Me" = "Me";
+"Image" = "Image";
 
 // Placeholder
 "Please add Token on 'me'" = "Please add Token on 'me'";
