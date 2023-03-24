@@ -19,6 +19,8 @@
 
 // Picker
 "Chose GPT model" = "Chose GPT model";
+"Number: %@" = "Number: %@";
+"Size: %@" = "Size: %@";
 
 // Alert
 "Message cannot be empty" = "Message cannot be empty";
