@@ -10,9 +10,8 @@ import SwiftUI
 struct HomeView: View {
   @StateObject var userViewModel: UserViewModel = UserViewModel()
   @StateObject var messageViewModel: MessageViewModel = MessageViewModel()
+  @StateObject var imageViewModel: ImageViewModel = ImageViewModel()
   @State var selectionTab: HomeTab = .chat
-  @State var number: Int = 1
-  @State var size: String = "256x256"
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
   
@@ -37,18 +36,28 @@ struct HomeView: View {
       NavigationView {
         ImageChatMainView(avatar: userViewModel.user.avatar)
           .navigationBarItems(trailing: Menu {
-            Picker("Number: \(String(number))", selection: $number) {
+            Picker("Number: \(String(imageViewModel.imageSet.number))", selection: $imageViewModel.imageSet.number) {
               ForEach(numberList, id: \.self) { num in
                 Text("\(num)")
               }
             }
             .pickerStyle(.menu)
-            Picker("Size: \(size)", selection: $size) {
+            .onChange(of: imageViewModel.imageSet.number) { _ in
+              Task {
+                await StorageManager.storeImageSet(imageViewModel.imageSet)
+              }
+            }
+            Picker("Size: \(imageViewModel.imageSet.size)", selection: $imageViewModel.imageSet.size) {
               ForEach(sizeList, id: \.self) { str in
                 Text("\(str)")
               }
             }
             .pickerStyle(.menu)
+            .onChange(of: imageViewModel.imageSet.size) { _ in
+              Task {
+                await StorageManager.storeImageSet(imageViewModel.imageSet)
+              }
+            }
           } label: {
             Image(systemName: "ellipsis")
           })
