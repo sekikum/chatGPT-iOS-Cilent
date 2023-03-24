@@ -34,7 +34,7 @@ struct HomeView: View {
       .tag(HomeTab.chat)
       
       NavigationView {
-        ImageChatMainView(avatar: userViewModel.user.avatar)
+        ImageChatMainView(avatar: userViewModel.user.avatar, number: imageViewModel.imageSet.number)
           .navigationBarItems(trailing: Menu {
             Picker("Number: \(String(imageViewModel.imageSet.number))", selection: $imageViewModel.imageSet.number) {
               ForEach(numberList, id: \.self) { num in
