@@ -19,8 +19,8 @@
 
 // Picker
 "Chose GPT model" = "选择 GPT 模型";
-"Number: %@" = "数量: %@";
-"Size: %@" = "大小: %@";
+"Number: %@" = "数量：%@";
+"Size: %@" = "大小：%@";
 
 // Alert
 "Message cannot be empty" = "消息不能为空";
