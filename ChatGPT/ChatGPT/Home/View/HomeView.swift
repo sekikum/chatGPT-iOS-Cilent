@@ -31,7 +31,7 @@ struct HomeView: View {
       }
       .tag(HomeTab.chat)
       
-      ImageChatMainView()
+      ImageChatMainView(avatar: userViewModel.user.avatar)
         .tabItem {
           Label("Image", systemImage: "photo.circle.fill")
         }
