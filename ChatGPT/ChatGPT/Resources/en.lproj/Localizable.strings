@@ -16,6 +16,7 @@
 "Input your message" = "Input your message";
 "Input your BaseURL" = "Input your BaseURL";
 "Input new Token" = "Input new Token";
+"Loading" = "Loading";
 
 // Picker
 "Chose GPT model" = "Chose GPT model";
