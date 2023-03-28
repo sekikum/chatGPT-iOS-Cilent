@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ImageChatMainView: View {
   @State var textField: String = ""
+  @State var urlImages4: [String]
+  @Binding var isShowBrowser: Bool
+  @Binding var selectImage: String
   let avatar: String
   let number: Int
   let buttonSize: CGFloat = 30
@@ -40,18 +43,19 @@ struct ImageChatMainView: View {
         .disabled(noTokenAdded)
         Spacer()
       }
-      ImageView(number: number)
+      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, number: number, urlImages4: urlImages4)
         .scrollDismissesKeyboard(.immediately)
         .onTapGesture {
           UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
       Spacer()
     }
+    .ignoresSafeArea(.keyboard, edges: .bottom)
   }
 }
 
 struct ImageChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageChatMainView(avatar: "Profile-User", number: 3)
+    ImageChatMainView(urlImages4: [], isShowBrowser: .constant(false), selectImage: .constant(""), avatar: "Profile-User", number: 3)
   }
 }
