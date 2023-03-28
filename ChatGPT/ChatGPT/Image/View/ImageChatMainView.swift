@@ -44,7 +44,6 @@ struct ImageChatMainView: View {
         Spacer()
       }
       ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, number: number, urlImages4: urlImages4)
-        .scrollDismissesKeyboard(.immediately)
         .onTapGesture {
           UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }

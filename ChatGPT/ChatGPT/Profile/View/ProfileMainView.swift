@@ -117,7 +117,6 @@ struct ProfileMainView: View {
         }
       }
     }
-    .scrollDismissesKeyboard(.immediately)
   }
 }
 
