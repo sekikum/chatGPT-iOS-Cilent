@@ -33,6 +33,9 @@ struct ImageView: View {
               .shadow(radius: shadowRadius)
               .padding(.leading, singleImagePadding)
               .padding(.trailing, singleImagePadding)
+              .onAppear {
+                images.append(image)
+              }
           } placeholder: {
             ProgressView("Loading")
           }

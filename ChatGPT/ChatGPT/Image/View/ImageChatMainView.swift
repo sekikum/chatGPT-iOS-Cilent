@@ -66,6 +66,7 @@ struct ImageChatMainView: View {
   func sendPrompt() {
     viewModel.sendPrompt(textField)
     textField = ""
+    images = []
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
 }
