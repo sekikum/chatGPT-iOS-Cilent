@@ -53,6 +53,26 @@ extension OpenAIServer {
     }
   }
   
+  func sendChatImage(with prompt: String, number: Int, size: String, completionHandler: @escaping (Result<OpenAIImage<ImageResult>, OpenAIError>) -> Void) {
+    let endpoint = OpenAIEndpoint.image
+    let body = ChatImageModel(prompt: prompt, n: number, size: size)
+    let request = prepareRequest(endpoint, body: body)
+    
+    makeRequest(request: request) { response in
+      switch response {
+      case .success(let success):
+        do {
+          let res = try JSONDecoder().decode(OpenAIImage<ImageResult>.self, from: success)
+          completionHandler(.success(res))
+        } catch {
+          completionHandler(.failure(.decodingError(error: error)))
+        }
+      case .failure(let failure):
+        completionHandler(.failure(.genericError(error: failure)))
+      }
+    }
+  }
+  
   private func prepareRequest<BodyType: Encodable>(_ endpoint: OpenAIEndpoint, body: BodyType) -> URLRequest {
     var urlComponents = URLComponents(url: URL(string: endpoint.baseURL())!, resolvingAgainstBaseURL: true)
     urlComponents?.path = endpoint.path

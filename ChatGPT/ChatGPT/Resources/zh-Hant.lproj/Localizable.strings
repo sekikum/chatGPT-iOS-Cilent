@@ -9,15 +9,19 @@
 // Tap
 "Chat" = "聊天";
 "Me" = "我";
+"Image" = "圖片";
 
 // Placeholder
 "Please add Token on 'me'" = "請在‘我’添加 Token";
 "Input your message" = "輸入您的訊息";
 "Input your BaseURL" = "輸入您的 BaseURL";
 "Input new Token" = "新增 Token";
+"Loading" = "加載中";
 
 // Picker
 "Chose GPT model" = "選擇 GPT 模型";
+"Number: %@" = "數量：%@";
+"Size: %@" = "大小：%@";
 
 // Alert
 "Message cannot be empty" = "訊息不能為空";

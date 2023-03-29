@@ -28,6 +28,14 @@
 		849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */; };
 		849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C655729C078CA00AC8E68 /* StoreManager.swift */; };
 		84C7B72029CC4837003FAD02 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C7B72229CC4837003FAD02 /* Localizable.strings */; };
+		84C7B72929CD367E003FAD02 /* ImageChatMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B72829CD367E003FAD02 /* ImageChatMainView.swift */; };
+		84C7B74729CD7546003FAD02 /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B74629CD7546003FAD02 /* ImageViewModel.swift */; };
+		84C7B74929CD7558003FAD02 /* ImageSetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B74829CD7558003FAD02 /* ImageSetModel.swift */; };
+		84C7B74B29CD7D68003FAD02 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B74A29CD7D68003FAD02 /* ImageView.swift */; };
+		84C7B74D29CD92C4003FAD02 /* ImageMultipleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B74C29CD92C4003FAD02 /* ImageMultipleView.swift */; };
+		84C7B77D29D2BFB4003FAD02 /* ImageBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B77C29D2BFB4003FAD02 /* ImageBrowserView.swift */; };
+		84C7B78029D2DD2E003FAD02 /* ChatImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B77F29D2DD2E003FAD02 /* ChatImageModel.swift */; };
+		84C7B78529D2E91B003FAD02 /* OpenAIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B78429D2E91B003FAD02 /* OpenAIImage.swift */; };
 		84E8457829C970B00049D5FA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 84E8457729C970B00049D5FA /* Alamofire */; };
 		84E8457A29C970CF0049D5FA /* OpenAIServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457929C970CF0049D5FA /* OpenAIServer.swift */; };
 		84E8457C29C970F80049D5FA /* OpenAIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */; };
@@ -79,6 +87,14 @@
 		84C7B72129CC4837003FAD02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84C7B72329CC483F003FAD02 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		84C7B72529CC5284003FAD02 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		84C7B72829CD367E003FAD02 /* ImageChatMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChatMainView.swift; sourceTree = "<group>"; };
+		84C7B74629CD7546003FAD02 /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
+		84C7B74829CD7558003FAD02 /* ImageSetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSetModel.swift; sourceTree = "<group>"; };
+		84C7B74A29CD7D68003FAD02 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		84C7B74C29CD92C4003FAD02 /* ImageMultipleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMultipleView.swift; sourceTree = "<group>"; };
+		84C7B77C29D2BFB4003FAD02 /* ImageBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserView.swift; sourceTree = "<group>"; };
+		84C7B77F29D2DD2E003FAD02 /* ChatImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageModel.swift; sourceTree = "<group>"; };
+		84C7B78429D2E91B003FAD02 /* OpenAIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIImage.swift; sourceTree = "<group>"; };
 		84E8457929C970CF0049D5FA /* OpenAIServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIServer.swift; sourceTree = "<group>"; };
 		84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEndpoint.swift; sourceTree = "<group>"; };
 		84E8457D29C977CB0049D5FA /* OpenAIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIModel.swift; sourceTree = "<group>"; };
@@ -264,6 +280,7 @@
 		8492CD7329B1D93C00187E3C /* ChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				84C7B72629CD3661003FAD02 /* Image */,
 				84C7B72429CC4FC4003FAD02 /* Resources */,
 				8469E2B029C318C800A54B97 /* Info.plist */,
 				849C655529C0785600AC8E68 /* Foundation */,
@@ -341,6 +358,61 @@
 				84C7B72229CC4837003FAD02 /* Localizable.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		84C7B72629CD3661003FAD02 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				84C7B77E29D2DA6F003FAD02 /* Server */,
+				84C7B74529CD752F003FAD02 /* Model */,
+				84C7B74429CD7526003FAD02 /* ViewModel */,
+				84C7B72729CD3668003FAD02 /* View */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		84C7B72729CD3668003FAD02 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84C7B72829CD367E003FAD02 /* ImageChatMainView.swift */,
+				84C7B74A29CD7D68003FAD02 /* ImageView.swift */,
+				84C7B74C29CD92C4003FAD02 /* ImageMultipleView.swift */,
+				84C7B77C29D2BFB4003FAD02 /* ImageBrowserView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84C7B74429CD7526003FAD02 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84C7B74629CD7546003FAD02 /* ImageViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		84C7B74529CD752F003FAD02 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84C7B74829CD7558003FAD02 /* ImageSetModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		84C7B77E29D2DA6F003FAD02 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				84C7B78129D2DD38003FAD02 /* Model */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		84C7B78129D2DD38003FAD02 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84C7B77F29D2DD2E003FAD02 /* ChatImageModel.swift */,
+				84C7B78429D2E91B003FAD02 /* OpenAIImage.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		84E8457529C96E160049D5FA /* Server */ = {
@@ -488,6 +560,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84C7B74929CD7558003FAD02 /* ImageSetModel.swift in Sources */,
+				84C7B72929CD367E003FAD02 /* ImageChatMainView.swift in Sources */,
 				847A26F429B9B35A006F6B34 /* ChatMainView.swift in Sources */,
 				84E8457C29C970F80049D5FA /* OpenAIEndpoint.swift in Sources */,
 				846729EE29B592FC00B85594 /* ChatView.swift in Sources */,
@@ -498,6 +572,10 @@
 				84E8458429C981940049D5FA /* ChatMessage.swift in Sources */,
 				84E8457A29C970CF0049D5FA /* OpenAIServer.swift in Sources */,
 				846729F629B5B62800B85594 /* MessageModel.swift in Sources */,
+				84C7B74D29CD92C4003FAD02 /* ImageMultipleView.swift in Sources */,
+				84C7B77D29D2BFB4003FAD02 /* ImageBrowserView.swift in Sources */,
+				84C7B74729CD7546003FAD02 /* ImageViewModel.swift in Sources */,
+				84C7B78029D2DD2E003FAD02 /* ChatImageModel.swift in Sources */,
 				849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */,
 				847A270629B9C125006F6B34 /* ProfileHeaderView.swift in Sources */,
 				84E8458029C980BF0049D5FA /* Command.swift in Sources */,
@@ -505,10 +583,12 @@
 				8492CD7729B1D93C00187E3C /* HomeView.swift in Sources */,
 				84E8457E29C977CB0049D5FA /* OpenAIModel.swift in Sources */,
 				847A270129B9BD1F006F6B34 /* UserViewModel.swift in Sources */,
+				84C7B78529D2E91B003FAD02 /* OpenAIImage.swift in Sources */,
 				846729F829B5B78100B85594 /* MessageView.swift in Sources */,
 				8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */,
 				849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */,
 				847A26F729B9B592006F6B34 /* ProfileMainView.swift in Sources */,
+				84C7B74B29CD7D68003FAD02 /* ImageView.swift in Sources */,
 				847A26FF29B9BCEB006F6B34 /* UserModel.swift in Sources */,
 				84E8458229C981420049D5FA /* OpenAI.swift in Sources */,
 			);
