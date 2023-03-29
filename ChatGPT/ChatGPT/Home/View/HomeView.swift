@@ -13,7 +13,8 @@ struct HomeView: View {
   @StateObject var imageViewModel: ImageViewModel = ImageViewModel()
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
-  @State var selectImage: String = .init()
+  @State var selectImage: Int = .init()
+  @State var images: [Image] = []
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
   
@@ -40,7 +41,7 @@ struct HomeView: View {
         .tag(HomeTab.chat)
         
         NavigationView {
-          ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, avatar: userViewModel.user.avatar)
+          ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, images: $images, avatar: userViewModel.user.avatar)
             .navigationBarItems(trailing: Menu {
               Picker("Number: \(String(imageViewModel.imageSet.number))", selection: $imageViewModel.imageSet.number) {
                 ForEach(numberList, id: \.self) { num in
@@ -79,10 +80,6 @@ struct HomeView: View {
           }
           .tag(HomeTab.me)
       }
-      .overlay {
-        ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $imageViewModel.imagesURL)
-      }
-      .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
       
       SideMenu(
         isShowing: $presentSideMenu,
@@ -90,6 +87,10 @@ struct HomeView: View {
           SideMenuView(viewModel: messageViewModel, selectedSideMenuTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)
         ))
     }
+    .overlay {
+      ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $images)
+    }
+    .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
   }
 }
 
