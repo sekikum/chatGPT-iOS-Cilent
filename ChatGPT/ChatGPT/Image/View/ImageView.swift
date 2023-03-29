@@ -34,7 +34,7 @@ struct ImageView: View {
               .padding(.leading, singleImagePadding)
               .padding(.trailing, singleImagePadding)
               .onAppear {
-                images.append(image)
+                images[0] = image
               }
           } placeholder: {
             ProgressView("Loading")

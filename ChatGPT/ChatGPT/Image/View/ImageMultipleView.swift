@@ -29,13 +29,13 @@ struct ImageMultipleView: View {
             .cornerRadius(cornerRadius)
             .shadow(radius: shadowRadius)
             .onAppear {
-              images.append(image)
+              images[imagesURL.firstIndex(of: url)!] = image
             }
         } placeholder: {
           ProgressView("Loading")
         }
         .onTapGesture {
-          select = imagesURL.firstIndex(of: url) ?? .init()
+          select = imagesURL.firstIndex(of: url)!
           isShowBrowser = true
           UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }

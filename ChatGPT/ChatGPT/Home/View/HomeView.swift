@@ -14,7 +14,7 @@ struct HomeView: View {
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
   @State var selectImage: Int = .init()
-  @State var images: [Image] = []
+  @State var images: [Image] = .init(repeating: Image(systemName: "arrow.clockwise"), count: StorageManager.restoreImageSet().number)
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
   
@@ -51,6 +51,7 @@ struct HomeView: View {
               .pickerStyle(.menu)
               .onChange(of: imageViewModel.imageSet.number) { _ in
                 Task {
+                  images = .init(repeating: Image(systemName: "arrow.clockwise"), count: imageViewModel.imageSet.number)
                   await StorageManager.storeImageSet(imageViewModel.imageSet)
                 }
               }
