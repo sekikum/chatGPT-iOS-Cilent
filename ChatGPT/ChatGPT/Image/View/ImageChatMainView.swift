@@ -11,7 +11,8 @@ struct ImageChatMainView: View {
   @StateObject var viewModel: ImageViewModel
   @State var textField: String = ""
   @Binding var isShowBrowser: Bool
-  @Binding var selectImage: String
+  @Binding var selectImage: Int
+  @Binding var images: [Image]
   let avatar: String
   let buttonSize: CGFloat = 30
   let textFieldLimit: Int = 4
@@ -50,7 +51,7 @@ struct ImageChatMainView: View {
         }
         Spacer()
       }
-      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, urlImages: $viewModel.imagesURL)
+      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, urlImages: $viewModel.imagesURL, images: $images)
       Spacer()
     }
     .background(
@@ -71,6 +72,6 @@ struct ImageChatMainView: View {
 
 struct ImageChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageChatMainView(viewModel: ImageViewModel(), isShowBrowser: .constant(false), selectImage: .constant(""), avatar: "")
+    ImageChatMainView(viewModel: ImageViewModel(), isShowBrowser: .constant(false), selectImage: .constant(1), images: .constant([]), avatar: "")
   }
 }
