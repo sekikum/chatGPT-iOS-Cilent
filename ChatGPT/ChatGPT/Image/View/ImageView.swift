@@ -35,6 +35,10 @@ struct ImageView: View {
           } placeholder: {
             ProgressView("Loading")
           }
+          .onTapGesture {
+            isShowBrowser = true
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+          }
         } else if urlImages.count <= 6 {
           ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages)
         }
