@@ -10,31 +10,19 @@ import SwiftUI
 struct ImageView: View {
   @Binding var isShowBrowser: Bool
   @Binding var selectImage: String
-  let number: Int
   let scrollViewPadding: CGFloat = 20
   let singleImagePadding: CGFloat = 30
   let imageSingleSize: CGFloat = UIScreen.main.bounds.size.width - 60
   let cornerRadius: CGFloat = 10
   let shadowRadius: CGFloat = 5
-  let urlImages4: [String]
-  let urlImages9: [String] = [
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/004.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/003.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/002.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/001.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/000.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/005.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/006.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/007.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/008.jpeg",
-  ]
+  @Binding var urlImages: [String]
   
   var body: some View {
-    if number <= 6 {
+    if urlImages.count <= 6 {
       VStack {
         Spacer()
-        if number == 1 {
-          AsyncImage(url: URL(string: "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/008.jpeg")) { image in
+        if urlImages.count == 1 {
+          AsyncImage(url: URL(string: urlImages.first ?? "")) { image in
             image
               .resizable()
               .scaledToFit()
@@ -47,14 +35,14 @@ struct ImageView: View {
           } placeholder: {
             ProgressView("Loading")
           }
-        } else if number <= 6 {
-          ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: urlImages4)
+        } else if urlImages.count <= 6 {
+          ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages)
         }
         Spacer()
       }
     } else {
       ScrollView {
-        ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: urlImages9)
+        ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages)
       }
       .padding(.top, scrollViewPadding)
     }
@@ -63,6 +51,6 @@ struct ImageView: View {
 
 struct ImageView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageView(isShowBrowser: .constant(false), selectImage: .constant(""), number: 3, urlImages4: [])
+    ImageView(isShowBrowser: .constant(false), selectImage: .constant(""), urlImages: .constant([]))
   }
 }

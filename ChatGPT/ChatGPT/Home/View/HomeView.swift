@@ -14,12 +14,6 @@ struct HomeView: View {
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
   @State var selectImage: String = .init()
-  let urlImages4: [String] = [
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/004.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/003.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/002.jpeg",
-    "https://tw-mobile-xian.github.io/moments-data/images/user/avatar/001.jpeg",
-  ]
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
   
@@ -42,7 +36,7 @@ struct HomeView: View {
       .tag(HomeTab.chat)
       
       NavigationView {
-        ImageChatMainView(urlImages4: urlImages4, isShowBrowser: $isShowBrowser, selectImage: $selectImage, avatar: userViewModel.user.avatar, number: imageViewModel.imageSet.number)
+        ImageChatMainView(urlImages: $imageViewModel.imagesURL, isShowBrowser: $isShowBrowser, selectImage: $selectImage, isShowAlert: $imageViewModel.isShowAlert, alertInfo: imageViewModel.alertInfo, avatar: userViewModel.user.avatar, number: imageViewModel.imageSet.number, send: imageViewModel.sendPrompt(_:), isShowLoading: imageViewModel.isShowLoading)
           .navigationBarItems(trailing: Menu {
             Picker("Number: \(String(imageViewModel.imageSet.number))", selection: $imageViewModel.imageSet.number) {
               ForEach(numberList, id: \.self) { num in
@@ -82,7 +76,7 @@ struct HomeView: View {
         .tag(HomeTab.me)
     }
     .overlay {
-      ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: urlImages4)
+      ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $imageViewModel.imagesURL)
     }
     .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
   }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ImageBrowserView: View {
   @Binding var isShow: Bool
   @Binding var selectionTab: String
-  @State var images: [String]
+  @Binding var images: [String]
   
   var body: some View {
     if isShow {
@@ -38,7 +38,7 @@ struct ImageBrowserView: View {
 
 struct ImageBrowserView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageBrowserView(isShow: .constant(false), selectionTab: .constant(""), images: ["cloud", "person"])
+    ImageBrowserView(isShow: .constant(false), selectionTab: .constant(""), images: .constant([]))
   }
 }
 
