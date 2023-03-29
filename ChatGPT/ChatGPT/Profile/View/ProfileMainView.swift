@@ -19,7 +19,8 @@ struct ProfileMainView: View {
   @State var isToggleOn: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
   let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
-  let initToken: (String) -> Void
+  let initTokenMessage: (String) -> Void
+  let initTokenImage: (String) -> Void
   let tokenLineLimit: Int = 1
   let toggleWidth: CGFloat = 50
   let buttonSize: CGFloat = 30
@@ -93,7 +94,8 @@ struct ProfileMainView: View {
         .onChange(of: viewModel.user.tokenSelect) { _ in
           Task {
             await StorageManager.storeUser(viewModel.user)
-            initToken(viewModel.user.tokenSelect)
+            initTokenMessage(viewModel.user.tokenSelect)
+            initTokenImage(viewModel.user.tokenSelect)
           }
         }
       }
@@ -160,6 +162,6 @@ extension ProfileMainView {
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView(viewModel: UserViewModel(), initToken: {_ in})
+    ProfileMainView(viewModel: UserViewModel(), initTokenMessage: {_ in}, initTokenImage: {_ in})
   }
 }
