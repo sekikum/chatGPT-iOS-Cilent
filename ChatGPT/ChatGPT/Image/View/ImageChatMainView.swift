@@ -9,11 +9,15 @@ import SwiftUI
 
 struct ImageChatMainView: View {
   @State var textField: String = ""
-  @State var urlImages4: [String]
+  @Binding var urlImages: [String]
   @Binding var isShowBrowser: Bool
   @Binding var selectImage: String
+  @Binding var isShowAlert: Bool
+  let alertInfo: String
   let avatar: String
   let number: Int
+  let send: (String) -> Void
+  let isShowLoading: Bool
   let buttonSize: CGFloat = 30
   let textFieldLimit: Int = 4
   let cornerRadius: CGFloat = 6
@@ -35,15 +39,23 @@ struct ImageChatMainView: View {
           .keyboardType(.default)
           .disableAutocorrection(true)
           .autocapitalization(.none)
-        Button(action: {}) {
+        Button(action: sendPrompt) {
           Image(systemName: "paperplane.circle.fill")
             .resizable()
             .frame(width: buttonSize, height: buttonSize)
         }
-        .disabled(noTokenAdded)
+        .disabled(isShowLoading || noTokenAdded)
+        .alert(alertInfo, isPresented: $isShowAlert) {
+          Button("OK", role: .cancel) { }
+        }
+        .overlay() {
+          if isShowLoading {
+            ProgressView()
+          }
+        }
         Spacer()
       }
-      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, number: number, urlImages4: urlImages4)
+      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, urlImages: $urlImages)
       Spacer()
     }
     .background(
@@ -54,10 +66,16 @@ struct ImageChatMainView: View {
     )
     .ignoresSafeArea(.keyboard, edges: .bottom)
   }
+  
+  func sendPrompt() {
+    send(textField)
+    textField = ""
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+  }
 }
 
 struct ImageChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageChatMainView(urlImages4: [], isShowBrowser: .constant(false), selectImage: .constant(""), avatar: "Profile-User", number: 3)
+    ImageChatMainView(urlImages: .constant([]), isShowBrowser: .constant(false), selectImage: .constant(""), isShowAlert: .constant(false), alertInfo: "",  avatar: "Profile-User", number: 3, send: {_ in}, isShowLoading: false)
   }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct ImageMultipleView: View {
   @Binding var select: String
   @Binding var isShowBrowser: Bool
-  let imagesURL: [String]
+  @Binding var imagesURL: [String]
   let imageSize = (UIScreen.main.bounds.size.width - 45) / 2
   let cornerRadius: CGFloat = 10
   let shadowRadius: CGFloat = 5
@@ -44,6 +44,6 @@ struct ImageMultipleView: View {
 
 struct ImageMultipleView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageMultipleView(select: .constant(""), isShowBrowser: .constant(true), imagesURL: ["lasso", "trash", "trash.fill", "cloud.fill", "folder", "folder.fill"])
+    ImageMultipleView(select: .constant(""), isShowBrowser: .constant(true), imagesURL: .constant([]))
   }
 }
