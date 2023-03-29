@@ -10,12 +10,12 @@ import SwiftUI
 struct ImageView: View {
   @Binding var isShowBrowser: Bool
   @Binding var selectImage: String
+  @Binding var urlImages: [String]
   let scrollViewPadding: CGFloat = 20
   let singleImagePadding: CGFloat = 30
   let imageSingleSize: CGFloat = UIScreen.main.bounds.size.width - 60
   let cornerRadius: CGFloat = 10
   let shadowRadius: CGFloat = 5
-  @Binding var urlImages: [String]
   
   var body: some View {
     if urlImages.count <= 6 {
