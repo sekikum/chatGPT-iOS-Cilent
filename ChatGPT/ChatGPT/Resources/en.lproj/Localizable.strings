@@ -9,15 +9,19 @@
 // Tap
 "Chat" = "Chat";
 "Me" = "Me";
+"Image" = "Image";
 
 // Placeholder
 "Please add Token on 'me'" = "Please add Token on 'me'";
 "Input your message" = "Input your message";
 "Input your BaseURL" = "Input your BaseURL";
 "Input new Token" = "Input new Token";
+"Loading" = "Loading";
 
 // Picker
 "Chose GPT model" = "Chose GPT model";
+"Number: %@" = "Number: %@";
+"Size: %@" = "Size: %@";
 
 // Alert
 "Message cannot be empty" = "Message cannot be empty";
