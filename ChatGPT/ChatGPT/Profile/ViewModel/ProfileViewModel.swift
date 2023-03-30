@@ -8,17 +8,17 @@
 import Foundation
 
 struct ProfileViewModel {
-  func maskToken(_ token: String) -> String {
+  func maskAPIKey(_ apiKey: String) -> String {
     let format = "****"
     var number = 4
-    if token.count <= 4 {
+    if apiKey.count <= 4 {
       return format
     }
-    if token.count <= 8 {
-      number = (token.count - 4) / 2
+    if apiKey.count <= 8 {
+      number = (apiKey.count - 4) / 2
     }
-    let maskToken = String(token.prefix(number)) + format + String(token.suffix(number))
-    return maskToken
+    let maskAPIKey = String(apiKey.prefix(number)) + format + String(apiKey.suffix(number))
+    return maskAPIKey
   }
   
   func trimString(_ string: String) -> String {

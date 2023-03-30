@@ -18,7 +18,7 @@ struct ImageChatMainView: View {
   let textFieldLimit: Int = 4
   let cornerRadius: CGFloat = 6
   let padding: CGFloat = 6
-  let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
+  let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
   
   var body: some View {
     VStack {
@@ -26,8 +26,8 @@ struct ImageChatMainView: View {
       HStack {
         Spacer()
         Image(avatar)
-        TextField(noTokenAdded ? "Please add APIKey on 'me'" : "Input your message", text: $textField, axis: .vertical)
-          .disabled(noTokenAdded)
+        TextField(noAPIKeyAdded ? "Please add APIKey on 'me'" : "Input your message", text: $textField, axis: .vertical)
+          .disabled(noAPIKeyAdded)
           .lineLimit(textFieldLimit)
           .padding(padding)
           .background(Color("Gray"))
@@ -40,7 +40,7 @@ struct ImageChatMainView: View {
             .resizable()
             .frame(width: buttonSize, height: buttonSize)
         }
-        .disabled(viewModel.isShowLoading || noTokenAdded)
+        .disabled(viewModel.isShowLoading || noAPIKeyAdded)
         .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
           Button("OK", role: .cancel) { }
         }

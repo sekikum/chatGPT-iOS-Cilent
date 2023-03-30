@@ -10,8 +10,8 @@ import Foundation
 struct UserModel: Codable {
   var avatar: String
   var nickname: String
-  var tokenList: [String]
-  var tokenSelect: String
+  var apiKeyList: [String]
+  var apiKeySelect: String
   var modelSelect: String
   var baseURL: String
 }
