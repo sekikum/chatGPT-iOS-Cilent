@@ -37,7 +37,7 @@ class ImageViewModel: ObservableObject {
         DispatchQueue.main.async {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString("Please choose the correct token and BaseURL", comment: "")
+          self.alertInfo = NSLocalizedString("Please choose the correct APIKey and BaseURL", comment: "")
         }
       case .success(let success):
         DispatchQueue.main.async {

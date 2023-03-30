@@ -67,7 +67,7 @@ struct ProfileMainView: View {
         }
       }
       
-      Section(viewModel.user.tokenList.isEmpty ? "No Token added" : "Choose a Token\n(Long press Token to delete)") {
+      Section(viewModel.user.tokenList.isEmpty ? "No APIKey added" : "Choose a APIKey\n(Long press APIKey to delete)") {
         Picker("", selection: $viewModel.user.tokenSelect) {
           ForEach(viewModel.user.tokenList, id: \.self) { token in
             Text(profileViewModel.maskToken(token))
@@ -82,7 +82,7 @@ struct ProfileMainView: View {
         }
         .alert(isPresented: $isShowDeleteAlert) { () -> Alert in
           Alert(
-            title: Text("Do you sure you want to delete this Token?"),
+            title: Text("Do you sure you want to delete this APIKey?"),
             message: Text("There is no undo"),
             primaryButton: .destructive(Text("Delete")) {
               deleteToken()
@@ -102,7 +102,7 @@ struct ProfileMainView: View {
       
       Section {
         HStack {
-          TextField("Input new Token", text: $tokenText)
+          TextField("Input new APIKey", text: $tokenText)
             .keyboardType(.default)
             .submitLabel(.done)
             .onSubmit(addNewToken)
@@ -113,7 +113,7 @@ struct ProfileMainView: View {
               .resizable()
               .frame(width: buttonSize, height: buttonSize)
           }
-          .alert("Token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
+          .alert("APIKey cannot be empty", isPresented: $isShowTokenEmptyAlert) {
             Button("OK", role: .cancel) { }
           }
         }

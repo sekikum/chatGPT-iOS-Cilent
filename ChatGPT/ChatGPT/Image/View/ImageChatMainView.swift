@@ -26,7 +26,7 @@ struct ImageChatMainView: View {
       HStack {
         Spacer()
         Image(avatar)
-        TextField(noTokenAdded ? "Please add Token on 'me'" : "Input your message", text: $textField, axis: .vertical)
+        TextField(noTokenAdded ? "Please add APIKey on 'me'" : "Input your message", text: $textField, axis: .vertical)
           .disabled(noTokenAdded)
           .lineLimit(textFieldLimit)
           .padding(padding)
