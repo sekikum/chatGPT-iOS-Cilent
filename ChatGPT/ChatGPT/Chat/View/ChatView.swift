@@ -16,13 +16,11 @@ struct ChatView: View {
   var body: some View {
     ScrollViewReader { proxy in
       ScrollView() {
-        LazyVStack{
-          ForEach(viewModel.messageItems) { message in
-            MessageView(userAvatar: avatar, message: message)
-              .frame(width: UIScreen.main.bounds.size.width)
-              .padding(.bottom, messageBottomPadding)
-              .id(message.id)
-          }
+        ForEach(viewModel.messageItems) { message in
+          MessageView(userAvatar: avatar, message: message)
+            .frame(width: UIScreen.main.bounds.size.width)
+            .padding(.bottom, messageBottomPadding)
+            .id(message.id)
         }
         .frame(width: UIScreen.main.bounds.size.width)
       }
