@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class MessageViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
@@ -14,11 +15,31 @@ class MessageViewModel: ObservableObject {
   @Published var isShowLoading: Bool = false
   var openAI = OpenAIServer(authToken: "")
   var chatMessageItems: [ChatMessage] = []
-  
+
+  var group: ChatContentGroup?
+  @Published var chatGroups: [ChatContentGroup] = []
+
   init() {
     initOpenAI(StorageManager.restoreUser().tokenSelect)
   }
-  
+
+  func addGroups() {
+      let group = ChatContentGroup(message: [])
+      chatGroups.append(group)
+      self.group = group
+  }
+
+  func saveLineToGroup(_ group: inout ChatContentGroup, content: MessageModel) {
+      group.message.append(content)
+  }
+
+  func setCurrentChat(_ group: ChatContentGroup) {
+      self.messageItems.removeAll()
+      for msg in group.message {
+          self.messageItems.append(msg)
+      }
+  }
+
   func initOpenAI(_ token: String) {
     openAI = OpenAIServer(authToken: token)
   }
