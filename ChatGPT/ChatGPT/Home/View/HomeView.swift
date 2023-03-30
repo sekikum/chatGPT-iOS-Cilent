@@ -75,7 +75,7 @@ struct HomeView: View {
         }
         .tag(HomeTab.image)
         
-        ProfileMainView(viewModel: userViewModel, initTokenMessage: messageViewModel.initOpenAI, initTokenImage: imageViewModel.initOpenAI)
+         ProfileMainView(viewModel: userViewModel, initAPIKeyMessage: messageViewModel.initOpenAI, initAPIKeyImage: imageViewModel.initOpenAI)
           .tabItem {
             Label("Me", systemImage: "person.fill")
           }

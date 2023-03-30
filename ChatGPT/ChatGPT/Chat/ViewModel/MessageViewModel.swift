@@ -13,14 +13,14 @@ class MessageViewModel: ObservableObject {
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
-  var openAI = OpenAIServer(authToken: "")
+  var openAI = OpenAIServer(authAPIKey: "")
   var chatMessageItems: [ChatMessage] = []
   
   var group: ChatContentGroup?
   @Published var chatGroups: [ChatContentGroup] = []
   
   init() {
-    initOpenAI(StorageManager.restoreUser().tokenSelect)
+    initOpenAI(StorageManager.restoreUser().apiKeySelect)
     addGroups() 
   }
   
@@ -43,8 +43,8 @@ class MessageViewModel: ObservableObject {
     }
   }
   
-  func initOpenAI(_ token: String) {
-    openAI = OpenAIServer(authToken: token)
+  func initOpenAI(_ apiKey: String) {
+    openAI = OpenAIServer(authAPIKey: apiKey)
   }
   
   func sendMessage(_ message: String, _ modelString: String) {
