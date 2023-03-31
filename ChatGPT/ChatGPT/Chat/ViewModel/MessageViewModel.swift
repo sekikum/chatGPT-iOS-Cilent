@@ -86,9 +86,7 @@ class MessageViewModel: ObservableObject {
           }
           let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
           self.chatMessageItems.append(chatMessageSystem)
-          
           self.isShowLoading = false
-          
           self.saveLineToGroup(message)
         }
       }

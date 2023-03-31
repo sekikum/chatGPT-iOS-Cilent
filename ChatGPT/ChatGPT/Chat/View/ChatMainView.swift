@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatMainView: View {
-  @ObservedObject var viewModel: MessageViewModel
+  @StateObject var viewModel: MessageViewModel
   let avatar: String
   @Binding var presentSideMenu: Bool
   

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SideMenuView: View {
-  @ObservedObject var viewModel: MessageViewModel
+  @StateObject var viewModel: MessageViewModel
   @Binding var selectedSideMenuTab: Int
   @Binding var presentSideMenu: Bool
   
