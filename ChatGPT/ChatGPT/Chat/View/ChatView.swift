@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct ChatView: View {
-  @ObservedObject var viewModel: MessageViewModel
+  @StateObject var viewModel: MessageViewModel
   let avatar: String
   let messageBottomPadding: CGFloat = 15
   
