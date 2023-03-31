@@ -16,32 +16,29 @@ struct HomeView: View {
   @State var selectImage: String = .init()
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
-
-  // add 0329
+  
   @State var presentSideMenu = false
   @State var selectedSideMenuTab = 0
-
   
   var body: some View {
     ZStack {
       TabView(selection: $selectionTab) {
         NavigationView {
-          ChatMainView( avatar: userViewModel.user.avatar, presentSideMenu: $presentSideMenu)
-              .environmentObject(messageViewModel)
-              .navigationBarItems(trailing: Menu {
-                  Button(action: messageViewModel.clearContext) {
-                      Text("Clear")
-                      Image(systemName: "xmark.circle.fill")
-                  }
-              } label: {
-                  Image(systemName: "ellipsis")
-              })
+          ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar, presentSideMenu: $presentSideMenu)
+            .navigationBarItems(trailing: Menu {
+              Button(action: messageViewModel.clearContext) {
+                Text("Clear")
+                Image(systemName: "xmark.circle.fill")
+              }
+            } label: {
+              Image(systemName: "ellipsis")
+            })
         }
         .tabItem {
           Label("Chat", systemImage: "message.fill")
         }
         .tag(HomeTab.chat)
-
+        
         NavigationView {
           ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, avatar: userViewModel.user.avatar)
             .navigationBarItems(trailing: Menu {
@@ -75,7 +72,7 @@ struct HomeView: View {
           Label("Image", systemImage: "photo.circle.fill")
         }
         .tag(HomeTab.image)
-
+        
         ProfileMainView(viewModel: userViewModel, initTokenMessage: messageViewModel.initOpenAI, initTokenImage: imageViewModel.initOpenAI)
           .tabItem {
             Label("Me", systemImage: "person.fill")
@@ -86,13 +83,11 @@ struct HomeView: View {
         ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $imageViewModel.imagesURL)
       }
       .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
-
-      // add 0329
+      
       SideMenu(
         isShowing: $presentSideMenu,
         content: AnyView(
-        SideMenuView(selectedSideMenuTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)
-            .environmentObject(messageViewModel)
+          SideMenuView(viewModel: messageViewModel, selectedSideMenuTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)
         ))
     }
   }

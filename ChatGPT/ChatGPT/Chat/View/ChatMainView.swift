@@ -8,19 +8,41 @@
 import SwiftUI
 
 struct ChatMainView: View {
-  @StateObject var viewModel: MessageViewModel
+  @ObservedObject var viewModel: MessageViewModel
   let avatar: String
+  @Binding var presentSideMenu: Bool
   
   var body: some View {
     VStack {
-      ChatView(avatar: avatar, messageItems: viewModel.messageItems)
+      ChatView(viewModel: viewModel, avatar: avatar)
       InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
     }
+    .navigationBarItems(leading: menuButton())
+  }
+  
+  func menuButton() -> some View {
+    VStack{
+      HStack{
+        Button{
+          presentSideMenu.toggle()
+        } label: {
+          Image(systemName: "plus.bubble")
+            .resizable()
+            .frame(width: 20, height: 20)
+            .padding(.top, 20)
+        }
+        Spacer()
+      }
+      
+      Spacer()
+      Spacer()
+    }
+    .padding(.horizontal, 24)
   }
 }
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-User")
+    ChatMainView(viewModel: MessageViewModel(), avatar: "Profile-User", presentSideMenu: .constant(true))
   }
 }
