@@ -14,13 +14,13 @@ struct MessageModel: Identifiable, Equatable, Hashable {
 }
 
 class ChatContentGroup: Identifiable {
-    static var index: Int = 0
-    var title: String
-    var message: [MessageModel]
-
-    init(message: [MessageModel]) {
-        Self.index += 1
-        self.title = "new chat \(Self.index)"
-        self.message = message
-    }
+  static var index: Int = 0
+  var title: String
+  var message: [MessageModel]
+  
+  init(message: [MessageModel]) {
+    Self.index += 1
+    self.title = "Chat \(Self.index)"
+    self.message = message
+  }
 }

@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct SideMenuView: View {
-  @EnvironmentObject var viewModel: MessageViewModel
+  @ObservedObject var viewModel: MessageViewModel
   @Binding var selectedSideMenuTab: Int
   @Binding var presentSideMenu: Bool
-
+  
   var body: some View {
     HStack {
       ZStack{
         VStack(alignment: .center, spacing: 20) {
           Button {
+            viewModel.clearContext()
             viewModel.addGroups()
           } label: {
             HStack {
@@ -46,7 +47,7 @@ struct SideMenuView: View {
     }
     .background(.clear)
   }
-
+  
   func groupListView() -> some View {
     List {
       ForEach(viewModel.chatGroups) { group in
@@ -64,24 +65,23 @@ struct SideMenuView: View {
         .padding(5)
       }
       .listRowBackground(Color.black)
-
+      
       if viewModel.chatGroups.isEmpty {
-          Text("ListFix")
-            .hidden()
-            .accessibility(hidden: true)
-            .listRowBackground(Color.clear)
-         }
-  }
+        Text("ListFix")
+          .hidden()
+          .accessibility(hidden: true)
+          .listRowBackground(Color.clear)
+      }
+    }
     .listStyle(.plain)
     .scrollContentBackground(.hidden)
-    }
   }
+}
 
 struct SideMenuView_Previews: PreviewProvider {
   static let viewModel = MessageViewModel()
   static var previews: some View {
-    SideMenuView(selectedSideMenuTab: .constant(0), presentSideMenu: .constant(true))
-      .environmentObject(viewModel)
+    SideMenuView(viewModel: MessageViewModel(), selectedSideMenuTab: .constant(0), presentSideMenu: .constant(true))
   }
 }
 

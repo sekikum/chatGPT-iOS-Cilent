@@ -15,31 +15,34 @@ class MessageViewModel: ObservableObject {
   @Published var isShowLoading: Bool = false
   var openAI = OpenAIServer(authToken: "")
   var chatMessageItems: [ChatMessage] = []
-
+  
   var group: ChatContentGroup?
   @Published var chatGroups: [ChatContentGroup] = []
-
+  
   init() {
     initOpenAI(StorageManager.restoreUser().tokenSelect)
+    addGroups() 
   }
-
+  
   func addGroups() {
-      let group = ChatContentGroup(message: [])
-      chatGroups.append(group)
-      self.group = group
+    let group = ChatContentGroup(message: [])
+    chatGroups.append(group)
+    self.group = group
   }
-
-  func saveLineToGroup(_ group: inout ChatContentGroup, content: MessageModel) {
-      group.message.append(content)
+  
+  func saveLineToGroup(_ content: MessageModel) {
+    self.group?.message.append(content)
+    self.messageItems.append(content)
   }
-
+  
   func setCurrentChat(_ group: ChatContentGroup) {
-      self.messageItems.removeAll()
-      for msg in group.message {
-          self.messageItems.append(msg)
-      }
+    self.group = group
+    self.messageItems.removeAll()
+    for message in group.message {
+      self.messageItems.append(message)
+    }
   }
-
+  
   func initOpenAI(_ token: String) {
     openAI = OpenAIServer(authToken: token)
   }
@@ -62,7 +65,7 @@ class MessageViewModel: ObservableObject {
       model = .chat(.chatgpt)
     }
     
-    messageItems.append(MessageModel(message: message, isUser: true))
+    self.saveLineToGroup(MessageModel(message: message, isUser: true))
     let chatMessageUser = ChatMessage(role: .user, content: message)
     chatMessageItems.append(chatMessageUser)
     isShowLoading = true
@@ -74,6 +77,7 @@ class MessageViewModel: ObservableObject {
           self.isShowLoading = false
           self.isShowAlert = true
           self.alertInfo = NSLocalizedString("Please choose the correct token and BaseURL", comment: "")
+          
         }
       case .success(let success):
         DispatchQueue.main.async {
@@ -82,8 +86,10 @@ class MessageViewModel: ObservableObject {
           }
           let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
           self.chatMessageItems.append(chatMessageSystem)
-          self.messageItems.append(message)
+          
           self.isShowLoading = false
+          
+          self.saveLineToGroup(message)
         }
       }
     }
