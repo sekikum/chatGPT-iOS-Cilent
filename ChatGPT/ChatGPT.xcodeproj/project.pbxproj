@@ -48,6 +48,8 @@
 		84F9670629C3FCEF006DD8A3 /* SplashMarkdown in Frameworks */ = {isa = PBXBuildFile; productRef = 84F9670529C3FCEF006DD8A3 /* SplashMarkdown */; };
 		84F9670929C3FD5A006DD8A3 /* SplashCodeSyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9670829C3FD5A006DD8A3 /* SplashCodeSyntaxHighlighter.swift */; };
 		84F9670B29C3FD68006DD8A3 /* TextOutputFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9670A29C3FD68006DD8A3 /* TextOutputFormat.swift */; };
+		8A76852629D46EB900696181 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A76852529D46EB900696181 /* SideMenu.swift */; };
+		8A76852829D4704600696181 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A76852729D4704600696181 /* SideMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +105,8 @@
 		84E8458329C981940049D5FA /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		84F9670829C3FD5A006DD8A3 /* SplashCodeSyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCodeSyntaxHighlighter.swift; sourceTree = "<group>"; };
 		84F9670A29C3FD68006DD8A3 /* TextOutputFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOutputFormat.swift; sourceTree = "<group>"; };
+		8A76852529D46EB900696181 /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
+		8A76852729D4704600696181 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,8 @@
 				846729ED29B592FC00B85594 /* ChatView.swift */,
 				846729F729B5B78100B85594 /* MessageView.swift */,
 				847A26F329B9B35A006F6B34 /* ChatMainView.swift */,
+				8A76852529D46EB900696181 /* SideMenu.swift */,
+				8A76852729D4704600696181 /* SideMenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -563,6 +569,7 @@
 				84C7B74929CD7558003FAD02 /* ImageSetModel.swift in Sources */,
 				84C7B72929CD367E003FAD02 /* ImageChatMainView.swift in Sources */,
 				847A26F429B9B35A006F6B34 /* ChatMainView.swift in Sources */,
+				8A76852629D46EB900696181 /* SideMenu.swift in Sources */,
 				84E8457C29C970F80049D5FA /* OpenAIEndpoint.swift in Sources */,
 				846729EE29B592FC00B85594 /* ChatView.swift in Sources */,
 				847A26E729B71BF4006F6B34 /* KeyBoardPublisher.swift in Sources */,
@@ -574,6 +581,7 @@
 				846729F629B5B62800B85594 /* MessageModel.swift in Sources */,
 				84C7B74D29CD92C4003FAD02 /* ImageMultipleView.swift in Sources */,
 				84C7B77D29D2BFB4003FAD02 /* ImageBrowserView.swift in Sources */,
+				8A76852829D4704600696181 /* SideMenuView.swift in Sources */,
 				84C7B74729CD7546003FAD02 /* ImageViewModel.swift in Sources */,
 				84C7B78029D2DD2E003FAD02 /* ChatImageModel.swift in Sources */,
 				849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */,
@@ -631,6 +639,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -691,6 +700,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

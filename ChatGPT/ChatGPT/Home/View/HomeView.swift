@@ -17,68 +17,79 @@ struct HomeView: View {
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
   
+  @State var presentSideMenu = false
+  @State var selectedSideMenuTab = 0
+  
   var body: some View {
-    TabView(selection: $selectionTab) {
-      NavigationView {
-        ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
-          .navigationBarItems(trailing: Menu {
-            Button(action: messageViewModel.clearContext) {
-              Text("Clear")
-              Image(systemName: "xmark.circle.fill")
-            }
-          } label: {
-            Image(systemName: "ellipsis")
-          })
-      }
-      .tabItem {
-        Label("Chat", systemImage: "message.fill")
-      }
-      .tag(HomeTab.chat)
-      
-      NavigationView {
-        ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, avatar: userViewModel.user.avatar)
-          .navigationBarItems(trailing: Menu {
-            Picker("Number: \(String(imageViewModel.imageSet.number))", selection: $imageViewModel.imageSet.number) {
-              ForEach(numberList, id: \.self) { num in
-                Text("\(num)")
+    ZStack {
+      TabView(selection: $selectionTab) {
+        NavigationView {
+          ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar, presentSideMenu: $presentSideMenu)
+            .navigationBarItems(trailing: Menu {
+              Button(action: messageViewModel.clearContext) {
+                Text("Clear")
+                Image(systemName: "xmark.circle.fill")
               }
-            }
-            .pickerStyle(.menu)
-            .onChange(of: imageViewModel.imageSet.number) { _ in
-              Task {
-                await StorageManager.storeImageSet(imageViewModel.imageSet)
-              }
-            }
-            Picker("Size: \(imageViewModel.imageSet.size)", selection: $imageViewModel.imageSet.size) {
-              ForEach(sizeList, id: \.self) { str in
-                Text("\(str)")
-              }
-            }
-            .pickerStyle(.menu)
-            .onChange(of: imageViewModel.imageSet.size) { _ in
-              Task {
-                await StorageManager.storeImageSet(imageViewModel.imageSet)
-              }
-            }
-          } label: {
-            Image(systemName: "ellipsis")
-          })
-      }
-      .tabItem {
-        Label("Image", systemImage: "photo.circle.fill")
-      }
-      .tag(HomeTab.image)
-      
-      ProfileMainView(viewModel: userViewModel, initTokenMessage: messageViewModel.initOpenAI, initTokenImage: imageViewModel.initOpenAI)
-        .tabItem {
-          Label("Me", systemImage: "person.fill")
+            } label: {
+              Image(systemName: "ellipsis")
+            })
         }
-        .tag(HomeTab.me)
+        .tabItem {
+          Label("Chat", systemImage: "message.fill")
+        }
+        .tag(HomeTab.chat)
+        
+        NavigationView {
+          ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, avatar: userViewModel.user.avatar)
+            .navigationBarItems(trailing: Menu {
+              Picker("Number: \(String(imageViewModel.imageSet.number))", selection: $imageViewModel.imageSet.number) {
+                ForEach(numberList, id: \.self) { num in
+                  Text("\(num)")
+                }
+              }
+              .pickerStyle(.menu)
+              .onChange(of: imageViewModel.imageSet.number) { _ in
+                Task {
+                  await StorageManager.storeImageSet(imageViewModel.imageSet)
+                }
+              }
+              Picker("Size: \(imageViewModel.imageSet.size)", selection: $imageViewModel.imageSet.size) {
+                ForEach(sizeList, id: \.self) { str in
+                  Text("\(str)")
+                }
+              }
+              .pickerStyle(.menu)
+              .onChange(of: imageViewModel.imageSet.size) { _ in
+                Task {
+                  await StorageManager.storeImageSet(imageViewModel.imageSet)
+                }
+              }
+            } label: {
+              Image(systemName: "ellipsis")
+            })
+        }
+        .tabItem {
+          Label("Image", systemImage: "photo.circle.fill")
+        }
+        .tag(HomeTab.image)
+        
+        ProfileMainView(viewModel: userViewModel, initTokenMessage: messageViewModel.initOpenAI, initTokenImage: imageViewModel.initOpenAI)
+          .tabItem {
+            Label("Me", systemImage: "person.fill")
+          }
+          .tag(HomeTab.me)
+      }
+      .overlay {
+        ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $imageViewModel.imagesURL)
+      }
+      .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
+      
+      SideMenu(
+        isShowing: $presentSideMenu,
+        content: AnyView(
+          SideMenuView(viewModel: messageViewModel, selectedSideMenuTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)
+        ))
     }
-    .overlay {
-      ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $imageViewModel.imagesURL)
-    }
-    .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
   }
 }
 

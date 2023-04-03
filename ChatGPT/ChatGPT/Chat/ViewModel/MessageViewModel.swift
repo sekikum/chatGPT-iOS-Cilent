@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class MessageViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
@@ -15,8 +16,31 @@ class MessageViewModel: ObservableObject {
   var openAI = OpenAIServer(authToken: "")
   var chatMessageItems: [ChatMessage] = []
   
+  var group: ChatContentGroup?
+  @Published var chatGroups: [ChatContentGroup] = []
+  
   init() {
     initOpenAI(StorageManager.restoreUser().tokenSelect)
+    addGroups() 
+  }
+  
+  func addGroups() {
+    let group = ChatContentGroup(message: [])
+    chatGroups.append(group)
+    self.group = group
+  }
+  
+  func saveLineToGroup(_ content: MessageModel) {
+    self.group?.message.append(content)
+    self.messageItems.append(content)
+  }
+  
+  func setCurrentChat(_ group: ChatContentGroup) {
+    self.group = group
+    self.messageItems.removeAll()
+    for message in group.message {
+      self.messageItems.append(message)
+    }
   }
   
   func initOpenAI(_ token: String) {
@@ -41,7 +65,7 @@ class MessageViewModel: ObservableObject {
       model = .chat(.chatgpt)
     }
     
-    messageItems.append(MessageModel(message: message, isUser: true))
+    self.saveLineToGroup(MessageModel(message: message, isUser: true))
     let chatMessageUser = ChatMessage(role: .user, content: message)
     chatMessageItems.append(chatMessageUser)
     isShowLoading = true
@@ -53,6 +77,7 @@ class MessageViewModel: ObservableObject {
           self.isShowLoading = false
           self.isShowAlert = true
           self.alertInfo = NSLocalizedString("Please choose the correct token and BaseURL", comment: "")
+          
         }
       case .success(let success):
         DispatchQueue.main.async {
@@ -61,8 +86,8 @@ class MessageViewModel: ObservableObject {
           }
           let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
           self.chatMessageItems.append(chatMessageSystem)
-          self.messageItems.append(message)
           self.isShowLoading = false
+          self.saveLineToGroup(message)
         }
       }
     }
