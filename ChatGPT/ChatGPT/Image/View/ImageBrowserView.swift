@@ -21,16 +21,13 @@ struct ImageBrowserView: View {
               .resizable()
               .frame(width: proxy.size.width, height: proxy.size.width)
               .scaledToFit()
-              .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.width)))
+              .modifier(ImageModifier(isShow: $isShow, contentSize: CGSize(width: proxy.size.width, height: proxy.size.width)))
               .tag(imageIndex)
           }
         }
       }
       .background(.black)
       .tabViewStyle(PageTabViewStyle())
-      .onTapGesture {
-        isShow = false
-      }
     }
   }
 }

@@ -10,11 +10,13 @@ import UIKit
 
 struct ImageModifier: ViewModifier {
   @State var currentScale: CGFloat = 1
+  @Binding var isShow: Bool
   private var contentSize: CGSize
   private var min: CGFloat = 1
   private var max: CGFloat = 3
   
-  init(contentSize: CGSize) {
+  init(isShow: Binding<Bool>, contentSize: CGSize) {
+    self._isShow = isShow
     self.contentSize = contentSize
   }
   
@@ -38,6 +40,9 @@ struct ImageModifier: ViewModifier {
         .modifier(PinchToZoom(scale: $currentScale, minScale: min, maxScale: max))
     }
     .gesture(doubleTapGesture)
+    .onTapGesture {
+      isShow = false
+    }
     .animation(.easeInOut, value: currentScale)
   }
 }
