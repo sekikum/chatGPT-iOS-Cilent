@@ -10,7 +10,7 @@ import XCTest
 
 final class ProfileViewModelTests: XCTestCase {
   func test_given_longer_than_eight_characters_string_when_call_maskAPIKey_then_get_first_and_last_four_characters_with_asterisk() throws {
-    XCTAssertEqual(ProfileViewModel().maskAPIKey("qwertyuiop"), "qwer****uiop")
+    XCTAssertEqual(ProfileViewModel().maskAPIKey("qwert23--yuiop"), "qwer****uiop")
   }
   
   func test_given_shorter_than_four_characters_string_when_call_maskAPIKey_then_get_four_asterisk() throws {

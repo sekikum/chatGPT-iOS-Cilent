@@ -12,8 +12,8 @@ struct ImageModifier: ViewModifier {
   @State var currentScale: CGFloat = 1
   @Binding var isShow: Bool
   private var contentSize: CGSize
-  private var min: CGFloat = 1
-  private var max: CGFloat = 3
+  private var minScale: CGFloat = 1
+  private var maxScale: CGFloat = 3
   
   init(isShow: Binding<Bool>, contentSize: CGSize) {
     self._isShow = isShow
@@ -23,12 +23,12 @@ struct ImageModifier: ViewModifier {
   var doubleTapGesture: some Gesture {
     TapGesture(count: 2)
       .onEnded {
-        if currentScale <= min {
-          currentScale = max
-        } else if currentScale >= max {
-          currentScale = min
+        if currentScale <= minScale {
+          currentScale = maxScale
+        } else if currentScale >= maxScale {
+          currentScale = minScale
         } else {
-          currentScale = ((max - min) / 2 + min) < currentScale ? max : min
+          currentScale = ((maxScale - minScale) / 2 + minScale) < currentScale ? maxScale : minScale
         }
       }
   }
@@ -37,7 +37,7 @@ struct ImageModifier: ViewModifier {
     ScrollView([.horizontal, .vertical], showsIndicators: false) {
       content
         .frame(width: contentSize.width * currentScale, height: contentSize.height * currentScale, alignment: .center)
-        .modifier(PinchToZoom(scale: $currentScale, minScale: min, maxScale: max))
+        .modifier(PinchToZoom(scale: $currentScale, minScale: minScale, maxScale: maxScale))
     }
     .gesture(doubleTapGesture)
     .onTapGesture {
@@ -63,9 +63,7 @@ class PinchZoomView: UIView {
     self.scale = currentScale
     self.scaleChange = scaleChange
     super.init(frame: .zero)
-    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
-    pinchGesture.cancelsTouchesInView = false
-    addGestureRecognizer(pinchGesture)
+    setupPinchGesture()
   }
   
   required init?(coder: NSCoder) {
@@ -91,6 +89,12 @@ class PinchZoomView: UIView {
     default:
       break
     }
+  }
+  
+  func setupPinchGesture() {
+    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
+    pinchGesture.cancelsTouchesInView = false
+    addGestureRecognizer(pinchGesture)
   }
 }
 
