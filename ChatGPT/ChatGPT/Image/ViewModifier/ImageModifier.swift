@@ -63,9 +63,7 @@ class PinchZoomView: UIView {
     self.scale = currentScale
     self.scaleChange = scaleChange
     super.init(frame: .zero)
-    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
-    pinchGesture.cancelsTouchesInView = false
-    addGestureRecognizer(pinchGesture)
+    setupPinchGesture()
   }
   
   required init?(coder: NSCoder) {
@@ -91,6 +89,12 @@ class PinchZoomView: UIView {
     default:
       break
     }
+  }
+  
+  func setupPinchGesture() {
+    let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
+    pinchGesture.cancelsTouchesInView = false
+    addGestureRecognizer(pinchGesture)
   }
 }
 
