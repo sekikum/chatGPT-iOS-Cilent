@@ -17,14 +17,14 @@ struct InputView: View {
   let cornerRadius: CGFloat = 6
   let textFieldLimit = 4
   let buttonSize: CGFloat = 30
-  let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
+  let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
   let modelSelect = StorageManager.restoreUser().modelSelect
   
   var body: some View {
     HStack {
       Spacer()
-      TextField(noTokenAdded ? "Please add Token on 'me'" : "Input your message", text: $textfieldText, axis: .vertical)
-        .disabled(noTokenAdded)
+      TextField(noAPIKeyAdded ? "Please add APIKey on 'me'" : "Input your message", text: $textfieldText, axis: .vertical)
+        .disabled(noAPIKeyAdded)
         .lineLimit(textFieldLimit)
         .padding(padding)
         .background(Color("Gray"))
@@ -45,7 +45,7 @@ struct InputView: View {
           ProgressView()
         }
       }
-      .disabled(isShowLoading || noTokenAdded)
+      .disabled(isShowLoading || noAPIKeyAdded)
       Spacer()
     }
   }

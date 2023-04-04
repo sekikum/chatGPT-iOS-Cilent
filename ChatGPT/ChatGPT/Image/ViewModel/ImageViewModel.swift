@@ -13,15 +13,15 @@ class ImageViewModel: ObservableObject {
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
-  var openAI = OpenAIServer(authToken: "")
+  var openAI = OpenAIServer(authAPIKey: "")
   
   init() {
     imageSet = StorageManager.restoreImageSet()
-    initOpenAI(StorageManager.restoreUser().tokenSelect)
+    initOpenAI(StorageManager.restoreUser().apiKeySelect)
   }
   
-  func initOpenAI(_ token: String) {
-    openAI = OpenAIServer(authToken: token)
+  func initOpenAI(_ apiKey: String) {
+    openAI = OpenAIServer(authAPIKey: apiKey)
   }
   
   func sendPrompt(_ prompt: String) {
@@ -37,7 +37,7 @@ class ImageViewModel: ObservableObject {
         DispatchQueue.main.async {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString("Please choose the correct token and BaseURL", comment: "")
+          self.alertInfo = NSLocalizedString("Please choose the correct APIKey and BaseURL", comment: "")
         }
       case .success(let success):
         DispatchQueue.main.async {

@@ -14,13 +14,13 @@ class UserViewModel: ObservableObject {
     user = StorageManager.restoreUser()
   }
   
-  func addToken(_ token: String) {
-    if user.tokenList.contains(token) {
-      user.tokenSelect = token
+  func addAPIKey(_ apiKey: String) {
+    if user.apiKeyList.contains(apiKey) {
+      user.apiKeySelect = apiKey
     } else {
-      user.tokenList.append(token)
-      if user.tokenList.count == 1 {
-        user.tokenSelect = user.tokenList[0]
+      user.apiKeyList.append(apiKey)
+      if user.apiKeyList.count == 1 {
+        user.apiKeySelect = user.apiKeyList[0]
       }
     }
     Task {
@@ -28,13 +28,13 @@ class UserViewModel: ObservableObject {
     }
   }
   
-  func deleteToken(_ token: String) {
-    user.tokenList = user.tokenList.filter { $0 != token }
-    if user.tokenSelect == token {
-      if user.tokenList.count == 0 {
-        user.tokenSelect = ""
+  func deleteAPIKey(_ apiKey: String) {
+    user.apiKeyList = user.apiKeyList.filter { $0 != apiKey }
+    if user.apiKeySelect == apiKey {
+      if user.apiKeyList.count == 0 {
+        user.apiKeySelect = ""
       } else {
-        user.tokenSelect = user.tokenList[0]
+        user.apiKeySelect = user.apiKeyList[0]
       }
     }
     Task {

@@ -11,13 +11,14 @@ struct ImageChatMainView: View {
   @StateObject var viewModel: ImageViewModel
   @State var textField: String = ""
   @Binding var isShowBrowser: Bool
-  @Binding var selectImage: String
+  @Binding var selectImage: Int
+  @Binding var images: [Image]
   let avatar: String
   let buttonSize: CGFloat = 30
   let textFieldLimit: Int = 4
   let cornerRadius: CGFloat = 6
   let padding: CGFloat = 6
-  let noTokenAdded = StorageManager.restoreUser().tokenList.isEmpty
+  let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
   
   var body: some View {
     VStack {
@@ -25,8 +26,8 @@ struct ImageChatMainView: View {
       HStack {
         Spacer()
         Image(avatar)
-        TextField(noTokenAdded ? "Please add Token on 'me'" : "Input your message", text: $textField, axis: .vertical)
-          .disabled(noTokenAdded)
+        TextField(noAPIKeyAdded ? "Please add APIKey on 'me'" : "Input your message", text: $textField, axis: .vertical)
+          .disabled(noAPIKeyAdded)
           .lineLimit(textFieldLimit)
           .padding(padding)
           .background(Color("Gray"))
@@ -39,7 +40,7 @@ struct ImageChatMainView: View {
             .resizable()
             .frame(width: buttonSize, height: buttonSize)
         }
-        .disabled(viewModel.isShowLoading || noTokenAdded)
+        .disabled(viewModel.isShowLoading || noAPIKeyAdded)
         .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
           Button("OK", role: .cancel) { }
         }
@@ -50,7 +51,7 @@ struct ImageChatMainView: View {
         }
         Spacer()
       }
-      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, urlImages: $viewModel.imagesURL)
+      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, urlImages: $viewModel.imagesURL, images: $images)
       Spacer()
     }
     .background(
@@ -65,12 +66,13 @@ struct ImageChatMainView: View {
   func sendPrompt() {
     viewModel.sendPrompt(textField)
     textField = ""
+    images = .init(repeating: Image(systemName: "arrow.clockwise"), count: StorageManager.restoreImageSet().number)
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
 }
 
 struct ImageChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageChatMainView(viewModel: ImageViewModel(), isShowBrowser: .constant(false), selectImage: .constant(""), avatar: "")
+    ImageChatMainView(viewModel: ImageViewModel(), isShowBrowser: .constant(false), selectImage: .constant(1), images: .constant([]), avatar: "")
   }
 }
