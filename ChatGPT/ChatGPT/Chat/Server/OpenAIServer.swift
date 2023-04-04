@@ -14,10 +14,10 @@ public enum OpenAIError: Error {
 }
 
 public class OpenAIServer {
-  fileprivate(set) var token: String?
+  fileprivate(set) var apiKey: String?
   
-  public init(authToken: String) {
-    self.token = authToken
+  public init(authAPIKey: String) {
+    self.apiKey = authAPIKey
   }
 }
 
@@ -79,8 +79,8 @@ extension OpenAIServer {
     var request = URLRequest(url: urlComponents!.url!)
     request.httpMethod = endpoint.method
     
-    if let token = self.token {
-      request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+    if let apiKey = self.apiKey {
+      request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     }
     
     request.setValue("application/json", forHTTPHeaderField: "content-type")

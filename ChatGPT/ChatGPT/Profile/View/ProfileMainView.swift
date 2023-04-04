@@ -9,19 +9,19 @@ import SwiftUI
 
 struct ProfileMainView: View {
   @StateObject var viewModel: UserViewModel
-  @State var tokenText: String = ""
+  @State var apiKeyText: String = ""
   @State var baseURLText: String = StorageManager.restoreUser().baseURL
-  @State var isShowTokenEmptyAlert: Bool = false
+  @State var isShowAPIKeyEmptyAlert: Bool = false
   @State var isShowBaseURLAlert: Bool = false
   @State var isShowDeleteAlert: Bool = false
-  @State var deletedToken: String = ""
+  @State var deletedAPIKey: String = ""
   @State var urlAlertText: String = ""
   @State var isToggleOn: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
   let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
-  let initTokenMessage: (String) -> Void
-  let initTokenImage: (String) -> Void
-  let tokenLineLimit: Int = 1
+  let initAPIKeyMessage: (String) -> Void
+  let initAPIKeyImage: (String) -> Void
+  let apiKeyLineLimit: Int = 1
   let toggleWidth: CGFloat = 50
   let buttonSize: CGFloat = 30
   
@@ -67,53 +67,53 @@ struct ProfileMainView: View {
         }
       }
       
-      Section(viewModel.user.tokenList.isEmpty ? "No Token added" : "Choose a Token\n(Long press Token to delete)") {
-        Picker("", selection: $viewModel.user.tokenSelect) {
-          ForEach(viewModel.user.tokenList, id: \.self) { token in
-            Text(profileViewModel.maskToken(token))
+      Section(viewModel.user.apiKeyList.isEmpty ? "No APIKey added" : "Choose a APIKey\n(Long press APIKey to delete)") {
+        Picker("", selection: $viewModel.user.apiKeySelect) {
+          ForEach(viewModel.user.apiKeyList, id: \.self) { apiKey in
+            Text(profileViewModel.maskAPIKey(apiKey))
               .gesture(
                 LongPressGesture(minimumDuration: 1)
                   .onEnded { value in
                     isShowDeleteAlert = value
-                    deletedToken = token
+                    deletedAPIKey = apiKey
                   })
-              .lineLimit(tokenLineLimit)
+              .lineLimit(apiKeyLineLimit)
           }
         }
         .alert(isPresented: $isShowDeleteAlert) { () -> Alert in
           Alert(
-            title: Text("Do you sure you want to delete this Token?"),
+            title: Text("Do you sure you want to delete this APIKey?"),
             message: Text("There is no undo"),
             primaryButton: .destructive(Text("Delete")) {
-              deleteToken()
+              deleteAPIKey()
             },
             secondaryButton: .cancel())
         }
         .labelsHidden()
         .pickerStyle(.inline)
-        .onChange(of: viewModel.user.tokenSelect) { _ in
+        .onChange(of: viewModel.user.apiKeySelect) { _ in
           Task {
             await StorageManager.storeUser(viewModel.user)
-            initTokenMessage(viewModel.user.tokenSelect)
-            initTokenImage(viewModel.user.tokenSelect)
+            initAPIKeyMessage(viewModel.user.apiKeySelect)
+            initAPIKeyImage(viewModel.user.apiKeySelect)
           }
         }
       }
       
       Section {
         HStack {
-          TextField("Input new Token", text: $tokenText)
+          TextField("Input new APIKey", text: $apiKeyText)
             .keyboardType(.default)
             .submitLabel(.done)
-            .onSubmit(addNewToken)
+            .onSubmit(addNewAPIKey)
             .disableAutocorrection(true)
             .autocapitalization(.none)
-          Button(action: addNewToken) {
+          Button(action: addNewAPIKey) {
             Image(systemName: "plus.circle.fill")
               .resizable()
               .frame(width: buttonSize, height: buttonSize)
           }
-          .alert("Token cannot be empty", isPresented: $isShowTokenEmptyAlert) {
+          .alert("APIKey cannot be empty", isPresented: $isShowAPIKeyEmptyAlert) {
             Button("OK", role: .cancel) { }
           }
         }
@@ -123,20 +123,20 @@ struct ProfileMainView: View {
 }
 
 extension ProfileMainView {
-  func addNewToken() {
-    if profileViewModel.trimString(tokenText).isEmpty {
-      isShowTokenEmptyAlert = true
-      tokenText = ""
+  func addNewAPIKey() {
+    if profileViewModel.trimString(apiKeyText).isEmpty {
+      isShowAPIKeyEmptyAlert = true
+      apiKeyText = ""
       return
     }
-    viewModel.addToken(tokenText)
-    tokenText = ""
+    viewModel.addAPIKey(apiKeyText)
+    apiKeyText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
   
-  func deleteToken() {
-    viewModel.deleteToken(deletedToken)
-    deletedToken = ""
+  func deleteAPIKey() {
+    viewModel.deleteAPIKey(deletedAPIKey)
+    deletedAPIKey = ""
   }
   
   func addBaseURL() {
@@ -162,6 +162,6 @@ extension ProfileMainView {
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView(viewModel: UserViewModel(), initTokenMessage: {_ in}, initTokenImage: {_ in})
+    ProfileMainView(viewModel: UserViewModel(), initAPIKeyMessage: {_ in}, initAPIKeyImage: {_ in})
   }
 }

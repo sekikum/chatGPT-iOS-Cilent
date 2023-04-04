@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ImageView: View {
   @Binding var isShowBrowser: Bool
-  @Binding var selectImage: String
+  @Binding var selectImage: Int
   @Binding var urlImages: [String]
+  @Binding var images: [Image]
   let scrollViewPadding: CGFloat = 20
   let singleImagePadding: CGFloat = 30
   let imageSingleSize: CGFloat = UIScreen.main.bounds.size.width - 60
@@ -32,6 +33,9 @@ struct ImageView: View {
               .shadow(radius: shadowRadius)
               .padding(.leading, singleImagePadding)
               .padding(.trailing, singleImagePadding)
+              .onAppear {
+                images[0] = image
+              }
           } placeholder: {
             ProgressView("Loading")
           }
@@ -40,13 +44,13 @@ struct ImageView: View {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
           }
         } else if urlImages.count <= 6 {
-          ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages)
+          ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages, images: $images)
         }
         Spacer()
       }
     } else {
       ScrollView {
-        ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages)
+        ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages, images: $images)
       }
       .padding(.top, scrollViewPadding)
     }
@@ -55,6 +59,6 @@ struct ImageView: View {
 
 struct ImageView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageView(isShowBrowser: .constant(false), selectImage: .constant(""), urlImages: .constant([]))
+    ImageView(isShowBrowser: .constant(false), selectImage: .constant(1), urlImages: .constant([]), images: .constant([]))
   }
 }

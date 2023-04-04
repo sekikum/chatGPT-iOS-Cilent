@@ -12,10 +12,10 @@
 "Image" = "Image";
 
 // Placeholder
-"Please add Token on 'me'" = "Please add Token on 'me'";
+"Please add APIKey on 'me'" = "Please add APIKey on 'me'";
 "Input your message" = "Input your message";
 "Input your BaseURL" = "Input your BaseURL";
-"Input new Token" = "Input new Token";
+"Input new APIKey" = "Input new APIKey";
 "Loading" = "Loading";
 
 // Picker
@@ -25,10 +25,10 @@
 
 // Alert
 "Message cannot be empty" = "Message cannot be empty";
-"Token cannot be empty" = "Token cannot be empty";
+"APIKey cannot be empty" = "APIKey cannot be empty";
 "BaseURL illegal" = "BaseURL illegal";
-"Please choose the correct Token and BaseURL" = "Please choose the correct Token and BaseURL";
-"Do you sure you want to delete this Token?" = "Do you sure you want to delete this Token?";
+"Please choose the correct APIKey and BaseURL" = "Please choose the correct APIKey and BaseURL";
+"Do you sure you want to delete this APIKey?" = "Do you sure you want to delete this APIKey?";
 "There is no undo" = "There is no undo";
 
 // Button
@@ -36,5 +36,5 @@
 "Clear" = "Clear";
 
 // Section
-"No Token added" = "No Token added";
-"Choose a Token\n(Long press Token to delete)" = "Choose a Token\n(Long press Token to delete)";
+"No APIKey added" = "No APIKey added";
+"Choose a APIKey\n(Long press APIKey to delete)" = "Choose a APIKey\n(Long press APIKey to delete)";
