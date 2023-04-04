@@ -10,14 +10,15 @@ import Foundation
 struct ProfileViewModel {
   func maskAPIKey(_ apiKey: String) -> String {
     let format = "****"
-    var number = 4
-    if apiKey.count <= 4 {
+    var size = 4
+    
+    if apiKey.count <= format.count {
       return format
     }
-    if apiKey.count <= 8 {
-      number = (apiKey.count - 4) / 2
+    if apiKey.count <= 2 * size + format.count {
+      size = (apiKey.count - size) / 2
     }
-    let maskAPIKey = String(apiKey.prefix(number)) + format + String(apiKey.suffix(number))
+    let maskAPIKey = String(apiKey.prefix(size)) + format + String(apiKey.suffix(size))
     return maskAPIKey
   }
   
