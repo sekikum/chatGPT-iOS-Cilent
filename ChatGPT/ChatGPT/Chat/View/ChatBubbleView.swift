@@ -15,7 +15,7 @@ enum Direction {
 
 struct ChatBubble<Content>: View where Content: View {
   let triangleDirection: Direction
-  let color : Color
+  let color: Color
   let paddingSize: CGFloat = 10
   let spacing: CGFloat = 0
   let imageOffsetX: CGFloat = 9
@@ -47,7 +47,6 @@ struct ChatBubble<Content>: View where Content: View {
         .foregroundColor(Color.white)
         .background(color)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadiu))
-      
       if triangleDirection == .right {
         Image(systemName: "arrowtriangle.left.fill")
           .frame(height: triHeight)
