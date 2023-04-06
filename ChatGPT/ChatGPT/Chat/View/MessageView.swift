@@ -24,21 +24,20 @@ struct MessageView: View {
     HStack(alignment: .top, spacing: spacing) {
       if message.isUser == true {
         Spacer()
-        ChatBubble(triangleDirection:  .right, color: Color("Blue"), avatar: avatarSize) {
+        ChatBubble(triangleDirection: .right, color: Color("Blue"), avatar: avatarSize) {
           Markdown(message.message)
             .padding()
             .background(Color("Blue"))
             .cornerRadius(textCornerRadius)
-            .padding(.leading, padding)
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         }
-          Image(userAvatar)
-            .resizable()
-            .scaledToFit()
-            .cornerRadius(avatarCornerRadius)
-            .frame(width: avatarSize, height: avatarSize)
-            .padding(.trailing, padding)
+        Image(userAvatar)
+          .resizable()
+          .scaledToFit()
+          .cornerRadius(avatarCornerRadius)
+          .frame(width: avatarSize, height: avatarSize)
+          .padding(.trailing, padding)
       } else {
         Image("Profile-ChatGPT")
           .resizable()
@@ -51,7 +50,6 @@ struct MessageView: View {
             .padding()
             .background(Color("Gray"))
             .cornerRadius(textCornerRadius)
-            .padding(.trailing, padding)
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         }
