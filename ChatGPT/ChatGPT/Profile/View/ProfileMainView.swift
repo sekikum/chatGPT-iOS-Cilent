@@ -24,6 +24,7 @@ struct ProfileMainView: View {
   let apiKeyLineLimit: Int = 1
   let toggleWidth: CGFloat = 50
   let buttonSize: CGFloat = 30
+  let listTopPadding: CGFloat = 1
   
   var body: some View {
     List {
@@ -119,6 +120,7 @@ struct ProfileMainView: View {
         }
       }
     }
+    .padding(.top, listTopPadding)
   }
 }
 
