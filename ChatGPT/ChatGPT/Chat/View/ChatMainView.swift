@@ -12,6 +12,10 @@ struct ChatMainView: View {
   let avatar: String
   @Binding var presentSideMenu: Bool
   let padding: CGFloat = 10
+  let frameWidth: CGFloat = 20
+  let frameHeight: CGFloat = 20
+  let imagePadding: CGFloat = 20
+  let buttonPadding: CGFloat = 24
   
   var body: some View {
     VStack {
@@ -30,13 +34,13 @@ struct ChatMainView: View {
         } label: {
           Image(systemName: "plus.bubble")
             .resizable()
-            .frame(width: 20, height: 20)
-            .padding(.top, 20)
+            .frame(width: frameWidth, height: frameHeight)
+            .padding(.top, imagePadding)
         }
         Spacer()
       }      
     }
-    .padding(.horizontal, 24)
+    .padding(.horizontal, buttonPadding)
   }
 }
 

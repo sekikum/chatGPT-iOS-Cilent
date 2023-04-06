@@ -11,7 +11,7 @@ struct SideMenu: View {
   @Binding var isShowing: Bool
   var content: AnyView
   var edgeTransition: AnyTransition = .move(edge: .leading)
-  let opacity: CGFloat = 0.8
+  let opacity: CGFloat = 0.4
 
   var body: some View {
     ZStack(alignment: .bottom) {
