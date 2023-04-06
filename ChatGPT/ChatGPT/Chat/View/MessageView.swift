@@ -18,24 +18,27 @@ struct MessageView: View {
   let avatarCornerRadius: CGFloat = 5
   let padding: CGFloat = 15
   let fontSize: Double = 16
-  
+  let spacing: CGFloat = -10
+
   var body: some View {
-    HStack(alignment: .top) {
+    HStack(alignment: .top, spacing: spacing) {
       if message.isUser == true {
         Spacer()
-        Markdown(message.message)
-          .padding()
-          .background(Color("Blue"))
-          .cornerRadius(textCornerRadius)
-          .padding(.leading, padding)
-          .textSelection(.enabled)
-          .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
-        Image(userAvatar)
-          .resizable()
-          .scaledToFit()
-          .cornerRadius(avatarCornerRadius)
-          .frame(width: avatarSize, height: avatarSize)
-          .padding(.trailing, padding)
+        ChatBubble(triangleDirection:  .right, color: Color("Blue"), avatar: avatarSize) {
+          Markdown(message.message)
+            .padding()
+            .background(Color("Blue"))
+            .cornerRadius(textCornerRadius)
+            .padding(.leading, padding)
+            .textSelection(.enabled)
+            .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
+        }
+          Image(userAvatar)
+            .resizable()
+            .scaledToFit()
+            .cornerRadius(avatarCornerRadius)
+            .frame(width: avatarSize, height: avatarSize)
+            .padding(.trailing, padding)
       } else {
         Image("Profile-ChatGPT")
           .resizable()
@@ -43,18 +46,20 @@ struct MessageView: View {
           .cornerRadius(avatarCornerRadius)
           .frame(width: avatarSize, height: avatarSize)
           .padding(.leading, padding)
-        Markdown(message.message)
-          .padding()
-          .background(Color("Gray"))
-          .cornerRadius(textCornerRadius)
-          .padding(.trailing, padding)
-          .textSelection(.enabled)
-          .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
+        ChatBubble(triangleDirection: .left, color: Color("Blue"), avatar: avatarSize) {
+          Markdown(message.message)
+            .padding()
+            .background(Color("Gray"))
+            .cornerRadius(textCornerRadius)
+            .padding(.trailing, padding)
+            .textSelection(.enabled)
+            .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
+        }
         Spacer()
       }
     }
   }
-  
+
   private var theme: Splash.Theme {
     switch self.colorScheme {
     case .dark:
