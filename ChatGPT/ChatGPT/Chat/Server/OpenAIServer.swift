@@ -46,7 +46,6 @@ extension OpenAIServer {
     AF.request(request).response { response in
       if let error = response.error {
         completionHandler(.failure(error))
-        
       } else if let data = response.data {
         completionHandler(.success(data))
       }
