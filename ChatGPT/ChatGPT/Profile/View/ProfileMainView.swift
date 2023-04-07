@@ -18,7 +18,7 @@ struct ProfileMainView: View {
   @State var urlAlertText: String = ""
   @State var isToggleOn: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
-  let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
+  let models: [String] = ["gpt-3.5", "gpt-3.5-0310", "gpt-4"]
   let initAPIKeyMessage: (String) -> Void
   let initAPIKeyImage: (String) -> Void
   let apiKeyLineLimit: Int = 1

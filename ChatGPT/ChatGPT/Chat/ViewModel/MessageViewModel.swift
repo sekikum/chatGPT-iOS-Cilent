@@ -21,7 +21,7 @@ class MessageViewModel: ObservableObject {
   
   init() {
     initOpenAI(StorageManager.restoreUser().apiKeySelect)
-    addGroups() 
+    addGroups()
   }
   
   func addGroups() {
@@ -61,6 +61,8 @@ class MessageViewModel: ObservableObject {
       model = .chat(.chatgpt0301)
     case "gpt-3.5":
       model = .chat(.chatgpt)
+    case "gpt-4":
+      model = .chat(.chatgpt4)
     default:
       model = .chat(.chatgpt)
     }
