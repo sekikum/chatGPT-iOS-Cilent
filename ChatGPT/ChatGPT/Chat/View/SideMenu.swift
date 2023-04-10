@@ -11,12 +11,13 @@ struct SideMenu: View {
   @Binding var isShowing: Bool
   var content: AnyView
   var edgeTransition: AnyTransition = .move(edge: .leading)
+  let opacity: CGFloat = 0.4
 
   var body: some View {
     ZStack(alignment: .bottom) {
-      if (isShowing) {
+      if isShowing {
         Color.black
-          .opacity(0.8)
+          .opacity(opacity)
           .onTapGesture {
             isShowing.toggle()
           }
