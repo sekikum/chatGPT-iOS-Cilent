@@ -105,9 +105,9 @@ extension OpenAIServer {
     let regex = try! NSRegularExpression(pattern: APIKeyErrorPattern, options: [])
     var formattedMessage = regex.stringByReplacingMatches(in: message, options: [], range: NSRange(location: 0, length: message.utf16.count), withTemplate: "")
     formattedMessage = formattedMessage.replacingOccurrences(
-        of: ModelErrorPattern,
-        with: "The model you selected ",
-        options: .regularExpression
+      of: ModelErrorPattern,
+      with: "The model you selected ",
+      options: .regularExpression
     )
     return formattedMessage
   }
