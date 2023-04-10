@@ -7,11 +7,16 @@
 
 import Foundation
 
-struct OpenAIError: Codable, Error {
-  var error: OpenAIErrorResult
+enum OpenAIError: Error {
+  case genericError
+  case apiError(error: OpenAIErrorResult)
 }
 
 struct OpenAIErrorResult: Codable {
+  var error: OpenAIErrorResultModel
+}
+
+struct OpenAIErrorResultModel: Codable {
   var id = UUID()
   var message: String
   let type: String
