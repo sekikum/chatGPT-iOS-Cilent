@@ -41,7 +41,7 @@ struct ChatBubble<Content>: View where Content: View {
           .frame(height: triHeight)
           .foregroundColor(color)
           .offset(x: imageOffsetX)
-          .offset(y: 0)
+          .offset(y: avatar / 2)
       }
       content()
         .foregroundColor(Color.white)
@@ -53,7 +53,7 @@ struct ChatBubble<Content>: View where Content: View {
           .foregroundColor(color)
           .rotationEffect(Angle(degrees: angleDegrees))
           .offset(x: -imageOffsetX)
-          .offset(y: (avatar - triHeight) / 2)
+          .offset(y: avatar / 2)
       }
     }
     .padding(triangleDirection == .left ? .leading : .trailing , paddingSize)
