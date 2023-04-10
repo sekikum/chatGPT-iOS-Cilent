@@ -30,15 +30,15 @@ extension OpenAIServer {
           completionHandler(.success(res))
         } catch {
           do {
-            var error = try JSONDecoder().decode(OpenAIError.self, from: success)
+            var error = try JSONDecoder().decode(OpenAIErrorResult.self, from: success)
             error.error.message = self.formatErrorMessage(error.error.message)
-            completionHandler(.failure(error))
+            completionHandler(.failure(.apiError(error: error)))
           } catch {
-            print("\(error)")
+            completionHandler(.failure(.genericError))
           }
         }
-      case .failure(let failure):
-        print(failure)
+      case .failure:
+        completionHandler(.failure(.genericError))
       }
     }
   }
@@ -66,15 +66,15 @@ extension OpenAIServer {
           completionHandler(.success(res))
         } catch {
           do {
-            var error = try JSONDecoder().decode(OpenAIError.self, from: success)
+            var error = try JSONDecoder().decode(OpenAIErrorResult.self, from: success)
             error.error.message = self.formatErrorMessage(error.error.message)
-            completionHandler(.failure(error))
+            completionHandler(.failure(.apiError(error: error)))
           } catch {
             print("\(error)")
           }
         }
-      case .failure(let failure):
-        print(failure)
+      case .failure:
+        completionHandler(.failure(.genericError))
       }
     }
   }
