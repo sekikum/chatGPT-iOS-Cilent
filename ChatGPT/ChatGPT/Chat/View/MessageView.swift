@@ -32,6 +32,7 @@ struct MessageView: View {
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         }
+        .padding(.leading,padding)
         Image(userAvatar)
           .resizable()
           .scaledToFit()
@@ -45,7 +46,7 @@ struct MessageView: View {
           .cornerRadius(avatarCornerRadius)
           .frame(width: avatarSize, height: avatarSize)
           .padding(.leading, padding)
-        ChatBubble(triangleDirection: .left, color: Color("Blue"), avatar: avatarSize) {
+        ChatBubble(triangleDirection: .left, color: Color("Gray"), avatar: avatarSize) {
           Markdown(message.message)
             .padding()
             .background(Color("Gray"))
@@ -53,6 +54,7 @@ struct MessageView: View {
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         }
+        .padding(.trailing,padding)
         Spacer()
       }
     }
