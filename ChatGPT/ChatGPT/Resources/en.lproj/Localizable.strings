@@ -27,7 +27,8 @@
 "Message cannot be empty" = "Message cannot be empty";
 "APIKey cannot be empty" = "APIKey cannot be empty";
 "BaseURL illegal" = "BaseURL illegal";
-"Please choose the correct APIKey and BaseURL" = "Please choose the correct APIKey and BaseURL";
+"Incorrect API key provided. You can find your API key at https://platform.openai.com/account/api-keys." = "Incorrect API key provided. You can find your API key at https://platform.openai.com/account/api-keys.";
+"The model you selected does not exist" = "The model you selected does not exist";
 "Do you sure you want to delete this APIKey?" = "Do you sure you want to delete this APIKey?";
 "There is no undo" = "There is no undo";
 
