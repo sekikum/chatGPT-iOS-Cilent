@@ -74,11 +74,17 @@ class MessageViewModel: ObservableObject {
     
     openAI.sendChat(with: chatMessageItems, model: model) { result in
       switch(result) {
-      case .failure(let OpenAIError.apiError(error: error)):
+      case .failure(let .apiError(error: error)):
         DispatchQueue.main.async {
           self.isShowLoading = false
           self.isShowAlert = true
           self.alertInfo = NSLocalizedString(error.error.message, comment: "")
+        }
+      case .failure(.genericError):
+        DispatchQueue.main.async {
+          self.isShowLoading = false
+          self.isShowAlert = true
+          self.alertInfo = NSLocalizedString("Check your network", comment: "")
         }
       case .success(let success):
         DispatchQueue.main.async {
@@ -90,10 +96,6 @@ class MessageViewModel: ObservableObject {
           self.isShowLoading = false
           self.saveLineToGroup(message)
         }
-      case .failure(.genericError):
-        self.isShowLoading = false
-        self.isShowAlert = true
-        self.alertInfo = NSLocalizedString("Check your network", comment: "")
       }
     }
   }
