@@ -29,6 +29,7 @@
 "BaseURL illegal" = "格式錯誤";
 "Incorrect API key provided. You can find your API key at https://platform.openai.com/account/api-keys." = "提供的 API 密碼不正確\n您可以在 https://platform.openai.com/account/api-keys 找到您的 APIKey";
 "The model you selected does not exist" = "所選模型不存在";
+"Check your network" = "檢查您的網絡";
 "Do you sure you want to delete this APIKey?" = "確定刪除此 APIKey？";
 "There is no undo" = "無法撤回";
 
