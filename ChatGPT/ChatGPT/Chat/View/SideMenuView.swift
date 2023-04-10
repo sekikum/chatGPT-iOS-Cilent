@@ -11,11 +11,19 @@ struct SideMenuView: View {
   @StateObject var viewModel: MessageViewModel
   @Binding var selectedSideMenuTab: Int
   @Binding var presentSideMenu: Bool
+  let spacing: CGFloat = 20
+  let buttonWidth: CGFloat = 200
+  let cornerRadius: CGFloat = 12
+  let lineWidth: CGFloat = 1
+  let padding: CGFloat = 100
+  let frame: CGFloat = 270
+  let groupSpacing: CGFloat = 20
+  let gruopPadding: CGFloat = 5
   
   var body: some View {
     HStack {
       ZStack{
-        VStack(alignment: .center, spacing: 20) {
+        VStack(alignment: .center, spacing: spacing) {
           Button {
             viewModel.clearContext()
             viewModel.addGroups()
@@ -25,22 +33,20 @@ struct SideMenuView: View {
               Text("New chat")
             }
             .padding(.horizontal)
-            .frame(width: 200)
-            .foregroundColor(.white)
+            .frame(width: buttonWidth)
             .padding()
             .overlay {
-              RoundedRectangle(cornerRadius: 12)
-                .stroke(lineWidth: 1)
-                .foregroundColor(.white)
+              RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(lineWidth: lineWidth)
             }
           }
           groupListView()
           Spacer()
         }
-        .padding(.top, 100)
-        .frame(width: 270)
+        .padding(.top, padding)
+        .frame(width: frame)
         .background(
-          Color.black
+          Color("Gray")
         )
       }
       Spacer()
@@ -51,18 +57,17 @@ struct SideMenuView: View {
   func groupListView() -> some View {
     List {
       ForEach(viewModel.chatGroups) { group in
-        HStack(spacing: 20) {
+        HStack(spacing: groupSpacing) {
           Image(systemName: "bubble.left.fill")
           Text(group.title)
-            .font(.system(.title))
+            .font(.system(.title2))
         }
         .listRowBackground(Color.clear)
         .onTapGesture(perform: {
           viewModel.setCurrentChat(group)
           presentSideMenu.toggle()
         })
-        .foregroundColor(.white)
-        .padding(5)
+        .padding(gruopPadding)
       }
       .listRowBackground(Color.black)
       

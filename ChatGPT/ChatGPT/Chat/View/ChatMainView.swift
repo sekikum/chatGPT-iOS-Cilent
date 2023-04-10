@@ -12,31 +12,13 @@ struct ChatMainView: View {
   let avatar: String
   @Binding var presentSideMenu: Bool
   let padding: CGFloat = 10
-  
+
   var body: some View {
     VStack {
       ChatView(viewModel: viewModel, avatar: avatar)
       InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
     }
     .padding(.bottom, padding)
-    .navigationBarItems(leading: menuButton())
-  }
-  
-  func menuButton() -> some View {
-    VStack{
-      HStack{
-        Button{
-          presentSideMenu.toggle()
-        } label: {
-          Image(systemName: "plus.bubble")
-            .resizable()
-            .frame(width: 20, height: 20)
-            .padding(.top, 20)
-        }
-        Spacer()
-      }      
-    }
-    .padding(.horizontal, 24)
   }
 }
 
