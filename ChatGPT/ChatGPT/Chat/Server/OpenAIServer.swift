@@ -8,11 +8,6 @@
 import Foundation
 import Alamofire
 
-public enum OpenAIError: Error {
-  case genericError(error: Error)
-  case decodingError(error: Error)
-}
-
 public class OpenAIServer {
   fileprivate(set) var apiKey: String?
   
@@ -34,10 +29,16 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(.decodingError(error: error)))
+          do {
+            var error = try JSONDecoder().decode(OpenAIError.self, from: success)
+            error.error.message = self.formatErrorMessage(error.error.message)
+            completionHandler(.failure(error))
+          } catch {
+            print("\(error)")
+          }
         }
       case .failure(let failure):
-        completionHandler(.failure(.genericError(error: failure)))
+        print(failure)
       }
     }
   }
@@ -64,10 +65,16 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAIImage<ImageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(.decodingError(error: error)))
+          do {
+            var error = try JSONDecoder().decode(OpenAIError.self, from: success)
+            error.error.message = self.formatErrorMessage(error.error.message)
+            completionHandler(.failure(error))
+          } catch {
+            print("\(error)")
+          }
         }
       case .failure(let failure):
-        completionHandler(.failure(.genericError(error: failure)))
+        print(failure)
       }
     }
   }
@@ -90,5 +97,18 @@ extension OpenAIServer {
     }
     
     return request
+  }
+  
+  func formatErrorMessage(_ message: String) -> String {
+    let APIKeyErrorPattern = "(?<=provided)[:\\s\\w-]+(?=\\.)"
+    let ModelErrorPattern = "The model:\\s*`gpt-[.\\d-]+`\\s*"
+    let regex = try! NSRegularExpression(pattern: APIKeyErrorPattern, options: [])
+    var formattedMessage = regex.stringByReplacingMatches(in: message, options: [], range: NSRange(location: 0, length: message.utf16.count), withTemplate: "")
+    formattedMessage = formattedMessage.replacingOccurrences(
+        of: ModelErrorPattern,
+        with: "The model you selected ",
+        options: .regularExpression
+    )
+    return formattedMessage
   }
 }

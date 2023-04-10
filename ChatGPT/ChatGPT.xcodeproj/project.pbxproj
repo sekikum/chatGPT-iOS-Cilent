@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84611B0F29DFC18C001EE08A /* OpenAIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84611B0E29DFC18C001EE08A /* OpenAIError.swift */; };
 		846729EC29B57EEA00B85594 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846729EB29B57EEA00B85594 /* InputView.swift */; };
 		846729EE29B592FC00B85594 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846729ED29B592FC00B85594 /* ChatView.swift */; };
 		846729F629B5B62800B85594 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846729F529B5B62800B85594 /* MessageModel.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84611B0E29DFC18C001EE08A /* OpenAIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIError.swift; sourceTree = "<group>"; };
 		846729EB29B57EEA00B85594 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		846729ED29B592FC00B85594 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		846729F529B5B62800B85594 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				84E8458129C981420049D5FA /* OpenAI.swift */,
 				84E8457F29C980BF0049D5FA /* Command.swift */,
 				84E8457D29C977CB0049D5FA /* OpenAIModel.swift */,
+				84611B0E29DFC18C001EE08A /* OpenAIError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 				84C7B74D29CD92C4003FAD02 /* ImageMultipleView.swift in Sources */,
 				84C7B77D29D2BFB4003FAD02 /* ImageBrowserView.swift in Sources */,
 				8A76852829D4704600696181 /* SideMenuView.swift in Sources */,
+				84611B0F29DFC18C001EE08A /* OpenAIError.swift in Sources */,
 				84C7B74729CD7546003FAD02 /* ImageViewModel.swift in Sources */,
 				84C7B78029D2DD2E003FAD02 /* ChatImageModel.swift in Sources */,
 				849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */,

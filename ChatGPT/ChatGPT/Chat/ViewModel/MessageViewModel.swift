@@ -74,11 +74,11 @@ class MessageViewModel: ObservableObject {
     
     openAI.sendChat(with: chatMessageItems, model: model) { result in
       switch(result) {
-      case .failure:
+      case .failure(let failure):
         DispatchQueue.main.async {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString("Please choose the correct APIKey and BaseURL", comment: "")
+          self.alertInfo = NSLocalizedString(failure.error.message, comment: "")
         }
       case .success(let success):
         DispatchQueue.main.async {
