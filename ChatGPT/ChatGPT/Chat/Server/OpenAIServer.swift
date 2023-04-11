@@ -29,10 +29,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown error")))
+          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
         }
       case .failure:
-        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check your network")))
+        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
       }
     }
   }
@@ -61,10 +61,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAIImage<ImageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown error")))
+          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
         }
       case .failure:
-        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check your network")))
+        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
       }
     }
   }
@@ -87,18 +87,5 @@ extension OpenAIServer {
     }
     
     return request
-  }
-  
-  func formatErrorMessage(_ message: String) -> String {
-    let APIKeyErrorPattern = "(?<=provided)[:\\s\\w-]+(?=\\.)"
-    let ModelErrorPattern = "The model:\\s*`gpt-[.\\d-]+`\\s*"
-    let regex = try! NSRegularExpression(pattern: APIKeyErrorPattern, options: [])
-    var formattedMessage = regex.stringByReplacingMatches(in: message, options: [], range: NSRange(location: 0, length: message.utf16.count), withTemplate: "")
-    formattedMessage = formattedMessage.replacingOccurrences(
-      of: ModelErrorPattern,
-      with: "The model you selected ",
-      options: .regularExpression
-    )
-    return formattedMessage
   }
 }
