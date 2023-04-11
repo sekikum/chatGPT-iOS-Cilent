@@ -21,7 +21,7 @@ class MessageViewModel: ObservableObject {
   
   init() {
     initOpenAI(StorageManager.restoreUser().apiKeySelect)
-    addGroups() 
+    addGroups()
   }
   
   func addGroups() {
@@ -61,6 +61,8 @@ class MessageViewModel: ObservableObject {
       model = .chat(.chatgpt0301)
     case "gpt-3.5":
       model = .chat(.chatgpt)
+    case "gpt-4":
+      model = .chat(.chatgpt4)
     default:
       model = .chat(.chatgpt)
     }
@@ -72,15 +74,17 @@ class MessageViewModel: ObservableObject {
     
     openAI.sendChat(with: chatMessageItems, model: model) { result in
       switch(result) {
-      case .failure:
-        DispatchQueue.main.async {
+      case .failure(let failure):
+        self.isShowLoading = false
+        self.isShowAlert = true
+        self.alertInfo = NSLocalizedString(failure.message, comment: "")
+      case .success(let success):
+        if let error = success.error {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString("Please choose the correct APIKey and BaseURL", comment: "")
-        }
-      case .success(let success):
-        DispatchQueue.main.async {
-          guard let chatMessageSystem = success.choices.first?.message else {
+          self.alertInfo = NSLocalizedString(error.code.formatErrorCode, comment: "")
+        } else {
+          guard let chatMessageSystem = success.choices?.first?.message else {
             return
           }
           let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
