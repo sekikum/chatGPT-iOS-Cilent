@@ -75,26 +75,22 @@ class MessageViewModel: ObservableObject {
     openAI.sendChat(with: chatMessageItems, model: model) { result in
       switch(result) {
       case .failure(let failure):
-        DispatchQueue.main.async {
+        self.isShowLoading = false
+        self.isShowAlert = true
+        self.alertInfo = NSLocalizedString(failure.message, comment: "")
+      case .success(let success):
+        if let error = success.error {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString(failure.message, comment: "")
-        }
-      case .success(let success):
-        DispatchQueue.main.async {
-          if let error = success.error {
-            self.isShowLoading = false
-            self.isShowAlert = true
-            self.alertInfo = NSLocalizedString(error.code, comment: "")
-          } else {
-            guard let chatMessageSystem = success.choices?.first?.message else {
-              return
-            }
-            let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
-            self.chatMessageItems.append(chatMessageSystem)
-            self.isShowLoading = false
-            self.saveLineToGroup(message)
+          self.alertInfo = NSLocalizedString(error.code, comment: "")
+        } else {
+          guard let chatMessageSystem = success.choices?.first?.message else {
+            return
           }
+          let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
+          self.chatMessageItems.append(chatMessageSystem)
+          self.isShowLoading = false
+          self.saveLineToGroup(message)
         }
       }
     }
