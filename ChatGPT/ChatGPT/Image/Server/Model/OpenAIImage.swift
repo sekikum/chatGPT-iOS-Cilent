@@ -8,7 +8,8 @@
 import Foundation
 
 public struct OpenAIImage<T: Payload>: Codable {
-  public let data: [T]
+  public let data: [T]?
+  public let error: OpenAIErrorResultModel?
 }
 
 public struct ImageResult: Payload {

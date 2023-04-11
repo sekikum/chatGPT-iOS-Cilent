@@ -18,12 +18,13 @@ struct ProfileMainView: View {
   @State var urlAlertText: String = ""
   @State var isToggleOn: Bool = false
   let profileViewModel: ProfileViewModel = ProfileViewModel()
-  let models: [String] = ["gpt-3.5", "gpt-3.5-0310"]
+  let models: [String] = ["gpt-3.5", "gpt-3.5-0310", "gpt-4"]
   let initAPIKeyMessage: (String) -> Void
   let initAPIKeyImage: (String) -> Void
   let apiKeyLineLimit: Int = 1
   let toggleWidth: CGFloat = 50
   let buttonSize: CGFloat = 30
+  let listTopPadding: CGFloat = 1
   
   var body: some View {
     List {
@@ -119,6 +120,7 @@ struct ProfileMainView: View {
         }
       }
     }
+    .padding(.top, listTopPadding)
   }
 }
 

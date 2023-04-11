@@ -8,11 +8,6 @@
 import Foundation
 import Alamofire
 
-public enum OpenAIError: Error {
-  case genericError(error: Error)
-  case decodingError(error: Error)
-}
-
 public class OpenAIServer {
   fileprivate(set) var apiKey: String?
   
@@ -34,21 +29,22 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(.decodingError(error: error)))
+          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
         }
-      case .failure(let failure):
-        completionHandler(.failure(.genericError(error: failure)))
+      case .failure:
+        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
       }
     }
   }
   
   private func makeRequest(request: URLRequest, completionHandler: @escaping (Result<Data, Error>) -> Void) {
     AF.request(request).response { response in
-      if let error = response.error {
-        completionHandler(.failure(error))
-        
-      } else if let data = response.data {
-        completionHandler(.success(data))
+      DispatchQueue.main.async {
+        if let error = response.error {
+          completionHandler(.failure(error))
+        } else if let data = response.data {
+          completionHandler(.success(data))
+        }
       }
     }
   }
@@ -65,10 +61,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAIImage<ImageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(.decodingError(error: error)))
+          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
         }
-      case .failure(let failure):
-        completionHandler(.failure(.genericError(error: failure)))
+      case .failure:
+        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
       }
     }
   }

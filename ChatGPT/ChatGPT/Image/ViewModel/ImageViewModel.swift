@@ -33,15 +33,20 @@ class ImageViewModel: ObservableObject {
     isShowLoading = true
     openAI.sendChatImage(with: prompt, number: imageSet.number, size: imageSet.size) { result in
       switch(result) {
-      case .failure:
-        DispatchQueue.main.async {
+      case .failure(let failure):
+        self.isShowLoading = false
+        self.isShowAlert = true
+        self.alertInfo = NSLocalizedString(failure.message, comment: "")
+      case .success(let success):
+        if let error = success.error {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString("Please choose the correct APIKey and BaseURL", comment: "")
-        }
-      case .success(let success):
-        DispatchQueue.main.async {
-          self.imagesURL = success.data.map({ $0.url })
+          self.alertInfo = NSLocalizedString(error.code.formatErrorCode, comment: "")
+        } else {
+          guard let data = success.data else {
+            return
+          }
+          self.imagesURL = data.map({ $0.url })
           self.isShowLoading = false
         }
       }
