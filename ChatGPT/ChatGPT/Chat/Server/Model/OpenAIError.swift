@@ -7,12 +7,7 @@
 
 import Foundation
 
-struct OpenAIError: Error {
-  var type: String
-  var message: String
-}
-
-public struct OpenAIErrorResultModel: Equatable, Codable, Hashable {
+public struct OpenAIErrorModel: Equatable, Codable, Hashable {
   var message: String
   let type: String
   let code: String

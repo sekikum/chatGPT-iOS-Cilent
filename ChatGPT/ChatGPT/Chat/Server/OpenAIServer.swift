@@ -17,7 +17,7 @@ public class OpenAIServer {
 }
 
 extension OpenAIServer {
-  func sendChat(with messages: [ChatMessage], model: OpenAIModel, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, OpenAIError>) -> Void) {
+  func sendChat(with messages: [ChatMessage], model: OpenAIModel, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
     let endpoint = OpenAIEndpoint.chat
     let body = ChatConversation(messages: messages, model: model.modelName, maxTokens: maxTokens)
     let request = prepareRequest(endpoint, body: body)
@@ -29,10 +29,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
+          completionHandler(.failure(ClientError(type: "unknown_error", message: "Unknown Error")))
         }
       case .failure:
-        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
+        completionHandler(.failure(ClientError(type: "network_error", message: "Check Your Network")))
       }
     }
   }
@@ -49,7 +49,7 @@ extension OpenAIServer {
     }
   }
   
-  func sendChatImage(with prompt: String, number: Int, size: String, completionHandler: @escaping (Result<OpenAIImage<ImageResult>, OpenAIError>) -> Void) {
+  func sendChatImage(with prompt: String, number: Int, size: String, completionHandler: @escaping (Result<OpenAIImage<ImageResult>, ClientError>) -> Void) {
     let endpoint = OpenAIEndpoint.image
     let body = ChatImageModel(prompt: prompt, n: number, size: size)
     let request = prepareRequest(endpoint, body: body)
@@ -61,10 +61,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAIImage<ImageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
+          completionHandler(.failure(ClientError(type: "unknown_error", message: "Unknown Error")))
         }
       case .failure:
-        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
+        completionHandler(.failure(ClientError(type: "network_error", message: "Check Your Network")))
       }
     }
   }

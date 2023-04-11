@@ -11,7 +11,7 @@ public protocol Payload: Codable { }
 
 public struct OpenAI<T: Payload>: Codable {
   public let choices: [T]?
-  public let error: OpenAIErrorResultModel?
+  public let error: OpenAIErrorModel?
 }
 
 public struct MessageResult: Payload {
