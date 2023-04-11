@@ -39,10 +39,12 @@ extension OpenAIServer {
   
   private func makeRequest(request: URLRequest, completionHandler: @escaping (Result<Data, Error>) -> Void) {
     AF.request(request).response { response in
-      if let error = response.error {
-        completionHandler(.failure(error))
-      } else if let data = response.data {
-        completionHandler(.success(data))
+      DispatchQueue.main.async {
+        if let error = response.error {
+          completionHandler(.failure(error))
+        } else if let data = response.data {
+          completionHandler(.success(data))
+        }
       }
     }
   }
