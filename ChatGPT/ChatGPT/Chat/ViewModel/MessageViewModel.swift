@@ -82,7 +82,7 @@ class MessageViewModel: ObservableObject {
         if let error = success.error {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString(error.code.formatErrorCode, comment: "")
+          self.alertInfo = NSLocalizedString(error.code.replaceUnderlineToWhiteSpaceAndCapitalized, comment: "")
         } else {
           guard let chatMessageSystem = success.choices?.first?.message else {
             return
