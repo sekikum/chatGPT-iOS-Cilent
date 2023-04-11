@@ -19,15 +19,17 @@ struct MessageView: View {
   let padding: CGFloat = 15
   let fontSize: Double = 16
   let spacing: CGFloat = -10
+  let userColor = Color("Blue")
+  let systemColor = Color("Gray")
 
   var body: some View {
     HStack(alignment: .top, spacing: spacing) {
       if message.isUser == true {
         Spacer()
-        ChatBubble(triangleDirection: .right, color: Color("Blue"), avatar: avatarSize) {
+        ChatBubble(triangleDirection: .right, color: userColor, avatar: avatarSize) {
           Markdown(message.message)
             .padding()
-            .background(Color("Blue"))
+            .background(userColor)
             .cornerRadius(textCornerRadius)
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
@@ -46,10 +48,10 @@ struct MessageView: View {
           .cornerRadius(avatarCornerRadius)
           .frame(width: avatarSize, height: avatarSize)
           .padding(.leading, padding)
-        ChatBubble(triangleDirection: .left, color: Color("Gray"), avatar: avatarSize) {
+        ChatBubble(triangleDirection: .left, color: systemColor, avatar: avatarSize) {
           Markdown(message.message)
             .padding()
-            .background(Color("Gray"))
+            .background(systemColor)
             .cornerRadius(textCornerRadius)
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
