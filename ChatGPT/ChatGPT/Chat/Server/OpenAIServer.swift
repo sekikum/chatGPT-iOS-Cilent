@@ -29,16 +29,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          do {
-            var error = try JSONDecoder().decode(OpenAIErrorResult.self, from: success)
-            error.error.message = self.formatErrorMessage(error.error.message)
-            completionHandler(.failure(.apiError(error: error)))
-          } catch {
-            completionHandler(.failure(.genericError))
-          }
+          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown error")))
         }
       case .failure:
-        completionHandler(.failure(.genericError))
+        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check your network")))
       }
     }
   }
@@ -65,16 +59,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAIImage<ImageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          do {
-            var error = try JSONDecoder().decode(OpenAIErrorResult.self, from: success)
-            error.error.message = self.formatErrorMessage(error.error.message)
-            completionHandler(.failure(.apiError(error: error)))
-          } catch {
-            print("\(error)")
-          }
+          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown error")))
         }
       case .failure:
-        completionHandler(.failure(.genericError))
+        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check your network")))
       }
     }
   }
