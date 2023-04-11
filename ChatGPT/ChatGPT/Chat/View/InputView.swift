@@ -18,7 +18,6 @@ struct InputView: View {
   let textFieldLimit = 4
   let buttonSize: CGFloat = 30
   let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
-  let modelSelect = StorageManager.restoreUser().modelSelect
   
   var body: some View {
     HStack {
@@ -51,7 +50,7 @@ struct InputView: View {
   }
   
   func sendMessageAction() {
-    send(textfieldText, modelSelect)
+    send(textfieldText, StorageManager.restoreUser().modelSelect)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
