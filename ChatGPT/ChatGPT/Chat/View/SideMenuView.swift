@@ -25,7 +25,8 @@ struct SideMenuView: View {
       ZStack{
         VStack(alignment: .center, spacing: spacing) {
           Button {
-            viewModel.clearContext()
+          //  viewModel.clearContext()
+            viewModel.clearScreen()
             viewModel.addGroups()
           } label: {
             HStack {
@@ -52,15 +53,22 @@ struct SideMenuView: View {
       Spacer()
     }
     .background(.clear)
+    .onAppear {
+    //  viewModel.fetchGroups()
+      
+    }
   }
   
   func groupListView() -> some View {
     List {
-      ForEach(viewModel.chatGroups) { group in
+      ForEach(viewModel.chatGroups, id: \.timestamp) { group in
         HStack(spacing: groupSpacing) {
           Image(systemName: "bubble.left.fill")
-          Text(group.title)
-            .font(.system(.title2))
+
+          if let flag = group.flag {
+            Text(flag)
+              .font(.system(.title2))
+          }
         }
         .listRowBackground(Color.clear)
         .onTapGesture(perform: {
