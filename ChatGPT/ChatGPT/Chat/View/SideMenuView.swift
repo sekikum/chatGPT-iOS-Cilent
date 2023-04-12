@@ -25,7 +25,6 @@ struct SideMenuView: View {
       ZStack{
         VStack(alignment: .center, spacing: spacing) {
           Button {
-          //  viewModel.clearContext()
             viewModel.clearScreen()
             viewModel.addGroups()
           } label: {
@@ -53,10 +52,6 @@ struct SideMenuView: View {
       Spacer()
     }
     .background(.clear)
-    .onAppear {
-    //  viewModel.fetchGroups()
-      
-    }
   }
   
   func groupListView() -> some View {
