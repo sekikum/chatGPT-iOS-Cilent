@@ -22,17 +22,50 @@ extension OpenAIServer {
     let body = ChatConversation(messages: messages, model: model.modelName, maxTokens: maxTokens)
     let request = prepareRequest(endpoint, body: body)
     
-    makeRequest(request: request) { response in
+    makeStreamRequest(request: request) { response in
       switch response {
       case .success(let success):
         do {
-          let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
-          completionHandler(.success(res))
+          let string = String(decoding: success, as: UTF8.self)
+          if string.hasPrefix("{\n    \"error\":") {
+            let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
+            completionHandler(.success(res))
+          }
+          let lines = string.components(separatedBy: "\n")
+          for line in lines {
+            if line.hasPrefix("data: [DONE]") {
+              return
+            }
+            if line.hasPrefix("data: ") {
+              let jsonString = line.replacingOccurrences(of: "data: ", with: "")
+              guard let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                return
+              }
+              let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: jsonData)
+              completionHandler(.success(res))
+            }
+          }
         } catch {
           completionHandler(.failure(ClientError(type: "unknown_error", message: "Unknown Error")))
         }
       case .failure:
         completionHandler(.failure(ClientError(type: "network_error", message: "Check Your Network")))
+      }
+    }
+  }
+  
+  private func makeStreamRequest(request: URLRequest, completionHandler: @escaping (Result<Data, Error>) -> Void) {
+    AF.streamRequest(request).responseStream { stream in
+      switch stream.event {
+      case let .stream(result):
+        switch result {
+        case let .success(data):
+          completionHandler(.success(data))
+        case let .failure(error):
+          completionHandler(.failure(error))
+        }
+      case .complete:
+        return
       }
     }
   }
