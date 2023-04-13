@@ -53,7 +53,6 @@ class MessageViewModel: ObservableObject {
     if let group = self.group {
       saveChatLine(group, content: content)
       self.messageItems.append(content)
-      
     }
   }
 
@@ -156,7 +155,6 @@ class MessageViewModel: ObservableObject {
   func clearScreen() {
     chatMessageItems = []
     messageItems = []
-    
   }
   
   func trimMessage(_ message: String) -> String {
@@ -222,7 +220,6 @@ extension MessageViewModel {
       saveContext()
     }
   }
-  
 }
 
 extension ChatGroup {
@@ -231,8 +228,7 @@ extension ChatGroup {
     self.flag = content
     self.index = Int32(index)
     self.timestamp = Date()
-  }
-  
+  }  
 }
 
 extension ChatLine {
