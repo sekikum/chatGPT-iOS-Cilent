@@ -23,7 +23,6 @@ class MessageViewModel: ObservableObject {
   @Published var chatGroups: [ChatGroup] = []
   var groupCount: Int = 0
   var group: ChatGroup?
-  var groupCountEntity: [ChatGroupCount]?
   
   init() {
     container = NSPersistentContainer(name: "ChatLog")
@@ -33,37 +32,36 @@ class MessageViewModel: ObservableObject {
       }
     }
     fetchGroups()
-    fetchGroupsCount()
-    initOpenAI(StorageManager.restoreUser().apiKeySelect)
     
-    if self.groupCount == 0 {
-      self.groupCount += 1
-      self.group = saveChatGroup("chat \(self.groupCount)")
-      fetchGroups()
+    if let last = self.chatGroups.last {
+      groupCount = Int(last.index)
+    } else {
+      addGroups()
     }
-  }
+    
+    initOpenAI(StorageManager.restoreUser().apiKeySelect)  }
   
   func addGroups() {
-    self.groupCount += 1
-    self.group = saveChatGroup("chat \(self.groupCount)")
+    groupCount += 1
+    group = saveChatGroup("chat \(groupCount)")
     fetchGroups()
   }
   
   func saveLineToGroup(_ content: MessageModel) {
-    if let group = self.group {
+    if let group = group {
       saveChatLine(group, content: content)
-      self.messageItems.append(content)
+      messageItems.append(content)
     }
   }
-
+  
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
-    self.messageItems.removeAll()
-
+    messageItems.removeAll()
+    
     if let contains = group.contains {
       for line in contains.array {
         if let l = line as? ChatLine {
-          self.messageItems.append(MessageModel(message: l.message ?? "", isUser: l.isUser))
+          messageItems.append(MessageModel(message: l.message ?? "", isUser: l.isUser))
         }
       }
     }
@@ -173,19 +171,19 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-
+  
   func saveChatGroup(_ content: String) -> ChatGroup {
     let group = ChatGroup(context: container.viewContext, content: content, index: self.groupCount)
     saveContext()
     return group
   }
-
+  
   func saveChatLine(_ group: ChatGroup, content: MessageModel) {
     let entity = ChatLine(context: container.viewContext, content: content)
     group.addToContains(entity)
     saveContext()
   }
-
+  
   func fetchGroups() {
     let request = NSFetchRequest<ChatGroup>(entityName: "ChatGroup")
     request.sortDescriptors = [NSSortDescriptor(keyPath: \ChatGroup.timestamp, ascending: true)]
@@ -197,18 +195,7 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-
-  func fetchGroupsCount() {
-    var index: Int32 = 0
-    for group in chatGroups {
-      if index < group.index {
-        index = group.index
-      }
-    }
-    self.groupCount = Int(index)
-    print(self.groupCount)
-  }
-
+  
   func deleteChatGroup() {
     if let group = self.group,
        let contains = group.contains {
