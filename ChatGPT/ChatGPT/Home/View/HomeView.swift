@@ -31,7 +31,7 @@ struct HomeView: View {
           ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar, presentSideMenu: $presentSideMenu)
             .navigationBarItems(leading: menuButton(),trailing: Menu {
               Button(action: messageViewModel.clearContext) {
-                Text("Clear")
+                Text("Clear") 
                 Image(systemName: "xmark.circle.fill")
               }
             } label: {
