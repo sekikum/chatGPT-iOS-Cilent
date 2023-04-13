@@ -84,10 +84,10 @@ class MessageViewModel: ObservableObject {
           self.isShowAlert = true
           self.alertInfo = NSLocalizedString(error.code.replaceUnderlineToWhiteSpaceAndCapitalized, comment: "")
         } else {
-          guard let chatMessageSystem = success.choices?.first?.message else {
+          guard let chatMessageSystem = success.choices?.first?.delta else {
             return
           }
-          let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
+          let message = MessageModel(message: self.trimMessage(chatMessageSystem.content ?? ""), isUser: false)
           self.chatMessageItems.append(chatMessageSystem)
           self.isShowLoading = false
           self.saveLineToGroup(message)

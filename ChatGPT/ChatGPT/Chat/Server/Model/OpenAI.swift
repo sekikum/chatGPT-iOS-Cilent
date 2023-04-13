@@ -15,5 +15,5 @@ public struct OpenAI<T: Payload>: Codable {
 }
 
 public struct MessageResult: Payload {
-  public let message: ChatMessage
+  public let delta: ChatMessage
 }
