@@ -32,7 +32,9 @@ class MessageViewModel: ObservableObject {
   
   func saveLineToGroup(_ content: MessageModel) {
     self.group?.message.append(content)
-    self.messageItems.append(content)
+    if content.isUser {
+      self.messageItems.append(content)
+    }
   }
   
   func setCurrentChat(_ group: ChatContentGroup) {
@@ -49,6 +51,7 @@ class MessageViewModel: ObservableObject {
   
   func sendMessage(_ message: String, _ modelString: String) {
     var model: OpenAIModel
+    var messageString: String = ""
     
     if message.isEmpty {
       isShowAlert = true
@@ -87,10 +90,20 @@ class MessageViewModel: ObservableObject {
           guard let chatMessageSystem = success.choices?.first?.delta else {
             return
           }
-          let message = MessageModel(message: self.trimMessage(chatMessageSystem.content ?? ""), isUser: false)
-          self.chatMessageItems.append(chatMessageSystem)
+          if chatMessageSystem.content == nil && chatMessageSystem.role == nil {
+            self.chatMessageItems.append(ChatMessage(role: .system, content: messageString))
+            self.saveLineToGroup(MessageModel(message: messageString, isUser: false))
+          }
+          messageString += chatMessageSystem.content ?? ""
+          if let isUser = chatMessageSystem.role {
+            self.messageItems.append(MessageModel(message: messageString, isUser: false))
+          } else {
+            if let lastMessageItems = self.messageItems.last {
+              let updatedMessageItems = MessageModel(message: messageString, isUser: lastMessageItems.isUser)
+              self.messageItems[self.messageItems.count - 1] = updatedMessageItems
+            }
+          }
           self.isShowLoading = false
-          self.saveLineToGroup(message)
         }
       }
     }
