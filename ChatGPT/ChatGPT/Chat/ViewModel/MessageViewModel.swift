@@ -90,12 +90,10 @@ class MessageViewModel: ObservableObject {
           }
           if !self.isStreamingMessage {
             self.openAI.streamRequest?.cancel()
-            self.chatMessageItems.append(ChatMessage(role: .system, content: messageString))
-            self.saveLineToGroup(MessageModel(message: messageString, isUser: false))
+            self.saveSystemMessage(messageString)
           }
           if success.choices?.first?.finish_reason != nil {
-            self.chatMessageItems.append(ChatMessage(role: .system, content: messageString))
-            self.saveLineToGroup(MessageModel(message: messageString, isUser: false))
+            self.saveSystemMessage(messageString)
             self.isStreamingMessage = false
           }
           messageString += chatMessageSystem.content ?? ""
@@ -117,6 +115,11 @@ class MessageViewModel: ObservableObject {
     self.isShowAlert = true
     self.alertInfo = NSLocalizedString(errorMessage, comment: "")
     self.isStreamingMessage = false
+  }
+  
+  func saveSystemMessage(_ message: String) {
+    self.chatMessageItems.append(ChatMessage(role: .system, content: message))
+    self.saveLineToGroup(MessageModel(message: message, isUser: false))
   }
   
   func clearContext() {
