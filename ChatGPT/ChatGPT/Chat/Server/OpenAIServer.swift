@@ -10,6 +10,7 @@ import Alamofire
 
 public class OpenAIServer {
   fileprivate(set) var apiKey: String?
+  var streamRequest: DataStreamRequest?
   
   public init(authAPIKey: String) {
     self.apiKey = authAPIKey
@@ -17,22 +18,55 @@ public class OpenAIServer {
 }
 
 extension OpenAIServer {
-  func sendChat(with messages: [ChatMessage], model: OpenAIModel, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, OpenAIError>) -> Void) {
+  func sendChat(with messages: [ChatMessage], model: OpenAIModel, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
     let endpoint = OpenAIEndpoint.chat
     let body = ChatConversation(messages: messages, model: model.modelName, maxTokens: maxTokens)
     let request = prepareRequest(endpoint, body: body)
     
-    makeRequest(request: request) { response in
+    makeStreamRequest(request: request) { response in
       switch response {
       case .success(let success):
         do {
-          let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
-          completionHandler(.success(res))
+          let string = String(decoding: success, as: UTF8.self)
+          if string.hasPrefix("{\n    \"error\":") {
+            let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
+            completionHandler(.success(res))
+          }
+          let lines = string.components(separatedBy: "\n")
+          for line in lines {
+            if line.hasPrefix("data: [DONE]") {
+              return
+            }
+            if line.hasPrefix("data: ") {
+              let jsonString = line.replacingOccurrences(of: "data: ", with: "")
+              guard let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+                return
+              }
+              let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: jsonData)
+              completionHandler(.success(res))
+            }
+          }
         } catch {
-          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
+          completionHandler(.failure(ClientError(type: "unknown_error", message: "Unknown Error")))
         }
       case .failure:
-        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
+        completionHandler(.failure(ClientError(type: "network_error", message: "Check Your Network")))
+      }
+    }
+  }
+  
+  private func makeStreamRequest(request: URLRequest, completionHandler: @escaping (Result<Data, Error>) -> Void) {
+    streamRequest = AF.streamRequest(request).responseStream { stream in
+      switch stream.event {
+      case let .stream(result):
+        switch result {
+        case let .success(data):
+          completionHandler(.success(data))
+        case let .failure(error):
+          completionHandler(.failure(error))
+        }
+      case .complete:
+        return
       }
     }
   }
@@ -49,7 +83,7 @@ extension OpenAIServer {
     }
   }
   
-  func sendChatImage(with prompt: String, number: Int, size: String, completionHandler: @escaping (Result<OpenAIImage<ImageResult>, OpenAIError>) -> Void) {
+  func sendChatImage(with prompt: String, number: Int, size: String, completionHandler: @escaping (Result<OpenAIImage<ImageResult>, ClientError>) -> Void) {
     let endpoint = OpenAIEndpoint.image
     let body = ChatImageModel(prompt: prompt, n: number, size: size)
     let request = prepareRequest(endpoint, body: body)
@@ -61,10 +95,10 @@ extension OpenAIServer {
           let res = try JSONDecoder().decode(OpenAIImage<ImageResult>.self, from: success)
           completionHandler(.success(res))
         } catch {
-          completionHandler(.failure(OpenAIError(type: "unknown_error", message: "Unknown Error")))
+          completionHandler(.failure(ClientError(type: "unknown_error", message: "Unknown Error")))
         }
       case .failure:
-        completionHandler(.failure(OpenAIError(type: "network_error", message: "Check Your Network")))
+        completionHandler(.failure(ClientError(type: "network_error", message: "Check Your Network")))
       }
     }
   }

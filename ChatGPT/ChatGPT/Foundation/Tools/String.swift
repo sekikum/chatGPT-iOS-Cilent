@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-  var formatErrorCode: String {
+  var replaceUnderlineToWhiteSpaceAndCapitalized: String {
     return self.replacingOccurrences(of: "_", with: " ").capitalized
   }
 }

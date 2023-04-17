@@ -9,7 +9,7 @@ import Foundation
 
 struct MessageModel: Identifiable, Equatable, Hashable {
   let id = UUID()
-  let message: String
+  var message: String
   let isUser: Bool
 }
 
