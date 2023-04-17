@@ -93,7 +93,7 @@ class MessageViewModel: ObservableObject {
             self.chatMessageItems.append(ChatMessage(role: .system, content: messageString))
             self.saveLineToGroup(MessageModel(message: messageString, isUser: false))
           }
-          if chatMessageSystem.content == nil && chatMessageSystem.role == nil {
+          if success.choices?.first?.finish_reason != nil {
             self.chatMessageItems.append(ChatMessage(role: .system, content: messageString))
             self.saveLineToGroup(MessageModel(message: messageString, isUser: false))
             self.isStreamingMessage = false
