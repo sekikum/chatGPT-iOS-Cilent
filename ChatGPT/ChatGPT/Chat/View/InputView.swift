@@ -10,6 +10,7 @@ import SwiftUI
 struct InputView: View {
   @State var textfieldText: String = ""
   @Binding var isShowAlert: Bool
+  @Binding var isStreamingMessage: Bool
   let alertInfo: String
   let send: (String, String) -> Void
   let isShowLoading: Bool
@@ -31,8 +32,8 @@ struct InputView: View {
         .keyboardType(.default)
         .disableAutocorrection(true)
         .autocapitalization(.none)
-      Button(action: sendMessageAction) {
-        Image(systemName: "paperplane.circle.fill")
+      Button(action: buttonAction) {
+        Image(systemName: isStreamingMessage ? "stop.circle.fill" : "paperplane.circle.fill")
           .resizable()
           .frame(width: buttonSize, height: buttonSize)
       }
@@ -49,6 +50,14 @@ struct InputView: View {
     }
   }
   
+  func buttonAction() {
+    if isStreamingMessage {
+      isStreamingMessage = false
+    } else {
+      sendMessageAction()
+    }
+  }
+  
   func sendMessageAction() {
     send(textfieldText, StorageManager.restoreUser().modelSelect)
     textfieldText = ""
@@ -58,6 +67,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), alertInfo: "", send: {_,_  in }, isShowLoading: false)
+    InputView(isShowAlert: .constant(false), isStreamingMessage: .constant(false), alertInfo: "", send: {_,_  in }, isShowLoading: false)
   }
 }

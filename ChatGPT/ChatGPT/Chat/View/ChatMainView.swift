@@ -16,7 +16,7 @@ struct ChatMainView: View {
   var body: some View {
     VStack {
       ChatView(viewModel: viewModel, avatar: avatar)
-      InputView(isShowAlert: $viewModel.isShowAlert, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
+      InputView(isShowAlert: $viewModel.isShowAlert, isStreamingMessage: $viewModel.isStreamingMessage, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
     }
     .padding(.bottom, padding)
   }
