@@ -41,7 +41,7 @@ class ImageViewModel: ObservableObject {
         if let error = success.error {
           self.isShowLoading = false
           self.isShowAlert = true
-          self.alertInfo = NSLocalizedString(error.code.formatErrorCode, comment: "")
+          self.alertInfo = NSLocalizedString(error.code.replaceUnderlineToWhiteSpaceAndCapitalized, comment: "")
         } else {
           guard let data = success.data else {
             return

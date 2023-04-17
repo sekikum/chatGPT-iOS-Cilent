@@ -13,6 +13,7 @@ class MessageViewModel: ObservableObject {
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
+  @Published var isStreamingMessage: Bool = false
   var openAI = OpenAIServer(authAPIKey: "")
   var chatMessageItems: [ChatMessage] = []
   
@@ -32,7 +33,9 @@ class MessageViewModel: ObservableObject {
   
   func saveLineToGroup(_ content: MessageModel) {
     self.group?.message.append(content)
-    self.messageItems.append(content)
+    if content.isUser {
+      self.messageItems.append(content)
+    }
   }
   
   func setCurrentChat(_ group: ChatContentGroup) {
@@ -49,7 +52,7 @@ class MessageViewModel: ObservableObject {
   
   func sendMessage(_ message: String, _ modelString: String) {
     var model: OpenAIModel
-    
+    var messageString: String = ""
     if message.isEmpty {
       isShowAlert = true
       alertInfo = NSLocalizedString("Message cannot be empty", comment: "")
@@ -71,39 +74,56 @@ class MessageViewModel: ObservableObject {
     let chatMessageUser = ChatMessage(role: .user, content: message)
     chatMessageItems.append(chatMessageUser)
     isShowLoading = true
+    isStreamingMessage = true
     
     openAI.sendChat(with: chatMessageItems, model: model) { result in
       switch(result) {
       case .failure(let failure):
-        self.isShowLoading = false
-        self.isShowAlert = true
-        self.alertInfo = NSLocalizedString(failure.message, comment: "")
+        self.setErrorData(errorMessage: failure.message)
       case .success(let success):
         if let error = success.error {
-          self.isShowLoading = false
-          self.isShowAlert = true
-          self.alertInfo = NSLocalizedString(error.code.formatErrorCode, comment: "")
+          self.setErrorData(errorMessage: error.code.replaceUnderlineToWhiteSpaceAndCapitalized)
         } else {
-          guard let chatMessageSystem = success.choices?.first?.message else {
+          self.isShowLoading = false
+          guard let chatMessageSystem = success.choices?.first?.delta else {
             return
           }
-          let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
-          self.chatMessageItems.append(chatMessageSystem)
-          self.isShowLoading = false
-          self.saveLineToGroup(message)
+          if !self.isStreamingMessage {
+            self.openAI.streamRequest?.cancel()
+            self.saveSystemMessage(messageString)
+          }
+          if success.choices?.first?.finishReason != nil {
+            self.saveSystemMessage(messageString)
+            self.isStreamingMessage = false
+          }
+          messageString += chatMessageSystem.content ?? ""
+          if let _ = chatMessageSystem.role {
+            self.messageItems.append(MessageModel(message: messageString, isUser: false))
+          } else {
+            if self.messageItems.last != nil {
+              let updatedMessageItems = MessageModel(message: messageString, isUser: false)
+              self.messageItems[self.messageItems.count - 1] = updatedMessageItems
+            }
+          }
         }
       }
     }
   }
   
+  func setErrorData(errorMessage: String) {
+    self.isShowLoading = false
+    self.isShowAlert = true
+    self.alertInfo = NSLocalizedString(errorMessage, comment: "")
+    self.isStreamingMessage = false
+  }
+  
+  func saveSystemMessage(_ message: String) {
+    self.chatMessageItems.append(ChatMessage(role: .system, content: message))
+    self.saveLineToGroup(MessageModel(message: message, isUser: false))
+  }
+  
   func clearContext() {
     chatMessageItems = []
     messageItems = []
-  }
-  
-  func trimMessage(_ message: String) -> String {
-    var resultMessage = message.trimmingCharacters(in: CharacterSet.whitespaces)
-    resultMessage = resultMessage.trimmingCharacters(in: CharacterSet.newlines)
-    return resultMessage
   }
 }

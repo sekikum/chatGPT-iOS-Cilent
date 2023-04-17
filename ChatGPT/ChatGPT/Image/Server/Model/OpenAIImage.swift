@@ -9,7 +9,7 @@ import Foundation
 
 public struct OpenAIImage<T: Payload>: Codable {
   public let data: [T]?
-  public let error: OpenAIErrorResultModel?
+  public let error: OpenAIErrorModel?
 }
 
 public struct ImageResult: Payload {
