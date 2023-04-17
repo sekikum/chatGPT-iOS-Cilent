@@ -14,7 +14,12 @@ public struct OpenAI<T: Payload>: Codable {
   public let error: OpenAIErrorModel?
 }
 
-public struct MessageResult: Payload {
+public struct MessageResult: Payload, Codable {
   public let delta: ChatMessage
-  public let finish_reason: String?
+  public let finishReason: String?
+  
+  enum CodingKeys: String, CodingKey {
+    case delta
+    case finishReason = "finish_reason"
+  }
 }
