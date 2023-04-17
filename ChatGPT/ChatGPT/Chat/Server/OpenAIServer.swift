@@ -10,6 +10,7 @@ import Alamofire
 
 public class OpenAIServer {
   fileprivate(set) var apiKey: String?
+  var streamRequest: DataStreamRequest?
   
   public init(authAPIKey: String) {
     self.apiKey = authAPIKey
@@ -55,7 +56,7 @@ extension OpenAIServer {
   }
   
   private func makeStreamRequest(request: URLRequest, completionHandler: @escaping (Result<Data, Error>) -> Void) {
-    AF.streamRequest(request).responseStream { stream in
+    streamRequest = AF.streamRequest(request).responseStream { stream in
       switch stream.event {
       case let .stream(result):
         switch result {
