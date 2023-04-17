@@ -92,7 +92,7 @@ class MessageViewModel: ObservableObject {
             self.openAI.streamRequest?.cancel()
             self.saveSystemMessage(messageString)
           }
-          if success.choices?.first?.finish_reason != nil {
+          if success.choices?.first?.finishReason != nil {
             self.saveSystemMessage(messageString)
             self.isStreamingMessage = false
           }
