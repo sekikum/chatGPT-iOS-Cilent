@@ -21,11 +21,13 @@ struct MessageView: View {
   let spacing: CGFloat = -10
   let userColor = Color("Blue")
   let systemColor = Color("Gray")
+  let clearFrame: CGFloat = 30
 
   var body: some View {
     HStack(alignment: .top, spacing: spacing) {
       if message.isUser == true {
         Spacer()
+        Color.clear.frame(width: clearFrame)
         ChatBubble(triangleDirection: .right, color: userColor, avatar: avatarSize) {
           Markdown(message.message)
             .padding()
@@ -34,7 +36,7 @@ struct MessageView: View {
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         }
-        .padding(.leading,padding)
+        .padding(.leading, padding)
         Image(userAvatar)
           .resizable()
           .scaledToFit()
@@ -56,7 +58,8 @@ struct MessageView: View {
             .textSelection(.enabled)
             .markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
         }
-        .padding(.trailing,padding)
+        .padding(.trailing, padding)
+        Color.clear.frame(width: clearFrame)
         Spacer()
       }
     }
