@@ -58,11 +58,13 @@ class MessageViewModel: ObservableObject {
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
     messageItems.removeAll()
+    sendMessageItems.removeAll()
 
     if let contains = group.contains {
       for line in contains.array {
         if let line = line as? ChatLine {
           messageItems.append(MessageModel(message: line.message ?? "", isUser: line.isUser))
+          sendMessageItems.append(ChatMessage(role: line.isUser ? .user : .system, content: line.message ?? ""))
         }
       }
     }
