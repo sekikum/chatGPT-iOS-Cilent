@@ -31,17 +31,17 @@ class MessageViewModel: ObservableObject {
       }
     }
     fetchGroups()
-
+    
     if let first = self.chatGroups.first {
       setCurrentChat(first)
     }
-      groupCount = self .chatGroups.count
+    groupCount = self .chatGroups.count
     if groupCount == 0 {
       addGroup()
     }
-
+    
     initOpenAI(StorageManager.restoreUser().apiKeySelect)  }
-
+  
   func addGroup() {
     groupCount += 1
     group = saveChatGroup("chat \(groupCount)")
@@ -56,12 +56,12 @@ class MessageViewModel: ObservableObject {
       }
     }
   }
-
+  
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
     messageItems.removeAll()
     sendMessageItems.removeAll()
-
+    
     if let contains = group.contains {
       for line in contains.array {
         if let line = line as? ChatLine {
@@ -159,12 +159,6 @@ class MessageViewModel: ObservableObject {
     sendMessageItems = []
     messageItems = []
   }
-  
-  func trimMessage(_ message: String) -> String {
-    var resultMessage = message.trimmingCharacters(in: CharacterSet.whitespaces)
-    resultMessage = resultMessage.trimmingCharacters(in: CharacterSet.newlines)
-    return resultMessage
-  }
 }
 
 extension MessageViewModel {
@@ -176,13 +170,13 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-
+  
   func saveChatGroup(_ content: String) -> ChatGroup {
     let group = ChatGroup(context: container.viewContext, content: content)
     saveContext()
     return group
   }
-
+  
   func saveChatLine(_ group: ChatGroup, content: MessageModel) {
     let entity = ChatLine(context: container.viewContext, content: content)
     group.addToContains(entity)
@@ -192,7 +186,7 @@ extension MessageViewModel {
   func fetchGroups() {
     let request = NSFetchRequest<ChatGroup>(entityName: "ChatGroup")
     request.sortDescriptors = [NSSortDescriptor(keyPath: \ChatGroup.timestamp, ascending: true)]
-
+    
     do {
       chatGroups = try container.viewContext.fetch(request)
     }
@@ -200,7 +194,7 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-
+  
   func deleteChatGroup() {
     if let group = self.group,
        let contains = group.contains {
