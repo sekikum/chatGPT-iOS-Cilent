@@ -27,7 +27,7 @@ struct ChatBubble<Content>: View where Content: View {
   init(triangleDirection: Direction,
        color: Color,
        avatar: CGFloat,
-       @ViewBuilder content: @escaping () -> Content) {
+       content: @escaping () -> Content) {
     self.triangleDirection = triangleDirection
     self.color = color
     self.content = content
