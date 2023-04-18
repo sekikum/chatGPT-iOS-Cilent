@@ -142,7 +142,7 @@ class MessageViewModel: ObservableObject {
   }
   
   func saveSystemMessage(_ message: String) {
-    self.chatMessageItems.append(ChatMessage(role: .system, content: message))
+    self.sendMessageItems.append(ChatMessage(role: .system, content: message))
     self.saveLineToGroup(MessageModel(message: message, isUser: false))
   }
   
