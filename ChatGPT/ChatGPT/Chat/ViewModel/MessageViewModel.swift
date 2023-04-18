@@ -51,7 +51,9 @@ class MessageViewModel: ObservableObject {
   func saveLineToGroup(_ content: MessageModel) {
     if let group = group {
       saveChatLine(group, content: content)
-      messageItems.append(content)
+      if content.isUser {
+        messageItems.append(content)
+      }
     }
   }
 
