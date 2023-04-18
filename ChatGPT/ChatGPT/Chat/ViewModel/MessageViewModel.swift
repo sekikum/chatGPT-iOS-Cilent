@@ -15,10 +15,9 @@ class MessageViewModel: ObservableObject {
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
   var openAI = OpenAIServer(authAPIKey: "")
-  var chatMessageItems: [ChatMessage] = []
+  var sendMessageItems: [ChatMessage] = []
   
   let container: NSPersistentContainer
-  
   @Published var chatGroups: [ChatGroup] = []
   var groupCount: Int = 0
   var group: ChatGroup?
@@ -31,16 +30,18 @@ class MessageViewModel: ObservableObject {
       }
     }
     fetchGroups()
-    
-    if let last = self.chatGroups.last {
-      groupCount = Int(last.index)
-    } else {
-      addGroups()
+
+    if let first = self.chatGroups.first {
+      setCurrentChat(first)
     }
-    
+      groupCount = self .chatGroups.count
+    if groupCount == 0 {
+      addGroup()
+    }
+
     initOpenAI(StorageManager.restoreUser().apiKeySelect)  }
-  
-  func addGroups() {
+
+  func addGroup() {
     groupCount += 1
     group = saveChatGroup("chat \(groupCount)")
     fetchGroups()
@@ -52,15 +53,15 @@ class MessageViewModel: ObservableObject {
       messageItems.append(content)
     }
   }
-  
+
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
     messageItems.removeAll()
-    
+
     if let contains = group.contains {
       for line in contains.array {
-        if let l = line as? ChatLine {
-          messageItems.append(MessageModel(message: l.message ?? "", isUser: l.isUser))
+        if let line = line as? ChatLine {
+          messageItems.append(MessageModel(message: line.message ?? "", isUser: line.isUser))
         }
       }
     }
@@ -92,10 +93,10 @@ class MessageViewModel: ObservableObject {
     
     self.saveLineToGroup(MessageModel(message: message, isUser: true))
     let chatMessageUser = ChatMessage(role: .user, content: message)
-    chatMessageItems.append(chatMessageUser)
+    sendMessageItems.append(chatMessageUser)
     isShowLoading = true
     
-    openAI.sendChat(with: chatMessageItems, model: model) { result in
+    openAI.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
       case .failure(let failure):
         self.isShowLoading = false
@@ -111,7 +112,7 @@ class MessageViewModel: ObservableObject {
             return
           }
           let message = MessageModel(message: self.trimMessage(chatMessageSystem.content), isUser: false)
-          self.chatMessageItems.append(chatMessageSystem)
+          self.sendMessageItems.append(chatMessageSystem)
           self.isShowLoading = false
           self.saveLineToGroup(message)
         }
@@ -120,14 +121,14 @@ class MessageViewModel: ObservableObject {
   }
   
   func clearContext() {
-    chatMessageItems = []
+    sendMessageItems = []
     messageItems = []
     deleteChatGroup()
     fetchGroups()
   }
   
   func clearScreen() {
-    chatMessageItems = []
+    sendMessageItems = []
     messageItems = []
   }
   
@@ -147,13 +148,13 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-  
+
   func saveChatGroup(_ content: String) -> ChatGroup {
-    let group = ChatGroup(context: container.viewContext, content: content, index: self.groupCount)
+    let group = ChatGroup(context: container.viewContext, content: content)
     saveContext()
     return group
   }
-  
+
   func saveChatLine(_ group: ChatGroup, content: MessageModel) {
     let entity = ChatLine(context: container.viewContext, content: content)
     group.addToContains(entity)
@@ -163,7 +164,7 @@ extension MessageViewModel {
   func fetchGroups() {
     let request = NSFetchRequest<ChatGroup>(entityName: "ChatGroup")
     request.sortDescriptors = [NSSortDescriptor(keyPath: \ChatGroup.timestamp, ascending: true)]
-    
+
     do {
       chatGroups = try container.viewContext.fetch(request)
     }
@@ -171,27 +172,22 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-  
+
   func deleteChatGroup() {
     if let group = self.group,
        let contains = group.contains {
-      for item in contains.array {
-        if let i = item as? ChatLine {
-          self.container.viewContext.delete(i)
-        }
-      }
+      self.group?.removeFromContains(contains)
       saveContext()
     }
   }
 }
 
 extension ChatGroup {
-  convenience init(context: NSManagedObjectContext, content: String, index: Int) {
+  convenience init(context: NSManagedObjectContext, content: String) {
     self.init(context: context)
     self.flag = content
-    self.index = Int32(index)
     self.timestamp = Date()
-  }  
+  }
 }
 
 extension ChatLine {
