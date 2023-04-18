@@ -122,16 +122,21 @@ class MessageViewModel: ObservableObject {
             self.saveSystemMessage(messageString)
             self.isStreamingMessage = false
           }
-          messageString += chatMessageSystem.content ?? ""
-          if let _ = chatMessageSystem.role {
-            self.messageItems.append(MessageModel(message: messageString, isUser: false))
-          } else {
-            if self.messageItems.last != nil {
-              let updatedMessageItems = MessageModel(message: messageString, isUser: false)
-              self.messageItems[self.messageItems.count - 1] = updatedMessageItems
-            }
-          }
+          self.updateSystemMessage(chatMessageSystem)
         }
+      }
+    }
+  }
+  
+  func updateSystemMessage(_ message: ChatMessage) {
+    if let role = message.role {
+      messageItems.append(MessageModel(message: "", isUser: false))
+    } else {
+      if let messageItem = messageItems.last {
+        var messageString = messageItem.message
+        messageString += message.content ?? ""
+        let updatedMessageItems = MessageModel(message: messageString, isUser: false)
+        self.messageItems[self.messageItems.count - 1] = updatedMessageItems
       }
     }
   }
