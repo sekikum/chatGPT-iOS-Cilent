@@ -40,7 +40,8 @@ class MessageViewModel: ObservableObject {
       addGroup()
     }
     
-    initOpenAI(StorageManager.restoreUser().apiKeySelect)  }
+    initOpenAI(StorageManager.restoreUser().apiKeySelect)
+  }
   
   func addGroup() {
     groupCount += 1
