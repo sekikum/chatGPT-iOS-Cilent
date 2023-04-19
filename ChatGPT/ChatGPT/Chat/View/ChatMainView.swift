@@ -26,6 +26,10 @@ struct ChatMainView: View {
         Text("Clear")
         Image(systemName: "xmark.circle")
       }
+      Button(action: addPrompt) {
+        Text("Prompt")
+        Image(systemName: "pencil.circle")
+      }
     } label: {
       Image(systemName: "ellipsis")
     })
@@ -39,6 +43,10 @@ struct ChatMainView: View {
         }
       }
     }
+  }
+  
+  func addPrompt() {
+    
   }
 }
 

@@ -37,6 +37,7 @@
 // Button
 "Delete" = "刪除";
 "Clear" = "清除";
+"Prompt" = "主題";
 
 // Section
 "No APIKey added" = "APIKey 未添加";

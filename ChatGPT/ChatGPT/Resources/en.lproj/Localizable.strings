@@ -37,6 +37,7 @@
 // Button
 "Delete" = "Delete";
 "Clear" = "Clear";
+"Prompt" = "Prompt";
 
 // Section
 "No APIKey added" = "No APIKey added";
