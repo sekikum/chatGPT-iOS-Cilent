@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-/// Hide the navigation back button title
-//extension UINavigationController {
-//  open override func viewWillLayoutSubviews() {
-//      super.viewWillLayoutSubviews()
-//    navigationBar.topItem?.backButtonDisplayMode = .minimal
-//    }
-//  }
-
 struct ChatGroupView: View {
   @StateObject var viewModel: MessageViewModel
   let avatar: String

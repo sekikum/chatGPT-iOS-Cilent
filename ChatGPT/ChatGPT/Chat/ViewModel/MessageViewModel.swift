@@ -70,7 +70,6 @@ class MessageViewModel: ObservableObject {
         }
       }
     }
-
   }
   
   func initOpenAI(_ apiKey: String) {
