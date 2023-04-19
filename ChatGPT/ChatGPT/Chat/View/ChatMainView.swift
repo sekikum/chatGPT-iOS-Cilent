@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ChatMainView: View {
   @StateObject var viewModel: MessageViewModel
+  @State var prompt: String = ""
+  @State var isShowSetPrompt: Bool = false
   let avatar: String
   let padding: CGFloat = 10
   var group: ChatGroup?
@@ -26,12 +28,21 @@ struct ChatMainView: View {
         Text("Clear")
         Image(systemName: "xmark.circle")
       }
-      Button(action: addPrompt) {
+      Button(action: {
+        isShowSetPrompt = true
+      }) {
         Text("Prompt")
         Image(systemName: "pencil.circle")
       }
     } label: {
       Image(systemName: "ellipsis")
+    })
+    .alert("Set Prompt", isPresented: $isShowSetPrompt, actions: {
+      TextField("Input prompt", text: $prompt)
+      Button("OK", action: {})
+      Button("Cancel", role: .cancel, action: {})
+    }, message: {
+      Text("What do you want chatGPT to do")
     })
     .onAppear {
       if isCreateGroup {
@@ -43,10 +54,6 @@ struct ChatMainView: View {
         }
       }
     }
-  }
-  
-  func addPrompt() {
-    
   }
 }
 

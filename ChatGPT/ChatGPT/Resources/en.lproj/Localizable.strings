@@ -17,6 +17,7 @@
 "Input your BaseURL" = "Input your BaseURL";
 "Input new APIKey" = "Input new APIKey";
 "Loading" = "Loading";
+"Input prompt" = "Input prompt";
 
 // Picker
 "Chose GPT model" = "Chose GPT model";
@@ -33,11 +34,14 @@
 "Model Not Found" = "Model Not Found";
 "Do you sure you want to delete this APIKey?" = "Do you sure you want to delete this APIKey?";
 "There is no undo" = "There is no undo";
+"Set Prompt" = "Set Prompt";
+"What do you want chatGPT to do" = "What do you want chatGPT to do";
 
 // Button
 "Delete" = "Delete";
 "Clear" = "Clear";
 "Prompt" = "Prompt";
+"Cancel" = "Cancel";
 
 // Section
 "No APIKey added" = "No APIKey added";
