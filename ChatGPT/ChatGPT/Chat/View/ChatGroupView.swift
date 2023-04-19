@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatGroupView: View {
   @StateObject var viewModel: MessageViewModel
   let avatar: String
+  let listPadding: CGFloat = 8
 
   var body: some View {
     NavigationStack {
