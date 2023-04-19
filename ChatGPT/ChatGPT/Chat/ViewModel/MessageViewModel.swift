@@ -31,37 +31,37 @@ class MessageViewModel: ObservableObject {
       }
     }
     fetchGroups()
-
+    
     if let first = self.chatGroups.first {
       setCurrentChat(first)
     }
-      groupCount = self .chatGroups.count
+    groupCount = self.chatGroups.count
     if groupCount == 0 {
       addGroup()
     }
-
+    
     initOpenAI(StorageManager.restoreUser().apiKeySelect)  }
-
+  
   func addGroup() {
     groupCount += 1
     group = saveChatGroup("chat \(groupCount)")
     fetchGroups()
   }
   
-  func saveLineToGroup(_ content: MessageModel) {
+  func saveLineToGroup() {
+    guard let content = messageItems.last else {
+      return
+    }
     if let group = group {
       saveChatLine(group, content: content)
-      if content.isUser {
-        messageItems.append(content)
-      }
     }
   }
-
+  
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
     messageItems.removeAll()
     sendMessageItems.removeAll()
-
+    
     if let contains = group.contains {
       for line in contains.array {
         if let line = line as? ChatLine {
@@ -78,12 +78,15 @@ class MessageViewModel: ObservableObject {
   
   func sendMessage(_ message: String, _ modelString: String) {
     var model: OpenAIModel
-    var messageString: String = ""
     if message.isEmpty {
       isShowAlert = true
       alertInfo = NSLocalizedString("Message cannot be empty", comment: "")
       return
     }
+    
+    updateUserMessage(message)
+    isShowLoading = true
+    isStreamingMessage = true
     
     switch(modelString) {
     case "gpt-3.5-0310":
@@ -95,12 +98,6 @@ class MessageViewModel: ObservableObject {
     default:
       model = .chat(.chatgpt)
     }
-    
-    self.saveLineToGroup(MessageModel(message: message, isUser: true))
-    let chatMessageUser = ChatMessage(role: .user, content: message)
-    sendMessageItems.append(chatMessageUser)
-    isShowLoading = true
-    isStreamingMessage = true
     
     openAI.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
@@ -116,36 +113,55 @@ class MessageViewModel: ObservableObject {
           }
           if !self.isStreamingMessage {
             self.openAI.streamRequest?.cancel()
-            self.saveSystemMessage(messageString)
+            self.saveLineToGroup()
           }
           if success.choices?.first?.finishReason != nil {
-            self.saveSystemMessage(messageString)
             self.isStreamingMessage = false
+            self.saveLineToGroup()
           }
-          messageString += chatMessageSystem.content ?? ""
-          if let _ = chatMessageSystem.role {
-            self.messageItems.append(MessageModel(message: messageString, isUser: false))
-          } else {
-            if self.messageItems.last != nil {
-              let updatedMessageItems = MessageModel(message: messageString, isUser: false)
-              self.messageItems[self.messageItems.count - 1] = updatedMessageItems
-            }
-          }
+          self.updateSystemMessage(chatMessageSystem)
         }
       }
     }
   }
   
-  func setErrorData(errorMessage: String) {
-    self.isShowLoading = false
-    self.isShowAlert = true
-    self.alertInfo = NSLocalizedString(errorMessage, comment: "")
-    self.isStreamingMessage = false
+  func updateSystemMessage(_ message: ChatMessage) {
+    if message.role != nil {
+      messageItems.append(MessageModel(message: "", isUser: false))
+    } else {
+      if let messageItem = messageItems.last {
+        var messageString = messageItem.message
+        messageString += message.content ?? ""
+        let updatedMessageItems = MessageModel(message: messageString, isUser: false)
+        messageItems[messageItems.count - 1] = updatedMessageItems
+      }
+    }
+    sendMessageItems = convertToChatMessages(from: messageItems)
   }
   
-  func saveSystemMessage(_ message: String) {
-    self.sendMessageItems.append(ChatMessage(role: .system, content: message))
-    self.saveLineToGroup(MessageModel(message: message, isUser: false))
+  func updateUserMessage(_ messageString: String) {
+    messageItems.append(MessageModel(message: messageString, isUser: true))
+    sendMessageItems = convertToChatMessages(from: messageItems)
+    saveLineToGroup()
+  }
+  
+  func convertToChatMessages(from messageModels: [MessageModel]) -> [ChatMessage] {
+    return messageModels.map { messageModel in
+      let role: ChatRole
+      if messageModel.isUser {
+        role = .user
+      } else {
+        role = .system
+      }
+      return ChatMessage(role: role, content: messageModel.message)
+    }
+  }
+  
+  func setErrorData(errorMessage: String) {
+    isShowLoading = false
+    isShowAlert = true
+    alertInfo = NSLocalizedString(errorMessage, comment: "")
+    isStreamingMessage = false
   }
   
   func clearContext() {
@@ -159,12 +175,6 @@ class MessageViewModel: ObservableObject {
     sendMessageItems = []
     messageItems = []
   }
-  
-  func trimMessage(_ message: String) -> String {
-    var resultMessage = message.trimmingCharacters(in: CharacterSet.whitespaces)
-    resultMessage = resultMessage.trimmingCharacters(in: CharacterSet.newlines)
-    return resultMessage
-  }
 }
 
 extension MessageViewModel {
@@ -176,13 +186,13 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-
+  
   func saveChatGroup(_ content: String) -> ChatGroup {
     let group = ChatGroup(context: container.viewContext, content: content)
     saveContext()
     return group
   }
-
+  
   func saveChatLine(_ group: ChatGroup, content: MessageModel) {
     let entity = ChatLine(context: container.viewContext, content: content)
     group.addToContains(entity)
@@ -192,7 +202,7 @@ extension MessageViewModel {
   func fetchGroups() {
     let request = NSFetchRequest<ChatGroup>(entityName: "ChatGroup")
     request.sortDescriptors = [NSSortDescriptor(keyPath: \ChatGroup.timestamp, ascending: true)]
-
+    
     do {
       chatGroups = try container.viewContext.fetch(request)
     }
@@ -200,7 +210,7 @@ extension MessageViewModel {
       print(error.localizedDescription)
     }
   }
-
+  
   func deleteChatGroup() {
     if let group = self.group,
        let contains = group.contains {
