@@ -14,8 +14,7 @@ struct HomeView: View {
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
   @State var selectImage: Int = .init()
-  @State var presentSideMenu = false
-  @State var selectedSideMenuTab = 0
+
   @State var images: [Image] = .init(repeating: Image(systemName: "arrow.clockwise"), count: StorageManager.restoreImageSet().number)
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
@@ -28,15 +27,7 @@ struct HomeView: View {
     ZStack {
       TabView(selection: $selectionTab) {
         NavigationView {
-          ChatMainView(viewModel: messageViewModel, avatar: userViewModel.user.avatar, presentSideMenu: $presentSideMenu)
-            .navigationBarItems(leading: menuButton(),trailing: Menu {
-              Button(action: messageViewModel.clearContext) {
-                Text("Clear") 
-                Image(systemName: "xmark.circle.fill")
-              }
-            } label: {
-              Image(systemName: "ellipsis")
-            })
+          ChatGroupView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
         }
         .tabItem {
           Label("Chat", systemImage: "message.fill")
@@ -84,31 +75,11 @@ struct HomeView: View {
           }
           .tag(HomeTab.me)
       }
-      
-      SideMenu(
-        isShowing: $presentSideMenu,
-        content: AnyView(
-          SideMenuView(viewModel: messageViewModel, selectedSideMenuTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)
-        ))
     }
     .overlay {
       ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $images)
     }
     .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
-  }
-
-  func menuButton() -> some View {
-    VStack{
-      HStack{
-        Button{
-          presentSideMenu.toggle()
-        } label: {
-          Image(systemName: "plus.bubble")
-            .resizable()
-        }
-        Spacer()
-      }
-    }
   }
 }
 

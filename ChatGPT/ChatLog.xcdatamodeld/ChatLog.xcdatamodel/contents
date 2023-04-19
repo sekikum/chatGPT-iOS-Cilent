@@ -2,16 +2,16 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ChatGroup" representedClassName="ChatGroup" syncable="YES" codeGenerationType="class">
         <attribute name="flag" attributeType="String"/>
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="contains" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ChatLine" inverseName="belongs" inverseEntity="ChatLine"/>
     </entity>
     <entity name="ChatGroupCount" representedClassName="ChatGroupCount" syncable="YES" codeGenerationType="class">
         <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="ChatLine" representedClassName="ChatLine" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="isUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isUser" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="message" attributeType="String"/>
         <relationship name="belongs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatGroup" inverseName="contains" inverseEntity="ChatGroup"/>
     </entity>
 </model>
