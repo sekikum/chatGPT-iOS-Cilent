@@ -48,12 +48,12 @@ class MessageViewModel: ObservableObject {
     fetchGroups()
   }
   
-  func saveLineToGroup(_ content: MessageModel) {
+  func saveLineToGroup() {
+    guard let content = messageItems.last else {
+      return
+    }
     if let group = group {
       saveChatLine(group, content: content)
-      if content.isUser {
-        messageItems.append(content)
-      }
     }
   }
   
@@ -78,12 +78,15 @@ class MessageViewModel: ObservableObject {
   
   func sendMessage(_ message: String, _ modelString: String) {
     var model: OpenAIModel
-    var messageString: String = ""
     if message.isEmpty {
       isShowAlert = true
       alertInfo = NSLocalizedString("Message cannot be empty", comment: "")
       return
     }
+    
+    updateUserMessage(message)
+    isShowLoading = true
+    isStreamingMessage = true
     
     switch(modelString) {
     case "gpt-3.5-0310":
@@ -95,12 +98,6 @@ class MessageViewModel: ObservableObject {
     default:
       model = .chat(.chatgpt)
     }
-    
-    self.saveLineToGroup(MessageModel(message: message, isUser: true))
-    let chatMessageUser = ChatMessage(role: .user, content: message)
-    sendMessageItems.append(chatMessageUser)
-    isShowLoading = true
-    isStreamingMessage = true
     
     openAI.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
@@ -116,11 +113,11 @@ class MessageViewModel: ObservableObject {
           }
           if !self.isStreamingMessage {
             self.openAI.streamRequest?.cancel()
-            self.saveSystemMessage(messageString)
+            self.saveLineToGroup()
           }
           if success.choices?.first?.finishReason != nil {
-            self.saveSystemMessage(messageString)
             self.isStreamingMessage = false
+            self.saveLineToGroup()
           }
           self.updateSystemMessage(chatMessageSystem)
         }
@@ -129,28 +126,42 @@ class MessageViewModel: ObservableObject {
   }
   
   func updateSystemMessage(_ message: ChatMessage) {
-    if let role = message.role {
+    if message.role != nil {
       messageItems.append(MessageModel(message: "", isUser: false))
     } else {
       if let messageItem = messageItems.last {
         var messageString = messageItem.message
         messageString += message.content ?? ""
         let updatedMessageItems = MessageModel(message: messageString, isUser: false)
-        self.messageItems[self.messageItems.count - 1] = updatedMessageItems
+        messageItems[messageItems.count - 1] = updatedMessageItems
       }
+    }
+    sendMessageItems = convertToChatMessages(from: messageItems)
+  }
+  
+  func updateUserMessage(_ messageString: String) {
+    messageItems.append(MessageModel(message: messageString, isUser: true))
+    sendMessageItems = convertToChatMessages(from: messageItems)
+    saveLineToGroup()
+  }
+  
+  func convertToChatMessages(from messageModels: [MessageModel]) -> [ChatMessage] {
+    return messageModels.map { messageModel in
+      let role: ChatRole
+      if messageModel.isUser {
+        role = .user
+      } else {
+        role = .system
+      }
+      return ChatMessage(role: role, content: messageModel.message)
     }
   }
   
   func setErrorData(errorMessage: String) {
-    self.isShowLoading = false
-    self.isShowAlert = true
-    self.alertInfo = NSLocalizedString(errorMessage, comment: "")
-    self.isStreamingMessage = false
-  }
-  
-  func saveSystemMessage(_ message: String) {
-    self.sendMessageItems.append(ChatMessage(role: .system, content: message))
-    self.saveLineToGroup(MessageModel(message: message, isUser: false))
+    isShowLoading = false
+    isShowAlert = true
+    alertInfo = NSLocalizedString(errorMessage, comment: "")
+    isStreamingMessage = false
   }
   
   func clearContext() {
