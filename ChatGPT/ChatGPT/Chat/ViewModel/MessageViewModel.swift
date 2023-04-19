@@ -35,7 +35,7 @@ class MessageViewModel: ObservableObject {
     if let first = self.chatGroups.first {
       setCurrentChat(first)
     }
-    groupCount = self .chatGroups.count
+    groupCount = self.chatGroups.count
     if groupCount == 0 {
       addGroup()
     }
