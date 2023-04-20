@@ -11,18 +11,24 @@ struct ChatGroupView: View {
   @StateObject var viewModel: MessageViewModel
   let avatar: String
   let listPadding: CGFloat = 8
-
+  
   var body: some View {
     NavigationStack {
-      List(viewModel.chatGroups, id: \.self) { group in
-        if let flag = group.flag {
-          NavigationLink {
-            ChatMainView(viewModel: viewModel, avatar: avatar, group: group)
-          } label: {
-            Label(flag, systemImage: "bubble.left")
-              .font(.system(.title2))
+      List {
+        ForEach(viewModel.chatGroups, id: \.self) { group in
+          if let flag = group.flag {
+            NavigationLink {
+              ChatMainView(viewModel: viewModel, avatar: avatar, group: group)
+            } label: {
+              Label(flag, systemImage: "bubble.left")
+            }
+            .padding(.vertical, 8)
           }
-          .padding(.vertical, 8)
+        }
+        .onDelete { indexSet in
+          for index in indexSet {
+            viewModel.deleteGroup(index)
+          }
         }
       }
       .navigationTitle("Chat")

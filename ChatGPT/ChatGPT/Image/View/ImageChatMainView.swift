@@ -61,6 +61,9 @@ struct ImageChatMainView: View {
         }
     )
     .ignoresSafeArea(.keyboard, edges: .bottom)
+    .gesture(DragGesture().onChanged{ _ in
+      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    })
   }
   
   func sendPrompt() {

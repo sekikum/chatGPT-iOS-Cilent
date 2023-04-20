@@ -121,6 +121,12 @@ struct ProfileMainView: View {
       }
     }
     .padding(.top, listTopPadding)
+    .gesture(DragGesture().onChanged{ _ in
+      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    })
+    .onTapGesture {
+      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
   }
 }
 
