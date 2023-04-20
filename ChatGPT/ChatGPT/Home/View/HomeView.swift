@@ -26,13 +26,11 @@ struct HomeView: View {
   var body: some View {
     ZStack {
       TabView(selection: $selectionTab) {
-        NavigationView {
-          ChatGroupView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
-        }
-        .tabItem {
-          Label("Chat", systemImage: "message.fill")
-        }
-        .tag(HomeTab.chat)
+        ChatGroupView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
+      }
+      .tabItem {
+        Label("Chat", systemImage: "message.fill")
+          .tag(HomeTab.chat)
         
         NavigationView {
           ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, images: $images, avatar: userViewModel.user.avatar)
