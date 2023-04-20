@@ -37,6 +37,7 @@ struct ChatView: View {
       }
       .onChange(of: viewModel.messageItems) { newValue in
         proxy.scrollTo(newValue.last?.id)
+
       }
     }
   }
