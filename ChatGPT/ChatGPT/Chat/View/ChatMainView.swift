@@ -11,6 +11,7 @@ struct ChatMainView: View {
   @StateObject var viewModel: MessageViewModel
   @Binding var prompt: String
   @State var isShowSetPrompt: Bool = false
+  @State var promptTemp: String = ""
   let avatar: String
   let padding: CGFloat = 10
   let subtitleLineLimit: Int = 1
@@ -45,6 +46,7 @@ struct ChatMainView: View {
       }
       Button(action: {
         isShowSetPrompt = true
+        promptTemp = prompt
       }) {
         Text("Prompt")
         Image(systemName: "pencil.circle")
@@ -57,7 +59,9 @@ struct ChatMainView: View {
       Button("OK", action: {
         viewModel.savePrompt()
       })
-      Button("Cancel", role: .cancel, action: {})
+      Button("Cancel", role: .cancel, action: {
+        prompt = promptTemp
+      })
     }, message: {
       Text("What do you want chatGPT to do")
     })
