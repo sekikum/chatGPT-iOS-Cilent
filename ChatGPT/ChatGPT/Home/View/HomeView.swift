@@ -14,7 +14,7 @@ struct HomeView: View {
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
   @State var selectImage: Int = .init()
-
+  
   @State var images: [Image] = .init(repeating: Image(systemName: "arrow.clockwise"), count: StorageManager.restoreImageSet().number)
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
@@ -27,9 +27,9 @@ struct HomeView: View {
     ZStack {
       TabView(selection: $selectionTab) {
         ChatGroupView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
-      }
-      .tabItem {
-        Label("Chat", systemImage: "message.fill")
+          .tabItem {
+            Label("Chat", systemImage: "message.fill")
+          }
           .tag(HomeTab.chat)
         
         NavigationView {
