@@ -49,7 +49,7 @@ class MessageViewModel: ObservableObject {
 
   func addGroup() {
     groupCount += 1
-    group = dataRespository.saveChatGroup("chat \(groupCount)")
+    group = dataRespository.saveChatGroup("Chat \(groupCount)")
     chatGroups = dataRespository.fetchData()
   }
 
