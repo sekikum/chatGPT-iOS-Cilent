@@ -15,6 +15,7 @@ class MessageViewModel: ObservableObject {
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
   @Published var isStreamingMessage: Bool = false
+  @Published var prompt: String = ""
   var openAI = OpenAIServer(authAPIKey: "")
   var sendMessageItems: [ChatMessage] = []
 
@@ -151,15 +152,16 @@ class MessageViewModel: ObservableObject {
   }
 
   func convertToChatMessages(from messageModels: [MessageModel]) -> [ChatMessage] {
-    return messageModels.map { messageModel in
-      let role: ChatRole
-      if messageModel.isUser {
-        role = .user
-      } else {
-        role = .system
-      }
+    var chatMessages: [ChatMessage] = []
+    if !prompt.isEmpty {
+      chatMessages.append(ChatMessage(role: .assistant, content: prompt))
+    }
+    let convertedMessages = messageModels.map { messageModel in
+      let role: ChatRole = messageModel.isUser ? .user : .system
       return ChatMessage(role: role, content: messageModel.message)
     }
+    chatMessages.append(contentsOf: convertedMessages)
+    return chatMessages
   }
 
   func setErrorData(errorMessage: String) {
