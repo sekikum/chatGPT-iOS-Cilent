@@ -13,6 +13,7 @@ struct ChatMainView: View {
   @State var isShowSetPrompt: Bool = false
   let avatar: String
   let padding: CGFloat = 10
+  let subtitleLineLimit: Int = 1
   var group: ChatGroup?
   var isCreateGroup: Bool = false
 
@@ -22,7 +23,21 @@ struct ChatMainView: View {
       InputView(isShowAlert: $viewModel.isShowAlert, isStreamingMessage: $viewModel.isStreamingMessage, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
     }
     .padding(.bottom, padding)
-    .navigationTitle((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
+    .navigationBarTitleDisplayMode(.inline)
+    .toolbar {
+      ToolbarItem(placement: .principal) {
+        VStack {
+          Text((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
+            .font(.headline)
+          if !prompt.isEmpty {
+            Text(prompt)
+              .font(.subheadline)
+              .foregroundColor(.secondary)
+              .lineLimit(subtitleLineLimit)
+          }
+        }
+      }
+    }
     .navigationBarItems(trailing: Menu {
       Button(action: viewModel.clearContext) {
         Text("Clear")
