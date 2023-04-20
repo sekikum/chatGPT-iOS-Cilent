@@ -54,7 +54,9 @@ struct ChatMainView: View {
     })
     .alert("Set Prompt", isPresented: $isShowSetPrompt, actions: {
       TextField("Input prompt", text: $prompt)
-      Button("OK", action: {})
+      Button("OK", action: {
+        viewModel.savePrompt()
+      })
       Button("Cancel", role: .cancel, action: {})
     }, message: {
       Text("What do you want chatGPT to do")

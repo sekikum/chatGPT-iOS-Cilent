@@ -13,6 +13,7 @@ protocol DataRespository {
   func fetchData() -> [ChatGroup]
   func saveChatGroup(_ content: String) -> ChatGroup
   func saveChatLine(_ group: ChatGroup, content: MessageModel)
+  func savePrompt(_ group: ChatGroup, content: String)
   func deleteGroup(_ group: ChatGroup)
   func deleteGroupContains(_ group: ChatGroup)
 }
@@ -47,6 +48,11 @@ class CoreDataRespository: DataRespository {
   func saveChatLine(_ group: ChatGroup, content: MessageModel) {
     let entity = ChatLine(context: container.viewContext, content: content)
     group.addToContains(entity)
+    saveContext()
+  }
+  
+  func savePrompt(_ group: ChatGroup, content: String) {
+    group.prompt = content
     saveContext()
   }
 

@@ -62,11 +62,18 @@ class MessageViewModel: ObservableObject {
       dataRespository.saveChatLine(group, content: content)
     }
   }
+  
+  func savePrompt() {
+    if let group = group {
+      dataRespository.savePrompt(group, content: prompt)
+    }
+  }
 
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
     messageItems.removeAll()
     sendMessageItems.removeAll()
+    prompt = group.prompt ?? ""
 
     if let contains = group.contains {
       for line in contains.array {
@@ -174,6 +181,7 @@ class MessageViewModel: ObservableObject {
   func clearContext() {
     sendMessageItems = []
     messageItems = []
+    prompt = ""
     if let group = self.group {
       dataRespository.deleteGroupContains(group)
     }
@@ -183,6 +191,7 @@ class MessageViewModel: ObservableObject {
   func clearScreen() {
     sendMessageItems = []
     messageItems = []
+    prompt = ""
   }
 }
 
