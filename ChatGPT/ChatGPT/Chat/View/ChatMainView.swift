@@ -20,7 +20,7 @@ struct ChatMainView: View {
       InputView(isShowAlert: $viewModel.isShowAlert, isStreamingMessage: $viewModel.isStreamingMessage, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
     }
     .padding(.bottom, padding)
-    .navigationTitle((isCreateGroup ? "New Chat" : group?.flag) ?? "unknown" )
+    .navigationTitle((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
     .navigationBarItems(trailing: Menu {
       Button(action: viewModel.clearContext) {
         Text("Clear")
@@ -31,6 +31,7 @@ struct ChatMainView: View {
     })
     .onAppear {
       if isCreateGroup {
+        viewModel.clearScreen()
         viewModel.addGroup()
       } else {
         if let group = group {

@@ -14,7 +14,7 @@ struct HomeView: View {
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
   @State var selectImage: Int = .init()
-
+  
   @State var images: [Image] = .init(repeating: Image(systemName: "arrow.clockwise"), count: StorageManager.restoreImageSet().number)
   let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
@@ -26,13 +26,11 @@ struct HomeView: View {
   var body: some View {
     ZStack {
       TabView(selection: $selectionTab) {
-        NavigationView {
-          ChatGroupView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
-        }
-        .tabItem {
-          Label("Chat", systemImage: "message.fill")
-        }
-        .tag(HomeTab.chat)
+        ChatGroupView(viewModel: messageViewModel, avatar: userViewModel.user.avatar)
+          .tabItem {
+            Label("Chat", systemImage: "message.fill")
+          }
+          .tag(HomeTab.chat)
         
         NavigationView {
           ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, images: $images, avatar: userViewModel.user.avatar)
@@ -79,7 +77,6 @@ struct HomeView: View {
     .overlay {
       ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $images)
     }
-    .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
   }
 }
 

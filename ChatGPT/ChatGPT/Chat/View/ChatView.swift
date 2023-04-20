@@ -32,11 +32,13 @@ struct ChatView: View {
       .onTapGesture {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
       }
+      .scrollDismissesKeyboard(.immediately)
       .onAppear {
         proxy.scrollTo(viewModel.messageItems.last?.id)
       }
       .onChange(of: viewModel.messageItems) { newValue in
         proxy.scrollTo(newValue.last?.id)
+
       }
     }
   }
