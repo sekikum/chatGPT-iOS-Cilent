@@ -77,7 +77,6 @@ struct HomeView: View {
     .overlay {
       ImageBrowserView(isShow: $isShowBrowser, selectionTab: $selectImage, images: $images)
     }
-    .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
   }
 }
 

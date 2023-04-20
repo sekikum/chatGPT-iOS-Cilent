@@ -29,7 +29,7 @@ struct ChatMainView: View {
     } label: {
       Image(systemName: "ellipsis")
     })
-      .onAppear {
+    .onAppear {
       if isCreateGroup {
         viewModel.clearScreen()
         viewModel.addGroup()
