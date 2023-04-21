@@ -39,6 +39,7 @@ struct ChatMainView: View {
         }
       }
     }
+    .toolbarBackground(.visible, for: .navigationBar)
     .navigationBarItems(trailing: Menu {
       Button(action: viewModel.clearContext) {
         Text("Clear")
