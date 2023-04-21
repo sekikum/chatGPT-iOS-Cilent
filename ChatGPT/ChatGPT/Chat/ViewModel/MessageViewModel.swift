@@ -15,6 +15,7 @@ class MessageViewModel: ObservableObject {
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
   @Published var isStreamingMessage: Bool = false
+  @Published var prompt: String = ""
   var openAI = OpenAIServer(authAPIKey: "")
   var sendMessageItems: [ChatMessage] = []
 
@@ -61,11 +62,18 @@ class MessageViewModel: ObservableObject {
       dataRespository.saveChatLine(group, content: content)
     }
   }
+  
+  func savePrompt() {
+    if let group = group {
+      dataRespository.savePrompt(group, content: prompt)
+    }
+  }
 
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
     messageItems.removeAll()
     sendMessageItems.removeAll()
+    prompt = group.prompt ?? ""
 
     if let contains = group.contains {
       for line in contains.array {
@@ -151,15 +159,16 @@ class MessageViewModel: ObservableObject {
   }
 
   func convertToChatMessages(from messageModels: [MessageModel]) -> [ChatMessage] {
-    return messageModels.map { messageModel in
-      let role: ChatRole
-      if messageModel.isUser {
-        role = .user
-      } else {
-        role = .system
-      }
+    var chatMessages: [ChatMessage] = []
+    if !prompt.isEmpty {
+      chatMessages.append(ChatMessage(role: .assistant, content: prompt))
+    }
+    let convertedMessages = messageModels.map { messageModel in
+      let role: ChatRole = messageModel.isUser ? .user : .system
       return ChatMessage(role: role, content: messageModel.message)
     }
+    chatMessages.append(contentsOf: convertedMessages)
+    return chatMessages
   }
 
   func setErrorData(errorMessage: String) {
@@ -172,6 +181,7 @@ class MessageViewModel: ObservableObject {
   func clearContext() {
     sendMessageItems = []
     messageItems = []
+    prompt = ""
     if let group = self.group {
       dataRespository.deleteGroupContains(group)
     }
@@ -181,6 +191,7 @@ class MessageViewModel: ObservableObject {
   func clearScreen() {
     sendMessageItems = []
     messageItems = []
+    prompt = ""
   }
 }
 
