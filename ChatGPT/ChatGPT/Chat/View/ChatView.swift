@@ -19,7 +19,7 @@ struct ChatView: View {
         ForEach(viewModel.messageItems) { message in
           MessageView(userAvatar: avatar, message: message)
             .frame(width: UIScreen.main.bounds.size.width)
-            .padding(.bottom, messageBottomPadding)
+            .padding(.top, messageBottomPadding)
             .id(message.id)
         }
         .frame(width: UIScreen.main.bounds.size.width)
@@ -38,7 +38,7 @@ struct ChatView: View {
       }
       .onChange(of: viewModel.messageItems) { newValue in
         proxy.scrollTo(newValue.last?.id)
-
+        
       }
     }
   }

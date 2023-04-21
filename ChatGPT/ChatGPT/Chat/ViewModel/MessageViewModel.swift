@@ -17,42 +17,51 @@ class MessageViewModel: ObservableObject {
   @Published var isStreamingMessage: Bool = false
   var openAI = OpenAIServer(authAPIKey: "")
   var sendMessageItems: [ChatMessage] = []
-
+  
   @Published var chatGroups: [ChatGroup] = []
   var groupCount: Int = 0
   var group: ChatGroup?
   let dataRespository: DataRespository
-
+  
   init(respository: DataRespository = CoreDataRespository()) {
     self.dataRespository = respository
     self.chatGroups = self.dataRespository.fetchData()
-
+    
     if let first = chatGroups.first {
       setCurrentChat(first)
     }
-
+    
     groupCount = self.chatGroups.count
-
+    
     if groupCount == 0 {
       addGroup()
     }
-
+    
     initOpenAI(StorageManager.restoreUser().apiKeySelect)
   }
-
+  
+  func updateGroups() {
+    chatGroups = dataRespository.fetchData()
+  }
+  
+  func modifyGroup(group: ChatGroup, flag: String) {
+    dataRespository.modifyGroup(group: group, flag: flag)
+    updateGroups()
+  }
+  
   func deleteGroup(_ index: Int) {
     if index >= 0 && index < chatGroups.count {
       dataRespository.deleteGroup(chatGroups[index])
       chatGroups.remove(at: index)
     }
   }
-
+  
   func addGroup() {
     groupCount += 1
     group = dataRespository.saveChatGroup("Chat \(groupCount)")
-    chatGroups = dataRespository.fetchData()
+    updateGroups()
   }
-
+  
   func saveLineToGroup() {
     guard let content = messageItems.last else {
       return
@@ -61,12 +70,12 @@ class MessageViewModel: ObservableObject {
       dataRespository.saveChatLine(group, content: content)
     }
   }
-
+  
   func setCurrentChat(_ group: ChatGroup) {
     self.group = group
     messageItems.removeAll()
     sendMessageItems.removeAll()
-
+    
     if let contains = group.contains {
       for line in contains.array {
         if let line = line as? ChatLine {
@@ -76,11 +85,11 @@ class MessageViewModel: ObservableObject {
       }
     }
   }
-
+  
   func initOpenAI(_ apiKey: String) {
     openAI = OpenAIServer(authAPIKey: apiKey)
   }
-
+  
   func sendMessage(_ message: String, _ modelString: String) {
     var model: OpenAIModel
     if message.isEmpty {
@@ -88,11 +97,11 @@ class MessageViewModel: ObservableObject {
       alertInfo = NSLocalizedString("Message cannot be empty", comment: "")
       return
     }
-
+    
     updateUserMessage(message)
     isShowLoading = true
     isStreamingMessage = true
-
+    
     switch(modelString) {
     case "gpt-3.5-0310":
       model = .chat(.chatgpt0301)
@@ -103,7 +112,7 @@ class MessageViewModel: ObservableObject {
     default:
       model = .chat(.chatgpt)
     }
-
+    
     openAI.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
       case .failure(let failure):
@@ -129,7 +138,7 @@ class MessageViewModel: ObservableObject {
       }
     }
   }
-
+  
   func updateSystemMessage(_ message: ChatMessage) {
     if message.role != nil {
       messageItems.append(MessageModel(message: "", isUser: false))
@@ -143,13 +152,13 @@ class MessageViewModel: ObservableObject {
     }
     sendMessageItems = convertToChatMessages(from: messageItems)
   }
-
+  
   func updateUserMessage(_ messageString: String) {
     messageItems.append(MessageModel(message: messageString, isUser: true))
     sendMessageItems = convertToChatMessages(from: messageItems)
     saveLineToGroup()
   }
-
+  
   func convertToChatMessages(from messageModels: [MessageModel]) -> [ChatMessage] {
     return messageModels.map { messageModel in
       let role: ChatRole
@@ -161,23 +170,22 @@ class MessageViewModel: ObservableObject {
       return ChatMessage(role: role, content: messageModel.message)
     }
   }
-
+  
   func setErrorData(errorMessage: String) {
     isShowLoading = false
     isShowAlert = true
     alertInfo = NSLocalizedString(errorMessage, comment: "")
     isStreamingMessage = false
   }
-
+  
   func clearContext() {
-    sendMessageItems = []
-    messageItems = []
-    if let group = self.group {
+    clearScreen()
+    if let group = group {
       dataRespository.deleteGroupContains(group)
     }
-    chatGroups = dataRespository.fetchData()
+    updateGroups()
   }
-
+  
   func clearScreen() {
     sendMessageItems = []
     messageItems = []

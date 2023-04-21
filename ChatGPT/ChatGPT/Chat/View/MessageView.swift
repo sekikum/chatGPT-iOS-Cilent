@@ -22,7 +22,7 @@ struct MessageView: View {
   let userColor = Color("Blue")
   let systemColor = Color("Gray")
   let clearFrame: CGFloat = 30
-
+  
   var body: some View {
     HStack(alignment: .top, spacing: spacing) {
       if message.isUser == true {
@@ -64,7 +64,7 @@ struct MessageView: View {
       }
     }
   }
-
+  
   private var theme: Splash.Theme {
     switch self.colorScheme {
     case .dark:

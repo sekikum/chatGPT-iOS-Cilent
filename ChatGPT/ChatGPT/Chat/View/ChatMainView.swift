@@ -13,7 +13,10 @@ struct ChatMainView: View {
   let padding: CGFloat = 10
   var group: ChatGroup?
   var isCreateGroup: Bool = false
-
+  
+  @State private var presentAlert = false
+  @State private var newTitle = ""
+  
   var body: some View {
     VStack {
       ChatView(viewModel: viewModel, avatar: avatar)
@@ -21,14 +24,21 @@ struct ChatMainView: View {
     }
     .padding(.bottom, padding)
     .navigationTitle((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
-    .navigationBarItems(trailing: Menu {
-      Button(action: viewModel.clearContext) {
-        Text("Clear")
-        Image(systemName: "xmark.circle")
-      }
-    } label: {
-      Image(systemName: "ellipsis")
-    })
+    .navigationBarItems(
+      trailing:
+        Menu {
+          Button(action: {
+            self.presentAlert.toggle()
+          }) {
+            Text("Change Title")
+          }
+          Button(action: viewModel.clearContext) {
+            Text("Clear")
+            Image(systemName: "xmark.circle")
+          }
+        } label: {
+          Image(systemName: "ellipsis")
+        })
     .onAppear {
       if isCreateGroup {
         viewModel.clearScreen()
@@ -39,6 +49,17 @@ struct ChatMainView: View {
         }
       }
     }
+    .alert("Change Title", isPresented: $presentAlert ,actions: {
+      TextField("new title", text: $newTitle)
+      Button("OK", action: {
+        if let group = group {
+          viewModel.modifyGroup(group: group, flag: newTitle)
+        }
+      })
+      Button("Cancel", role: .cancel, action: {})
+    }, message: {
+      Text("input new title.")
+    })
   }
 }
 
