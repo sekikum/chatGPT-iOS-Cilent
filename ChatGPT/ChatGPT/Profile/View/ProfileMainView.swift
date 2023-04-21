@@ -68,6 +68,20 @@ struct ProfileMainView: View {
         }
       }
       
+      Section {
+        HStack {
+          ClearableTextField("Input new APIKey", text: $apiKeyText)
+            .keyboardType(.default)
+            .submitLabel(.done)
+            .onSubmit(addNewAPIKey)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .alert("APIKey cannot be empty", isPresented: $isShowAPIKeyEmptyAlert) {
+              Button("OK", role: .cancel) { }
+            }
+        }
+      }
+      
       Section(viewModel.user.apiKeyList.isEmpty ? "No APIKey added" : "Choose a APIKey\n(Long press APIKey to delete)") {
         Picker("", selection: $viewModel.user.apiKeySelect) {
           ForEach(viewModel.user.apiKeyList, id: \.self) { apiKey in
@@ -100,33 +114,11 @@ struct ProfileMainView: View {
           }
         }
       }
-      
-      Section {
-        HStack {
-          TextField("Input new APIKey", text: $apiKeyText)
-            .keyboardType(.default)
-            .submitLabel(.done)
-            .onSubmit(addNewAPIKey)
-            .disableAutocorrection(true)
-            .autocapitalization(.none)
-          Button(action: addNewAPIKey) {
-            Image(systemName: "plus.circle.fill")
-              .resizable()
-              .frame(width: buttonSize, height: buttonSize)
-          }
-          .alert("APIKey cannot be empty", isPresented: $isShowAPIKeyEmptyAlert) {
-            Button("OK", role: .cancel) { }
-          }
-        }
-      }
     }
     .padding(.top, listTopPadding)
     .gesture(DragGesture().onChanged{ _ in
       UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     })
-    .onTapGesture {
-      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
   }
 }
 
