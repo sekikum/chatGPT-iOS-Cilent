@@ -11,7 +11,7 @@ import Combine
 struct ChatView: View {
   @StateObject var viewModel: MessageViewModel
   let avatar: String
-  let messageBottomPadding: CGFloat = 15
+  let messageTopPadding: CGFloat = 15
   
   var body: some View {
     ScrollViewReader { proxy in
@@ -19,7 +19,7 @@ struct ChatView: View {
         ForEach(viewModel.messageItems) { message in
           MessageView(userAvatar: avatar, message: message)
             .frame(width: UIScreen.main.bounds.size.width)
-            .padding(.bottom, messageBottomPadding)
+            .padding(.top, messageTopPadding)
             .id(message.id)
         }
         .frame(width: UIScreen.main.bounds.size.width)
