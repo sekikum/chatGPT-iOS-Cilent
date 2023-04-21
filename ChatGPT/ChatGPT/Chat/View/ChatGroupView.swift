@@ -22,7 +22,7 @@ struct ChatGroupView: View {
             } label: {
               Label(flag, systemImage: "bubble.left")
             }
-            .padding(.vertical, 8)
+            .padding(.vertical, listPadding)
           }
         }
         .onDelete { indexSet in

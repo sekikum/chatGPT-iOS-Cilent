@@ -16,6 +16,7 @@ protocol DataRespository {
   func savePrompt(_ group: ChatGroup, content: String)
   func deleteGroup(_ group: ChatGroup)
   func deleteGroupContains(_ group: ChatGroup)
+  func modifyGroup(group: ChatGroup, flag: String)
 }
 
 class CoreDataRespository: DataRespository {
@@ -38,7 +39,13 @@ class CoreDataRespository: DataRespository {
       print(error.localizedDescription)
     }
   }
-
+  
+  func modifyGroup(group: ChatGroup, flag: String) {
+    group.flag = flag
+    saveContext()
+  }
+  
+  
   func saveChatGroup(_ content: String) -> ChatGroup {
     let group = ChatGroup(context: container.viewContext, content: content)
     saveContext()

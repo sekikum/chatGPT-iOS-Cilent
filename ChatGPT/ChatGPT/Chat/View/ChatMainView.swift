@@ -17,55 +17,32 @@ struct ChatMainView: View {
   let subtitleLineLimit: Int = 1
   var group: ChatGroup?
   var isCreateGroup: Bool = false
-
+  
+  @State private var presentAlert = false
+  @State private var newTitle = ""
+  
   var body: some View {
     VStack {
       ChatView(viewModel: viewModel, avatar: avatar)
       InputView(isShowAlert: $viewModel.isShowAlert, isStreamingMessage: $viewModel.isStreamingMessage, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
     }
     .padding(.bottom, padding)
-    .navigationBarTitleDisplayMode(.inline)
-    .toolbar {
-      ToolbarItem(placement: .principal) {
-        VStack {
-          Text((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
-            .font(.headline)
-          if !prompt.isEmpty {
-            Text(prompt)
-              .font(.subheadline)
-              .foregroundColor(.secondary)
-              .lineLimit(subtitleLineLimit)
+    .navigationTitle((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
+    .navigationBarItems(
+      trailing:
+        Menu {
+          Button(action: {
+            self.presentAlert.toggle()
+          }) {
+            Text("Change Title")
           }
-        }
-      }
-    }
-    .toolbarBackground(.visible, for: .navigationBar)
-    .navigationBarItems(trailing: Menu {
-      Button(action: viewModel.clearContext) {
-        Text("Clear")
-        Image(systemName: "xmark.circle")
-      }
-      Button(action: {
-        isShowSetPrompt = true
-        promptTemp = prompt
-      }) {
-        Text("Prompt")
-        Image(systemName: "pencil.circle")
-      }
-    } label: {
-      Image(systemName: "ellipsis")
-    })
-    .alert("Set Prompt", isPresented: $isShowSetPrompt, actions: {
-      TextField("Input prompt", text: $prompt)
-      Button("OK", action: {
-        viewModel.savePrompt()
-      })
-      Button("Cancel", role: .cancel, action: {
-        prompt = promptTemp
-      })
-    }, message: {
-      Text("What do you want chatGPT to do")
-    })
+          Button(action: viewModel.clearContext) {
+            Text("Clear")
+            Image(systemName: "xmark.circle")
+          }
+        } label: {
+          Image(systemName: "ellipsis")
+        })
     .onAppear {
       if isCreateGroup {
         viewModel.clearScreen()
@@ -76,6 +53,17 @@ struct ChatMainView: View {
         }
       }
     }
+    .alert("Change Title", isPresented: $presentAlert ,actions: {
+      TextField("new title", text: $newTitle)
+      Button("OK", action: {
+        if let group = group {
+          viewModel.modifyGroup(group: group, flag: newTitle)
+        }
+      })
+      Button("Cancel", role: .cancel, action: {})
+    }, message: {
+      Text("input new title.")
+    })
   }
 }
 

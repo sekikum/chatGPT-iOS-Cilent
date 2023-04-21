@@ -40,7 +40,16 @@ class MessageViewModel: ObservableObject {
 
     initOpenAI(StorageManager.restoreUser().apiKeySelect)
   }
-
+  
+  func updateGroups() {
+    chatGroups = dataRespository.fetchData()
+  }
+  
+  func modifyGroup(group: ChatGroup, flag: String) {
+    dataRespository.modifyGroup(group: group, flag: flag)
+    updateGroups()
+  }
+  
   func deleteGroup(_ index: Int) {
     if index >= 0 && index < chatGroups.count {
       dataRespository.deleteGroup(chatGroups[index])
@@ -51,7 +60,7 @@ class MessageViewModel: ObservableObject {
   func addGroup() {
     groupCount += 1
     group = dataRespository.saveChatGroup("Chat \(groupCount)")
-    chatGroups = dataRespository.fetchData()
+    updateGroups()
   }
 
   func saveLineToGroup() {
@@ -170,22 +179,21 @@ class MessageViewModel: ObservableObject {
     chatMessages.append(contentsOf: convertedMessages)
     return chatMessages
   }
-
+  
   func setErrorData(errorMessage: String) {
     isShowLoading = false
     isShowAlert = true
     alertInfo = NSLocalizedString(errorMessage, comment: "")
     isStreamingMessage = false
   }
-
+  
   func clearContext() {
-    sendMessageItems = []
-    messageItems = []
+    clearScreen()
     prompt = ""
-    if let group = self.group {
+    if let group = group {
       dataRespository.deleteGroupContains(group)
     }
-    chatGroups = dataRespository.fetchData()
+    updateGroups()
   }
 
   func clearScreen() {

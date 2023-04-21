@@ -19,7 +19,11 @@ struct ChatView: View {
         ForEach(viewModel.messageItems) { message in
           MessageView(userAvatar: avatar, message: message)
             .frame(width: UIScreen.main.bounds.size.width)
+<<<<<<< HEAD
             .padding(.top, messageTopPadding)
+=======
+            .padding(.top, messageBottomPadding)
+>>>>>>> 4b27b2e (feat: added the ability to modify the title)
             .id(message.id)
         }
         .frame(width: UIScreen.main.bounds.size.width)
@@ -38,7 +42,7 @@ struct ChatView: View {
       }
       .onChange(of: viewModel.messageItems) { newValue in
         proxy.scrollTo(newValue.last?.id)
-
+        
       }
     }
   }
