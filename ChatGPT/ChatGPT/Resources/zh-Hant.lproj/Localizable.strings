@@ -17,7 +17,7 @@
 "Input your BaseURL" = "輸入您的 BaseURL";
 "Input new APIKey" = "新增 APIKey";
 "Loading" = "加載中";
-"Input prompt" = "提示";
+"Input prompt" = "輸入提示";
 
 // Picker
 "Chose GPT model" = "選擇 GPT 模型";
