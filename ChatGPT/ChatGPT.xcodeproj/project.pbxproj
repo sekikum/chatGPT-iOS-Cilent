@@ -69,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8424D4A929F673E300522EB6 /* ChatGPT.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ChatGPT.xctestplan; sourceTree = "<group>"; };
 		84611B0E29DFC18C001EE08A /* OpenAIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIError.swift; sourceTree = "<group>"; };
 		846729EB29B57EEA00B85594 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		846729ED29B592FC00B85594 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -289,6 +290,7 @@
 		8492CD6829B1D93C00187E3C = {
 			isa = PBXGroup;
 			children = (
+				8424D4A929F673E300522EB6 /* ChatGPT.xctestplan */,
 				8492CD7329B1D93C00187E3C /* ChatGPT */,
 				849C654629C0137100AC8E68 /* ChatGPTTests */,
 				8492CD7229B1D93C00187E3C /* Products */,
