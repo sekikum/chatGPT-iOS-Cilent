@@ -57,11 +57,16 @@ struct ChatMainView: View {
     })
     .alert("Set Prompt", isPresented: $isShowSetPrompt, actions: {
       TextField("Input prompt", text: $prompt)
+        .onAppear {
+          UITextField.appearance().clearButtonMode = .whileEditing
+        }
       Button("OK", action: {
         viewModel.savePrompt()
+        UITextField.appearance().clearButtonMode = .never
       })
       Button("Cancel", role: .cancel, action: {
         prompt = promptTemp
+        UITextField.appearance().clearButtonMode = .never
       })
     }, message: {
       Text("What do you want chatGPT to do")
