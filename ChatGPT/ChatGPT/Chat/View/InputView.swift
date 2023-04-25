@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-struct InputViewModel {
-  let send: (String, String) -> Void
-  let isShowLoading: Bool
-  let placeholder: String
-  let buttonImage: String
-  let isTextFieldDisable: Bool
-  let setButtonAction: (() -> Void) -> Void
-  let isButtonDisable: Bool
-}
-
 struct InputView: View {
   @State var textfieldText: String = ""
   let viewModel: InputViewModel
@@ -28,7 +18,7 @@ struct InputView: View {
   var body: some View {
     HStack {
       Spacer()
-      TextField(viewModel.placeholder, text: $textfieldText, axis: .vertical)
+      TextField(viewModel.makePlaceholder(), text: $textfieldText, axis: .vertical)
         .disabled(viewModel.isTextFieldDisable)
         .lineLimit(textFieldLimit)
         .padding(padding)
@@ -38,7 +28,7 @@ struct InputView: View {
         .disableAutocorrection(true)
         .autocapitalization(.none)
       Button(action: setButtonAction) {
-        Image(systemName: viewModel.buttonImage)
+        Image(systemName: viewModel.makeButtonImage())
           .resizable()
           .frame(width: buttonSize, height: buttonSize)
       }
@@ -47,7 +37,7 @@ struct InputView: View {
           ProgressView()
         }
       }
-      .disabled(viewModel.isButtonDisable)
+      .disabled(viewModel.isButtonDisable())
       Spacer()
     }
   }
@@ -59,12 +49,13 @@ struct InputView: View {
   }
   
   func setButtonAction() {
-    viewModel.setButtonAction(sendMessageAction)
+    viewModel.updateButtonAction(send: sendMessageAction)
   }
 }
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(viewModel: InputViewModel(send: {_,_ in }, isShowLoading: false, placeholder: "Input your message", buttonImage: "paperplane.circle.fill", isTextFieldDisable: false, setButtonAction: { _ in }, isButtonDisable: false))
+//    InputView(viewModel: InputViewModel(send: {_,_ in }, isShowLoading: false, placeholder: "Input your message", buttonImage: "paperplane.circle.fill", isTextFieldDisable: false, setButtonAction: { _ in }, isButtonDisable: false))
+    InputView(viewModel: InputViewModel(isStreaming: .constant(false), isShowLoading: false, send: {_,_ in }))
   }
 }
