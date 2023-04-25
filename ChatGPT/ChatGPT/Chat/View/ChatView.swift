@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct ChatView: View {
-  @StateObject var viewModel: MessageViewModel
+  @StateObject var viewModel: ChatGroupViewModel
   let avatar: String
   let messageTopPadding: CGFloat = 15
   
@@ -46,6 +46,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatView(viewModel: MessageViewModel(), avatar: "Profile-User")
+    ChatView(viewModel: ChatGroupViewModel(), avatar: "Profile-User")
   }
 }

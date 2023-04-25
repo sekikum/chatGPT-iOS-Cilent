@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatGroupView: View {
-  @StateObject var viewModel: MessageViewModel
+  @StateObject var viewModel: ChatGroupViewModel
   let avatar: String
   let listPadding: CGFloat = 8
   
@@ -47,6 +47,6 @@ struct ChatGroupView: View {
 
 struct ChatGroupView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatGroupView(viewModel: MessageViewModel(), avatar: "1")
+    ChatGroupView(viewModel: ChatGroupViewModel(), avatar: "1")
   }
 }
