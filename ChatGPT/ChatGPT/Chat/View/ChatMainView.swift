@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatMainView: View {
-  @StateObject var viewModel: MessageViewModel
+  @StateObject var viewModel: ChatGroupViewModel
   @Binding var prompt: String
   @State var isShowSetPrompt: Bool = false
   @State var promptTemp: String = ""
@@ -86,6 +86,6 @@ struct ChatMainView: View {
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(viewModel: MessageViewModel(), prompt: .constant(""), avatar: "Profile-User")
+    ChatMainView(viewModel: ChatGroupViewModel(), prompt: .constant(""), avatar: "Profile-User")
   }
 }
