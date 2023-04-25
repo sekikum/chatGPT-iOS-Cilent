@@ -53,3 +53,18 @@ class ImageViewModel: ObservableObject {
     }
   }
 }
+
+extension ImageViewModel {
+  func isTextFieldDisable() -> Bool {
+    return StorageManager.restoreUser().apiKeyList.isEmpty
+  }
+  
+  func makePlaceholder() -> String {
+    let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
+    return noAPIKeyAdded ? "Please add APIKey on 'me'" : "Input your message"
+  }
+  
+  func isButtonDisable() -> Bool {
+    return isShowLoading || isTextFieldDisable()
+  }
+}
