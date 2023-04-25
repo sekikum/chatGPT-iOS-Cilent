@@ -193,6 +193,35 @@ class MessageViewModel: ObservableObject {
     messageItems = []
     prompt = ""
   }
+  
+  func makeInputViewModel() -> InputViewModel {
+    InputViewModel(send: sendMessage(_:_:), isShowLoading: isShowLoading, placeholder: makePlaceholder(), buttonImage: makeButtonImage(), isTextFieldDisable: isTextFieldDisable(), setButtonAction: updateButtonAction, isButtonDisable: isButtonDisable())
+  }
+  
+  func isTextFieldDisable() -> Bool {
+    return StorageManager.restoreUser().apiKeyList.isEmpty
+  }
+  
+  func makePlaceholder() -> String {
+    let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
+    return noAPIKeyAdded ? "Please add APIKey on 'me'" : "Input your message"
+  }
+  
+  func makeButtonImage() -> String {
+    isStreamingMessage ? "stop.circle.fill" : "paperplane.circle.fill"
+  }
+  
+  func updateButtonAction(send: () -> Void) {
+    if isStreamingMessage {
+      isStreamingMessage = false
+    } else {
+      send()
+    }
+  }
+  
+  func isButtonDisable() -> Bool {
+    return isShowLoading || isTextFieldDisable()
+  }
 }
 
 extension ChatGroup {

@@ -7,24 +7,29 @@
 
 import SwiftUI
 
-struct InputView: View {
-  @State var textfieldText: String = ""
-  @Binding var isShowAlert: Bool
-  @Binding var isStreamingMessage: Bool
-  let alertInfo: String
+struct InputViewModel {
   let send: (String, String) -> Void
   let isShowLoading: Bool
+  let placeholder: String
+  let buttonImage: String
+  let isTextFieldDisable: Bool
+  let setButtonAction: (() -> Void) -> Void
+  let isButtonDisable: Bool
+}
+
+struct InputView: View {
+  @State var textfieldText: String = ""
+  let viewModel: InputViewModel
   let padding: CGFloat = 6
   let cornerRadius: CGFloat = 6
   let textFieldLimit = 4
   let buttonSize: CGFloat = 30
-  let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
   
   var body: some View {
     HStack {
       Spacer()
-      TextField(noAPIKeyAdded ? "Please add APIKey on 'me'" : "Input your message", text: $textfieldText, axis: .vertical)
-        .disabled(noAPIKeyAdded)
+      TextField(viewModel.placeholder, text: $textfieldText, axis: .vertical)
+        .disabled(viewModel.isTextFieldDisable)
         .lineLimit(textFieldLimit)
         .padding(padding)
         .background(Color("Gray"))
@@ -32,41 +37,34 @@ struct InputView: View {
         .keyboardType(.default)
         .disableAutocorrection(true)
         .autocapitalization(.none)
-      Button(action: buttonAction) {
-        Image(systemName: isStreamingMessage ? "stop.circle.fill" : "paperplane.circle.fill")
+      Button(action: setButtonAction) {
+        Image(systemName: viewModel.buttonImage)
           .resizable()
           .frame(width: buttonSize, height: buttonSize)
       }
-      .alert(alertInfo, isPresented: $isShowAlert) {
-        Button("OK", role: .cancel) { }
-      }
       .overlay() {
-        if isShowLoading {
+        if viewModel.isShowLoading {
           ProgressView()
         }
       }
-      .disabled(isShowLoading || noAPIKeyAdded)
+      .disabled(viewModel.isButtonDisable)
       Spacer()
     }
   }
   
-  func buttonAction() {
-    if isStreamingMessage {
-      isStreamingMessage = false
-    } else {
-      sendMessageAction()
-    }
-  }
-  
   func sendMessageAction() {
-    send(textfieldText, StorageManager.restoreUser().modelSelect)
+    viewModel.send(textfieldText, StorageManager.restoreUser().modelSelect)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+  }
+  
+  func setButtonAction() {
+    viewModel.setButtonAction(sendMessageAction)
   }
 }
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(isShowAlert: .constant(false), isStreamingMessage: .constant(false), alertInfo: "", send: {_,_  in }, isShowLoading: false)
+    InputView(viewModel: InputViewModel(send: {_,_ in }, isShowLoading: false, placeholder: "Input your message", buttonImage: "paperplane.circle.fill", isTextFieldDisable: false, setButtonAction: { _ in }, isButtonDisable: false))
   }
 }
