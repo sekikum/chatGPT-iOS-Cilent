@@ -21,7 +21,7 @@ struct ChatMainView: View {
   var body: some View {
     VStack {
       ChatView(viewModel: viewModel, avatar: avatar)
-      InputView(viewModel: viewModel.makeInputViewModel())
+      InputView(viewModel: InputViewModel(isStreaming: $viewModel.isStreamingMessage, isShowLoading: viewModel.isShowLoading, send: viewModel.sendMessage(_:_:)))
     }
     .padding(.bottom, padding)
     .navigationBarTitleDisplayMode(.inline)
