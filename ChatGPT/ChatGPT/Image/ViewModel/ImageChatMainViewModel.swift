@@ -1,5 +1,5 @@
 //
-//  ImageViewModel.swift
+//  ImageChatMainViewModel.swift
 //  ChatGPT
 //
 //  Created by Wenyan Zhao on 2023/3/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ImageViewModel: ObservableObject {
+class ImageChatMainViewModel: ObservableObject {
   @Published var imageSet: ImageSetModel
   @Published var imagesURL: [String] = []
   @Published var isShowAlert: Bool = false
@@ -54,7 +54,7 @@ class ImageViewModel: ObservableObject {
   }
 }
 
-extension ImageViewModel {
+extension ImageChatMainViewModel {
   func isTextFieldDisable() -> Bool {
     return StorageManager.restoreUser().apiKeyList.isEmpty
   }

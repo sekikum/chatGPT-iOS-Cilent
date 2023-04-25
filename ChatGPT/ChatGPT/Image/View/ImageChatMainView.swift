@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImageChatMainView: View {
-  @StateObject var viewModel: ImageViewModel
+  @StateObject var viewModel: ImageChatMainViewModel
   @State var textField: String = ""
   @Binding var isShowBrowser: Bool
   @Binding var selectImage: Int
@@ -75,6 +75,6 @@ struct ImageChatMainView: View {
 
 struct ImageChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ImageChatMainView(viewModel: ImageViewModel(), isShowBrowser: .constant(false), selectImage: .constant(1), images: .constant([]), avatar: "")
+    ImageChatMainView(viewModel: ImageChatMainViewModel(), isShowBrowser: .constant(false), selectImage: .constant(1), images: .constant([]), avatar: "")
   }
 }
