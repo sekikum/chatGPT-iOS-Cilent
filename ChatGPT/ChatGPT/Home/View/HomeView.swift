@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
   @StateObject var userViewModel: UserViewModel = UserViewModel()
   @StateObject var chatGroupViewModel: ChatGroupViewModel = ChatGroupViewModel()
-  @StateObject var imageViewModel: ImageViewModel = ImageViewModel()
+  @StateObject var imageChatMainViewModel: ImageChatMainViewModel = ImageChatMainViewModel()
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
   @State var selectImage: Int = .init()
@@ -33,29 +33,29 @@ struct HomeView: View {
           .tag(HomeTab.chat)
         
         NavigationView {
-          ImageChatMainView(viewModel: imageViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, images: $images, avatar: userViewModel.user.avatar)
+          ImageChatMainView(viewModel: imageChatMainViewModel, isShowBrowser: $isShowBrowser, selectImage: $selectImage, images: $images, avatar: userViewModel.user.avatar)
             .navigationBarItems(trailing: Menu {
-              Picker("Number: \(String(imageViewModel.imageSet.number))", selection: $imageViewModel.imageSet.number) {
+              Picker("Number: \(String(imageChatMainViewModel.imageSet.number))", selection: $imageChatMainViewModel.imageSet.number) {
                 ForEach(numberList, id: \.self) { num in
                   Text("\(num)")
                 }
               }
               .pickerStyle(.menu)
-              .onChange(of: imageViewModel.imageSet.number) { _ in
+              .onChange(of: imageChatMainViewModel.imageSet.number) { _ in
                 Task {
-                  images = .init(repeating: Image(systemName: "arrow.clockwise"), count: imageViewModel.imageSet.number)
-                  await StorageManager.storeImageSet(imageViewModel.imageSet)
+                  images = .init(repeating: Image(systemName: "arrow.clockwise"), count: imageChatMainViewModel.imageSet.number)
+                  await StorageManager.storeImageSet(imageChatMainViewModel.imageSet)
                 }
               }
-              Picker("Size: \(imageViewModel.imageSet.size)", selection: $imageViewModel.imageSet.size) {
+              Picker("Size: \(imageChatMainViewModel.imageSet.size)", selection: $imageChatMainViewModel.imageSet.size) {
                 ForEach(sizeList, id: \.self) { str in
                   Text("\(str)")
                 }
               }
               .pickerStyle(.menu)
-              .onChange(of: imageViewModel.imageSet.size) { _ in
+              .onChange(of: imageChatMainViewModel.imageSet.size) { _ in
                 Task {
-                  await StorageManager.storeImageSet(imageViewModel.imageSet)
+                  await StorageManager.storeImageSet(imageChatMainViewModel.imageSet)
                 }
               }
             } label: {
@@ -67,7 +67,7 @@ struct HomeView: View {
         }
         .tag(HomeTab.image)
         
-        ProfileMainView(viewModel: userViewModel, initAPIKeyMessage: chatGroupViewModel.initOpenAI, initAPIKeyImage: imageViewModel.initOpenAI)
+        ProfileMainView(viewModel: userViewModel, initAPIKeyMessage: chatGroupViewModel.initOpenAI, initAPIKeyImage: imageChatMainViewModel.initOpenAI)
           .tabItem {
             Label("Me", systemImage: "person.fill")
           }
