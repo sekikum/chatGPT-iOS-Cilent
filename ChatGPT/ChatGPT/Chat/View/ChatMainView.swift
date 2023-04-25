@@ -71,6 +71,9 @@ struct ChatMainView: View {
     }, message: {
       Text("What do you want chatGPT to do")
     })
+    .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
+      Button("OK", role: .cancel) { }
+    }
     .onAppear {
       if isCreateGroup {
         viewModel.clearScreen()
