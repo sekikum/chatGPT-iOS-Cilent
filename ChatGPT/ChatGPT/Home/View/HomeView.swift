@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
   @StateObject var userViewModel: UserViewModel = UserViewModel()
-  @StateObject var chatGroupViewModel: ChatGroupViewModel = ChatGroupViewModel()
+  @StateObject var chatMainViewModel: ChatMainViewModel = ChatMainViewModel()
   @StateObject var imageChatMainViewModel: ImageChatMainViewModel = ImageChatMainViewModel()
   @State var selectionTab: HomeTab = .chat
   @State var isShowBrowser = false
@@ -26,7 +26,7 @@ struct HomeView: View {
   var body: some View {
     ZStack {
       TabView(selection: $selectionTab) {
-        ChatGroupView(viewModel: chatGroupViewModel, avatar: userViewModel.user.avatar)
+        ChatGroupView(viewModel: chatMainViewModel, avatar: userViewModel.user.avatar)
           .tabItem {
             Label("Chat", systemImage: "message.fill")
           }
@@ -67,7 +67,7 @@ struct HomeView: View {
         }
         .tag(HomeTab.image)
         
-        ProfileMainView(viewModel: userViewModel, initAPIKeyMessage: chatGroupViewModel.initOpenAI, initAPIKeyImage: imageChatMainViewModel.initOpenAI)
+        ProfileMainView(viewModel: userViewModel, initAPIKeyMessage: chatMainViewModel.initOpenAI, initAPIKeyImage: imageChatMainViewModel.initOpenAI)
           .tabItem {
             Label("Me", systemImage: "person.fill")
           }

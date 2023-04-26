@@ -1,5 +1,5 @@
 //
-//  ChatGroupViewModel.swift
+//  ChatMainViewModel.swift
 //  ChatGPT
 //
 //  Created by Wenyan Zhao on 2023/3/6.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class ChatGroupViewModel: ObservableObject {
+class ChatMainViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
