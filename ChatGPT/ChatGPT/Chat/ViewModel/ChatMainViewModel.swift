@@ -7,73 +7,28 @@
 
 import Foundation
 import SwiftUI
-import CoreData
 
 class ChatMainViewModel: ObservableObject {
   @Published var messageItems: [MessageModel] = []
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
-  @Published var prompt: String = ""
   @Published var isStreamingMessage: Bool = false
-  var openAI = OpenAIServer(authAPIKey: "")
+  @Published var prompt: String = ""
   var sendMessageItems: [ChatMessage] = []
-
-  @Published var chatGroups: [ChatGroup] = []
-  var groupCount: Int = 0
-  var group: ChatGroup?
+  var group: ChatGroup
   let dataRespository: DataRespository
 
-  init(respository: DataRespository = CoreDataRespository()) {
+  init(group: ChatGroup, respository: DataRespository) {
+    self.sendMessageItems = []
+    self.group = group
     self.dataRespository = respository
-    self.chatGroups = self.dataRespository.fetchData()
-
-    if let first = chatGroups.first {
-      setCurrentChat(first)
-    }
-
-    groupCount = self.chatGroups.count
-
-    if groupCount == 0 {
-      addGroup()
-    }
-
-    initOpenAI(StorageManager.restoreUser().apiKeySelect)
-  }
-
-  func deleteGroup(_ index: Int) {
-    if index >= 0 && index < chatGroups.count {
-      dataRespository.deleteGroup(chatGroups[index])
-      chatGroups.remove(at: index)
-    }
-  }
-
-  func addGroup() {
-    groupCount += 1
-    group = dataRespository.saveChatGroup("Chat \(groupCount)")
-    chatGroups = dataRespository.fetchData()
-  }
-
-  func saveLineToGroup() {
-    guard let content = messageItems.last else {
-      return
-    }
-    if let group = group {
-      dataRespository.saveChatLine(group, content: content)
-    }
-  }
-  
-  func savePrompt() {
-    if let group = group {
-      dataRespository.savePrompt(group, content: prompt)
-    }
+    setCurrentChat(group)
   }
 
   func setCurrentChat(_ group: ChatGroup) {
-    self.group = group
+    self.prompt = group.prompt ?? ""
     messageItems.removeAll()
-    sendMessageItems.removeAll()
-    prompt = group.prompt ?? ""
 
     if let contains = group.contains {
       for line in contains.array {
@@ -83,10 +38,6 @@ class ChatMainViewModel: ObservableObject {
         }
       }
     }
-  }
-
-  func initOpenAI(_ apiKey: String) {
-    openAI = OpenAIServer(authAPIKey: apiKey)
   }
 
   func sendMessage(_ message: String, _ modelString: String) {
@@ -112,7 +63,7 @@ class ChatMainViewModel: ObservableObject {
       model = .chat(.chatgpt)
     }
 
-    openAI.sendChat(with: sendMessageItems, model: model) { result in
+    ClientManager.shared.openAI.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
       case .failure(let failure):
         self.setErrorData(errorMessage: failure.message)
@@ -125,7 +76,7 @@ class ChatMainViewModel: ObservableObject {
             return
           }
           if !self.isStreamingMessage {
-            self.openAI.streamRequest?.cancel()
+            ClientManager.shared.openAI.streamRequest?.cancel()
             self.saveLineToGroup()
           }
           if success.choices?.first?.finishReason != nil {
@@ -181,33 +132,17 @@ class ChatMainViewModel: ObservableObject {
   func clearContext() {
     sendMessageItems = []
     messageItems = []
-    prompt = ""
-    if let group = self.group {
-      dataRespository.deleteGroupContains(group)
+    dataRespository.deleteGroupContains(group)
+  }
+
+  func saveLineToGroup() {
+    guard let content = messageItems.last else {
+      return
     }
-    chatGroups = dataRespository.fetchData()
+    dataRespository.saveChatLine(group, content: content)
   }
 
-  func clearScreen() {
-    sendMessageItems = []
-    messageItems = []
-    prompt = ""
-  }
-}
-
-extension ChatGroup {
-  convenience init(context: NSManagedObjectContext, content: String) {
-    self.init(context: context)
-    self.flag = content
-    self.timestamp = Date()
-  }
-}
-
-extension ChatLine {
-  convenience init(context: NSManagedObjectContext, content: MessageModel) {
-    self.init(context: context)
-    self.isUser = content.isUser
-    self.message = content.message
-    self.id = content.id
+  func savePrompt() {
+    dataRespository.savePrompt(group, content: prompt)
   }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileMainView: View {
-  @StateObject var viewModel: UserViewModel
+  @StateObject var viewModel: ProfileViewModel
   @State var apiKeyText: String = ""
   @State var baseURLText: String = StorageManager.restoreUser().baseURL
   @State var isShowAPIKeyEmptyAlert: Bool = false
@@ -17,10 +17,7 @@ struct ProfileMainView: View {
   @State var deletedAPIKey: String = ""
   @State var urlAlertText: String = ""
   @State var isToggleOn: Bool = false
-  let profileViewModel: ProfileViewModel = ProfileViewModel()
   let models: [String] = ["gpt-3.5", "gpt-3.5-0310", "gpt-4"]
-  let initAPIKeyMessage: (String) -> Void
-  let initAPIKeyImage: (String) -> Void
   let apiKeyLineLimit: Int = 1
   let toggleWidth: CGFloat = 50
   let buttonSize: CGFloat = 30
@@ -85,7 +82,7 @@ struct ProfileMainView: View {
       Section(viewModel.user.apiKeyList.isEmpty ? "No APIKey added" : "Choose a APIKey\n(Long press APIKey to delete)") {
         Picker("", selection: $viewModel.user.apiKeySelect) {
           ForEach(viewModel.user.apiKeyList, id: \.self) { apiKey in
-            Text(profileViewModel.maskAPIKey(apiKey))
+            Text(viewModel.maskAPIKey(apiKey))
               .gesture(
                 LongPressGesture(minimumDuration: 1)
                   .onEnded { value in
@@ -107,10 +104,9 @@ struct ProfileMainView: View {
         .labelsHidden()
         .pickerStyle(.inline)
         .onChange(of: viewModel.user.apiKeySelect) { _ in
+          ClientManager.shared.openAI.updateAPIKey(viewModel.user.apiKeySelect)
           Task {
             await StorageManager.storeUser(viewModel.user)
-            initAPIKeyMessage(viewModel.user.apiKeySelect)
-            initAPIKeyImage(viewModel.user.apiKeySelect)
           }
         }
       }
@@ -124,7 +120,7 @@ struct ProfileMainView: View {
 
 extension ProfileMainView {
   func addNewAPIKey() {
-    if profileViewModel.trimString(apiKeyText).isEmpty {
+    if viewModel.trimString(apiKeyText).isEmpty {
       isShowAPIKeyEmptyAlert = true
       apiKeyText = ""
       return
@@ -140,11 +136,11 @@ extension ProfileMainView {
   }
   
   func addBaseURL() {
-    let url = profileViewModel.trimString(baseURLText)
+    let url = viewModel.trimString(baseURLText)
     baseURLText = url
     if url.isEmpty {
       isToggleOn = false
-    } else if !profileViewModel.isValidURL(url) {
+    } else if !viewModel.isValidURL(url) {
       isShowBaseURLAlert = true
       isToggleOn = false
       urlAlertText = NSLocalizedString("BaseURL illegal", comment: "")
@@ -162,6 +158,6 @@ extension ProfileMainView {
 
 struct ProfileMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ProfileMainView(viewModel: UserViewModel(), initAPIKeyMessage: {_ in}, initAPIKeyImage: {_ in})
+    ProfileMainView(viewModel: ProfileViewModel())
   }
 }

@@ -9,13 +9,11 @@ import SwiftUI
 
 struct ChatMainView: View {
   @StateObject var viewModel: ChatMainViewModel
-  @Binding var prompt: String
   @State var isShowSetPrompt: Bool = false
   @State var promptTemp: String = ""
   let avatar: String
   let padding: CGFloat = 10
   let subtitleLineLimit: Int = 1
-  var group: ChatGroup?
   var isCreateGroup: Bool = false
 
   var body: some View {
@@ -28,10 +26,10 @@ struct ChatMainView: View {
     .toolbar {
       ToolbarItem(placement: .principal) {
         VStack {
-          Text((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
+          Text(viewModel.group.flag ?? "unkown")
             .font(.headline)
-          if !prompt.isEmpty {
-            Text(prompt)
+          if !viewModel.prompt.isEmpty {
+            Text(viewModel.prompt)
               .font(.subheadline)
               .foregroundColor(.secondary)
               .lineLimit(subtitleLineLimit)
@@ -47,7 +45,7 @@ struct ChatMainView: View {
       }
       Button(action: {
         isShowSetPrompt = true
-        promptTemp = prompt
+        promptTemp = viewModel.prompt
       }) {
         Text("Prompt")
         Image(systemName: "pencil.circle")
@@ -56,7 +54,7 @@ struct ChatMainView: View {
       Image(systemName: "ellipsis")
     })
     .alert("Set Prompt", isPresented: $isShowSetPrompt, actions: {
-      TextField("Input prompt", text: $prompt)
+      TextField("Input prompt", text: $viewModel.prompt)
         .onAppear {
           UITextField.appearance().clearButtonMode = .whileEditing
         }
@@ -65,7 +63,7 @@ struct ChatMainView: View {
         UITextField.appearance().clearButtonMode = .never
       })
       Button("Cancel", role: .cancel, action: {
-        prompt = promptTemp
+        viewModel.prompt = promptTemp
         UITextField.appearance().clearButtonMode = .never
       })
     }, message: {
@@ -74,21 +72,11 @@ struct ChatMainView: View {
     .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
       Button("OK", role: .cancel) { }
     }
-    .onAppear {
-      if isCreateGroup {
-        viewModel.clearScreen()
-        viewModel.addGroup()
-      } else {
-        if let group = group {
-          viewModel.setCurrentChat(group)
-        }
-      }
-    }
   }
 }
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(viewModel: ChatMainViewModel(), prompt: .constant(""), avatar: "Profile-User")
+    ChatMainView(viewModel: ChatMainViewModel(group: ChatGroup(), respository: CoreDataRespository()), avatar: "")
   }
 }

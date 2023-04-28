@@ -38,7 +38,6 @@ struct ChatView: View {
       }
       .onChange(of: viewModel.messageItems) { newValue in
         proxy.scrollTo(newValue.last?.id)
-
       }
     }
   }
@@ -46,6 +45,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatView(viewModel: ChatMainViewModel(), avatar: "Profile-User")
+    ChatView(viewModel: ChatMainViewModel(group: ChatGroup(), respository: CoreDataRespository()), avatar: "Profile-User")
   }
 }

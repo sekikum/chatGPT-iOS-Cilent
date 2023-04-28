@@ -82,3 +82,20 @@ class CoreDataRespository: DataRespository {
     }
   }
 }
+
+extension ChatGroup {
+  convenience init(context: NSManagedObjectContext, content: String) {
+    self.init(context: context)
+    self.flag = content
+    self.timestamp = Date()
+  }
+}
+
+extension ChatLine {
+  convenience init(context: NSManagedObjectContext, content: MessageModel) {
+    self.init(context: context)
+    self.isUser = content.isUser
+    self.message = content.message
+    self.id = content.id
+  }
+}
