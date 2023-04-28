@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ImageChatMainView: View {
-  @StateObject var viewModel: ImageChatMainViewModel
+  @StateObject var viewModel: ImageChatMainViewModel = ImageChatMainViewModel()
   @State var textField: String = ""
   @Binding var isShowBrowser: Bool
   @Binding var selectImage: Int
   @Binding var images: [Image]
   let avatar: String
+  let numberList: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  let sizeList: [String] = ["256x256", "512x512", "1024x1024"]
   let buttonSize: CGFloat = 30
   let textFieldLimit: Int = 4
   let cornerRadius: CGFloat = 6
@@ -60,6 +62,33 @@ struct ImageChatMainView: View {
         }
     )
     .ignoresSafeArea(.keyboard, edges: .bottom)
+    .navigationBarItems(trailing: Menu {
+      Picker("Number: \(String(viewModel.imageSet.number))", selection: $viewModel.imageSet.number) {
+        ForEach(numberList, id: \.self) { num in
+          Text("\(num)")
+        }
+      }
+      .pickerStyle(.menu)
+      .onChange(of: viewModel.imageSet.number) { _ in
+        Task {
+          images = .init(repeating: Image(systemName: "arrow.clockwise"), count: viewModel.imageSet.number)
+          await StorageManager.storeImageSet(viewModel.imageSet)
+        }
+      }
+      Picker("Size: \(viewModel.imageSet.size)", selection: $viewModel.imageSet.size) {
+        ForEach(sizeList, id: \.self) { str in
+          Text("\(str)")
+        }
+      }
+      .pickerStyle(.menu)
+      .onChange(of: viewModel.imageSet.size) { _ in
+        Task {
+          await StorageManager.storeImageSet(viewModel.imageSet)
+        }
+      }
+    } label: {
+      Image(systemName: "ellipsis")
+    })
     .gesture(DragGesture().onChanged{ _ in
       UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     })
