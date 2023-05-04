@@ -26,13 +26,11 @@ struct HomeView: View {
           }
           .tag(HomeTab.chat)
         
-        NavigationView {
-          ImageChatMainView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, images: $images, avatar: StorageManager.restoreUser().avatar)
-        }
-        .tabItem {
-          Label("Image", systemImage: "photo.circle.fill")
-        }
-        .tag(HomeTab.image)
+        ImageChatMainView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, images: $images, avatar: StorageManager.restoreUser().avatar)
+          .tabItem {
+            Label("Image", systemImage: "photo.circle.fill")
+          }
+          .tag(HomeTab.image)
         
         ProfileMainView(viewModel: ProfileViewModel())
           .tabItem {

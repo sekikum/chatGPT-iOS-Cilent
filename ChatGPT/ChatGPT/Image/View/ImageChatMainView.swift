@@ -22,76 +22,80 @@ struct ImageChatMainView: View {
   let padding: CGFloat = 6
   
   var body: some View {
-    VStack {
-      Spacer()
-      HStack {
+    NavigationView {
+      VStack {
         Spacer()
-        Image(avatar)
-        TextField(viewModel.makePlaceholder(), text: $textField, axis: .vertical)
-          .disabled(viewModel.isTextFieldDisable())
-          .lineLimit(textFieldLimit)
-          .padding(padding)
-          .background(Color("Gray"))
-          .cornerRadius(cornerRadius)
-          .keyboardType(.default)
-          .disableAutocorrection(true)
-          .autocapitalization(.none)
-        Button(action: sendPrompt) {
-          Image(systemName: "paperplane.circle.fill")
-            .resizable()
-            .frame(width: buttonSize, height: buttonSize)
+        HStack {
+          Spacer()
+          Image(avatar)
+          TextField(viewModel.makePlaceholder(), text: $textField, axis: .vertical)
+            .disabled(viewModel.isTextFieldDisable())
+            .lineLimit(textFieldLimit)
+            .padding(padding)
+            .background(Color("Gray"))
+            .cornerRadius(cornerRadius)
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+          Button(action: sendPrompt) {
+            Image(systemName: "paperplane.circle.fill")
+              .resizable()
+              .frame(width: buttonSize, height: buttonSize)
+          }
+          .disabled(viewModel.isButtonDisable())
+          .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
+            Button("OK", role: .cancel) { }
+          }
+          .overlay() {
+            if viewModel.isShowLoading {
+              ProgressView()
+            }
+          }
+          Spacer()
         }
-        .disabled(viewModel.isButtonDisable())
-        .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
-          Button("OK", role: .cancel) { }
-        }
-        .overlay() {
-          if viewModel.isShowLoading {
-            ProgressView()
+        ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, urlImages: $viewModel.imagesURL, images: $images)
+        Spacer()
+      }
+      .background(
+        Color("White")
+          .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+          }
+      )
+      .ignoresSafeArea(.keyboard, edges: .bottom)
+      .navigationTitle("Image")
+      .navigationBarTitleDisplayMode(.inline)
+      .navigationBarItems(trailing: Menu {
+        Picker("Number: \(String(viewModel.imageSet.number))", selection: $viewModel.imageSet.number) {
+          ForEach(numberList, id: \.self) { num in
+            Text("\(num)")
           }
         }
-        Spacer()
-      }
-      ImageView(isShowBrowser: $isShowBrowser, selectImage: $selectImage, urlImages: $viewModel.imagesURL, images: $images)
-      Spacer()
+        .pickerStyle(.menu)
+        .onChange(of: viewModel.imageSet.number) { _ in
+          Task {
+            images = .init(repeating: Image(systemName: "arrow.clockwise"), count: viewModel.imageSet.number)
+            await StorageManager.storeImageSet(viewModel.imageSet)
+          }
+        }
+        Picker("Size: \(viewModel.imageSet.size)", selection: $viewModel.imageSet.size) {
+          ForEach(sizeList, id: \.self) { str in
+            Text("\(str)")
+          }
+        }
+        .pickerStyle(.menu)
+        .onChange(of: viewModel.imageSet.size) { _ in
+          Task {
+            await StorageManager.storeImageSet(viewModel.imageSet)
+          }
+        }
+      } label: {
+        Image(systemName: "ellipsis")
+      })
+      .gesture(DragGesture().onChanged{ _ in
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+      })
     }
-    .background(
-      Color("White")
-        .onTapGesture {
-          UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        }
-    )
-    .ignoresSafeArea(.keyboard, edges: .bottom)
-    .navigationBarItems(trailing: Menu {
-      Picker("Number: \(String(viewModel.imageSet.number))", selection: $viewModel.imageSet.number) {
-        ForEach(numberList, id: \.self) { num in
-          Text("\(num)")
-        }
-      }
-      .pickerStyle(.menu)
-      .onChange(of: viewModel.imageSet.number) { _ in
-        Task {
-          images = .init(repeating: Image(systemName: "arrow.clockwise"), count: viewModel.imageSet.number)
-          await StorageManager.storeImageSet(viewModel.imageSet)
-        }
-      }
-      Picker("Size: \(viewModel.imageSet.size)", selection: $viewModel.imageSet.size) {
-        ForEach(sizeList, id: \.self) { str in
-          Text("\(str)")
-        }
-      }
-      .pickerStyle(.menu)
-      .onChange(of: viewModel.imageSet.size) { _ in
-        Task {
-          await StorageManager.storeImageSet(viewModel.imageSet)
-        }
-      }
-    } label: {
-      Image(systemName: "ellipsis")
-    })
-    .gesture(DragGesture().onChanged{ _ in
-      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    })
   }
   
   func sendPrompt() {
