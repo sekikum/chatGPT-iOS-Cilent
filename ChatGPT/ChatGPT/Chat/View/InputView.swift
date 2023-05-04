@@ -55,7 +55,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-//    InputView(viewModel: InputViewModel(send: {_,_ in }, isShowLoading: false, placeholder: "Input your message", buttonImage: "paperplane.circle.fill", isTextFieldDisable: false, setButtonAction: { _ in }, isButtonDisable: false))
     InputView(viewModel: InputViewModel(isStreaming: .constant(false), isShowLoading: false, send: {_,_ in }))
   }
 }
