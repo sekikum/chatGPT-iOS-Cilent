@@ -72,6 +72,7 @@ struct ChatMainView: View {
     .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
       Button("OK", role: .cancel) { }
     }
+    .toolbar(.hidden, for: .tabBar)
   }
 }
 
