@@ -8,10 +8,10 @@
 import Foundation
 
 struct UserModel: Codable {
-  var avatar: String
-  var nickname: String
-  var apiKeyList: [String]
-  var apiKeySelect: String
-  var modelSelect: String
-  var baseURL: String
+  var avatar: String = "Profile-User"
+  var nickname: String = "sekikum"
+  var apiKeyList: [String] = []
+  var apiKeySelect: String = ""
+  var modelSelect: String = "gpt-3.5"
+  var baseURL: String = ""
 }
