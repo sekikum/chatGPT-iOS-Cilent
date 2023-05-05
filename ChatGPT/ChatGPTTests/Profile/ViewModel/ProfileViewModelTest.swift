@@ -53,6 +53,31 @@ final class ProfileViewModelTests: XCTestCase {
     XCTAssertEqual(viewModel.user.apiKeySelect, existingApiKey)
   }
   
+  func test_given_existing_api_key_when_call_deleteAPIKey_then_remove_it_from_user_apiKeyList_and_update_apiKeySelect() throws {
+    let apiKeyToDelete = "abc123"
+    let existingApiKeyList = ["abc123", "xyz789"]
+    viewModel.user = UserModel(apiKeyList: existingApiKeyList, apiKeySelect: apiKeyToDelete)
+    
+    viewModel.deleteAPIKey(apiKeyToDelete)
+    
+    XCTAssertEqual(viewModel.user.apiKeyList.count, 1)
+    XCTAssertFalse(viewModel.user.apiKeyList.contains(apiKeyToDelete))
+    XCTAssertEqual(viewModel.user.apiKeySelect, existingApiKeyList.last)
+  }
+  
+  func test_given_non_existing_api_key_when_call_deleteAPIKey_then_user_apiKeyList_and_apiKeySelect_should_not_change() throws {
+    let apiKeyToDelete = "invalid-api-key"
+    let existingApiKeyList = ["abc123", "xyz789"]
+    viewModel.user = UserModel(apiKeyList: existingApiKeyList, apiKeySelect: "abc123")
+    
+    viewModel.deleteAPIKey(apiKeyToDelete)
+    
+    XCTAssertEqual(viewModel.user.apiKeyList.count, 2)
+    XCTAssertTrue(viewModel.user.apiKeyList.contains("abc123"))
+    XCTAssertTrue(viewModel.user.apiKeyList.contains("xyz789"))
+    XCTAssertEqual(viewModel.user.apiKeySelect, "abc123")
+  }
+  
   func test_given_longer_than_eight_characters_string_when_call_maskAPIKey_then_get_first_and_last_four_characters_with_asterisk() throws {
     XCTAssertEqual(ProfileViewModel().maskAPIKey("qwert23--yuiop"), "qwer****uiop")
   }
