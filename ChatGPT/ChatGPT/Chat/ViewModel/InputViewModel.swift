@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct InputViewModel {
-  @Binding var isStreaming: Bool
+  let isStreaming: Bool
   let isShowLoading: Bool
   let send: (String, String) -> Void
-  let isTextFieldDisable = StorageManager.restoreUser().apiKeyList.isEmpty
+  let cancel: () -> Void
+  let isTextFieldDisable: Bool = StorageManager.restoreUser().apiKeyList.isEmpty
   
   func makePlaceholder() -> String {
     return isTextFieldDisable ? "Please add APIKey on 'me'" : "Input your message"
@@ -23,7 +24,7 @@ struct InputViewModel {
   
   func updateButtonAction(send: () -> Void) {
     if isStreaming {
-      isStreaming = false
+      cancel()
     } else {
       send()
     }

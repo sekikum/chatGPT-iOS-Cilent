@@ -42,6 +42,7 @@
 		84C7B78529D2E91B003FAD02 /* OpenAIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B78429D2E91B003FAD02 /* OpenAIImage.swift */; };
 		84CA528329F7D4AA00179C64 /* InputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CA528229F7D4AA00179C64 /* InputViewModel.swift */; };
 		84CA528529F8C29300179C64 /* ChatGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CA528429F8C29300179C64 /* ChatGroupViewModel.swift */; };
+		84D3752E2A04D50C00A404FD /* InputViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3752D2A04D50C00A404FD /* InputViewModelTest.swift */; };
 		84E8457829C970B00049D5FA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 84E8457729C970B00049D5FA /* Alamofire */; };
 		84E8457A29C970CF0049D5FA /* OpenAIServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457929C970CF0049D5FA /* OpenAIServer.swift */; };
 		84E8457C29C970F80049D5FA /* OpenAIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */; };
@@ -112,6 +113,7 @@
 		84C7B78429D2E91B003FAD02 /* OpenAIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIImage.swift; sourceTree = "<group>"; };
 		84CA528229F7D4AA00179C64 /* InputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModel.swift; sourceTree = "<group>"; };
 		84CA528429F8C29300179C64 /* ChatGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupViewModel.swift; sourceTree = "<group>"; };
+		84D3752D2A04D50C00A404FD /* InputViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewModelTest.swift; sourceTree = "<group>"; };
 		84E8457929C970CF0049D5FA /* OpenAIServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIServer.swift; sourceTree = "<group>"; };
 		84E8457B29C970F80049D5FA /* OpenAIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEndpoint.swift; sourceTree = "<group>"; };
 		84E8457D29C977CB0049D5FA /* OpenAIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIModel.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 		849C654629C0137100AC8E68 /* ChatGPTTests */ = {
 			isa = PBXGroup;
 			children = (
+				84D375292A04D45A00A404FD /* Chat */,
 				849C654E29C0138E00AC8E68 /* Profile */,
 			);
 			path = ChatGPTTests;
@@ -450,6 +453,22 @@
 				84C7B78429D2E91B003FAD02 /* OpenAIImage.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		84D375292A04D45A00A404FD /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				84D3752A2A04D48600A404FD /* ViewModel */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		84D3752A2A04D48600A404FD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84D3752D2A04D50C00A404FD /* InputViewModelTest.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		84E8457529C96E160049D5FA /* Server */ = {
@@ -658,6 +677,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */,
+				84D3752E2A04D50C00A404FD /* InputViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

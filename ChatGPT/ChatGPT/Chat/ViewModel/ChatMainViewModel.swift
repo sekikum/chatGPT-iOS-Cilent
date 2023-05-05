@@ -145,4 +145,8 @@ class ChatMainViewModel: ObservableObject {
   func savePrompt() {
     dataRespository.savePrompt(group, content: prompt)
   }
+  
+  func cancelStreaming() {
+    isStreamingMessage = false
+  }
 }
