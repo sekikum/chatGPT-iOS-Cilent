@@ -9,6 +9,50 @@
 import XCTest
 
 final class ProfileViewModelTests: XCTestCase {
+  var viewModel: ProfileViewModel!
+  
+  override func setUp() {
+    super.setUp()
+    viewModel = ProfileViewModel()
+  }
+  
+  override func tearDown() {
+    viewModel = nil
+    super.tearDown()
+  }
+  
+  func test_given_first_new_api_key_when_call_addAPIKey_then_append_it_to_user_apiKeyList_and_update_apiKeySelect() throws {
+    viewModel.user = UserModel(apiKeyList: [], apiKeySelect: "")
+    let newApiKey = "xyz789"
+    
+    viewModel.addAPIKey(newApiKey)
+    
+    XCTAssertEqual(viewModel.user.apiKeyList.count, 1)
+    XCTAssertEqual(viewModel.user.apiKeyList.first, newApiKey)
+    XCTAssertEqual(viewModel.user.apiKeySelect, newApiKey)
+  }
+  
+  func test_given_new_api_key_when_call_addAPIKey_then_append_it_to_user_apiKeyList() throws {
+    let existingApiKey = "abc123"
+    viewModel.user = UserModel(apiKeyList: [existingApiKey], apiKeySelect: existingApiKey)
+    let newApiKey = "xyz789"
+    
+    viewModel.addAPIKey(newApiKey)
+    
+    XCTAssertEqual(viewModel.user.apiKeyList.count, 2)
+    XCTAssertEqual(viewModel.user.apiKeyList.last, newApiKey)
+    XCTAssertEqual(viewModel.user.apiKeySelect, existingApiKey)
+  }
+  
+  func test_given_existing_api_key_when_call_addAPIKey_then_update_user_apiKeySelect() throws {
+    let existingApiKey = "abc123"
+    viewModel.user = UserModel(apiKeyList: [existingApiKey], apiKeySelect: existingApiKey)
+    
+    viewModel.addAPIKey(existingApiKey)
+    
+    XCTAssertEqual(viewModel.user.apiKeySelect, existingApiKey)
+  }
+  
   func test_given_longer_than_eight_characters_string_when_call_maskAPIKey_then_get_first_and_last_four_characters_with_asterisk() throws {
     XCTAssertEqual(ProfileViewModel().maskAPIKey("qwert23--yuiop"), "qwer****uiop")
   }
