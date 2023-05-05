@@ -55,6 +55,6 @@ struct InputView: View {
 
 struct InputView_Previews: PreviewProvider {
   static var previews: some View {
-    InputView(viewModel: InputViewModel(isStreaming: .constant(false), isShowLoading: false, send: {_,_ in }))
+    InputView(viewModel: InputViewModel(isStreaming: false, isShowLoading: false, send: {_,_ in }, cancel: {}))
   }
 }
