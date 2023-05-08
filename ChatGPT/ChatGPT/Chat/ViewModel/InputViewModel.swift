@@ -29,7 +29,7 @@ struct InputViewModel {
     return StorageManager.restoreUser().apiKeyList.isEmpty
   }
   
-  func updateSendButtonAction(message: String) {
+  func sendButtonAction(message: String) {
     if isStreaming {
       cancel()
     } else {
