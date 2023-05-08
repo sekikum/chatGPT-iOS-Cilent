@@ -122,4 +122,8 @@ extension OpenAIServer {
     
     return request
   }
+  
+  func updateAPIKey(_ apiKey: String) {
+    self.apiKey = apiKey
+  }
 }

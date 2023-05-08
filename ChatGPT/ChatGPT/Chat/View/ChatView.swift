@@ -9,14 +9,14 @@ import SwiftUI
 import Combine
 
 struct ChatView: View {
-  @StateObject var viewModel: MessageViewModel
+  let messageItems: [MessageModel]
   let avatar: String
   let messageTopPadding: CGFloat = 15
   
   var body: some View {
     ScrollViewReader { proxy in
       ScrollView() {
-        ForEach(viewModel.messageItems) { message in
+        ForEach(messageItems) { message in
           MessageView(userAvatar: avatar, message: message)
             .frame(width: UIScreen.main.bounds.size.width)
             .padding(.top, messageTopPadding)
@@ -26,7 +26,7 @@ struct ChatView: View {
       }
       .onReceive(keyboardPublisher) { value in
         if value {
-          proxy.scrollTo(viewModel.messageItems.last?.id, anchor: .bottom)
+          proxy.scrollTo(messageItems.last?.id, anchor: .bottom)
         }
       }
       .onTapGesture {
@@ -34,11 +34,10 @@ struct ChatView: View {
       }
       .scrollDismissesKeyboard(.immediately)
       .onAppear {
-        proxy.scrollTo(viewModel.messageItems.last?.id)
+        proxy.scrollTo(messageItems.last?.id)
       }
-      .onChange(of: viewModel.messageItems) { newValue in
+      .onChange(of: messageItems) { newValue in
         proxy.scrollTo(newValue.last?.id)
-
       }
     }
   }
@@ -46,6 +45,6 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatView(viewModel: MessageViewModel(), avatar: "Profile-User")
+    ChatView(messageItems: [MessageModel(message: "1+1=?", isUser: true), MessageModel(message: "2", isUser: false)], avatar: "Profile-User")
   }
 }

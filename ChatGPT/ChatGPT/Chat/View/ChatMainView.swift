@@ -8,30 +8,28 @@
 import SwiftUI
 
 struct ChatMainView: View {
-  @StateObject var viewModel: MessageViewModel
-  @Binding var prompt: String
+  @StateObject var viewModel: ChatMainViewModel
   @State var isShowSetPrompt: Bool = false
   @State var promptTemp: String = ""
   let avatar: String
   let padding: CGFloat = 10
   let subtitleLineLimit: Int = 1
-  var group: ChatGroup?
   var isCreateGroup: Bool = false
 
   var body: some View {
     VStack {
-      ChatView(viewModel: viewModel, avatar: avatar)
-      InputView(isShowAlert: $viewModel.isShowAlert, isStreamingMessage: $viewModel.isStreamingMessage, alertInfo: viewModel.alertInfo, send: viewModel.sendMessage, isShowLoading: viewModel.isShowLoading)
+      ChatView(messageItems: viewModel.messageItems, avatar: avatar)
+      InputView(viewModel: InputViewModel(isStreaming: viewModel.isStreamingMessage, isShowLoading: viewModel.isShowLoading, send: viewModel.sendMessage(_:_:), cancel: viewModel.cancelStreaming))
     }
     .padding(.bottom, padding)
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
       ToolbarItem(placement: .principal) {
         VStack {
-          Text((isCreateGroup ? "New Chat" : group?.flag) ?? "Unknown")
+          Text(viewModel.getGroupTitle())
             .font(.headline)
-          if !prompt.isEmpty {
-            Text(prompt)
+          if !viewModel.prompt.isEmpty {
+            Text(viewModel.prompt)
               .font(.subheadline)
               .foregroundColor(.secondary)
               .lineLimit(subtitleLineLimit)
@@ -47,7 +45,7 @@ struct ChatMainView: View {
       }
       Button(action: {
         isShowSetPrompt = true
-        promptTemp = prompt
+        promptTemp = viewModel.prompt
       }) {
         Text("Prompt")
         Image(systemName: "pencil.circle")
@@ -56,31 +54,30 @@ struct ChatMainView: View {
       Image(systemName: "ellipsis")
     })
     .alert("Set Prompt", isPresented: $isShowSetPrompt, actions: {
-      TextField("Input prompt", text: $prompt)
+      TextField("Input prompt", text: $viewModel.prompt)
+        .onAppear {
+          UITextField.appearance().clearButtonMode = .whileEditing
+        }
       Button("OK", action: {
         viewModel.savePrompt()
+        UITextField.appearance().clearButtonMode = .never
       })
       Button("Cancel", role: .cancel, action: {
-        prompt = promptTemp
+        viewModel.prompt = promptTemp
+        UITextField.appearance().clearButtonMode = .never
       })
     }, message: {
       Text("What do you want chatGPT to do")
     })
-    .onAppear {
-      if isCreateGroup {
-        viewModel.clearScreen()
-        viewModel.addGroup()
-      } else {
-        if let group = group {
-          viewModel.setCurrentChat(group)
-        }
-      }
+    .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
+      Button("OK", role: .cancel) { }
     }
+    .toolbar(.hidden, for: .tabBar)
   }
 }
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(viewModel: MessageViewModel(), prompt: .constant(""), avatar: "Profile-User")
+    ChatMainView(viewModel: ChatMainViewModel(group: ChatGroup(), repository: CoreDataRepository()), avatar: "")
   }
 }
