@@ -28,8 +28,8 @@ struct ImageChatMainView: View {
         HStack {
           Spacer()
           Image(avatar)
-          TextField(viewModel.makePlaceholder(), text: $textField, axis: .vertical)
-            .disabled(viewModel.isTextFieldDisable())
+          TextField(viewModel.imagePlaceholderText(), text: $textField, axis: .vertical)
+            .disabled(viewModel.imageTextFieldDisable)
             .lineLimit(textFieldLimit)
             .padding(padding)
             .background(Color("Gray"))
@@ -42,7 +42,7 @@ struct ImageChatMainView: View {
               .resizable()
               .frame(width: buttonSize, height: buttonSize)
           }
-          .disabled(viewModel.isButtonDisable())
+          .disabled(viewModel.sendButtonDisable())
           .alert(viewModel.alertInfo, isPresented: $viewModel.isShowAlert) {
             Button("OK", role: .cancel) { }
           }
@@ -95,6 +95,9 @@ struct ImageChatMainView: View {
       .gesture(DragGesture().onChanged{ _ in
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
       })
+      .onAppear {
+        viewModel.setImageTextFieldDisable()
+      }
     }
   }
   

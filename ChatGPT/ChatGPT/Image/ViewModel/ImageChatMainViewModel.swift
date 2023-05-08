@@ -13,9 +13,11 @@ class ImageChatMainViewModel: ObservableObject {
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
+  @Published var imageTextFieldDisable: Bool = false
   
   init() {
     imageSet = StorageManager.restoreImageSet()
+    setImageTextFieldDisable()
   }
   
   func sendPrompt(_ prompt: String) {
@@ -46,19 +48,16 @@ class ImageChatMainViewModel: ObservableObject {
       }
     }
   }
-}
-
-extension ImageChatMainViewModel {
-  func isTextFieldDisable() -> Bool {
-    return StorageManager.restoreUser().apiKeyList.isEmpty
+  
+  func setImageTextFieldDisable() {
+    imageTextFieldDisable = StorageManager.restoreUser().apiKeyList.isEmpty
   }
   
-  func makePlaceholder() -> String {
-    let noAPIKeyAdded = StorageManager.restoreUser().apiKeyList.isEmpty
-    return noAPIKeyAdded ? "Please add APIKey on 'me'" : "Input your message"
+  func imagePlaceholderText() -> String {
+    return imageTextFieldDisable ? "Please add APIKey on 'me'" : "Input your message"
   }
   
-  func isButtonDisable() -> Bool {
-    return isShowLoading || isTextFieldDisable()
+  func sendButtonDisable() -> Bool {
+    return isShowLoading || imageTextFieldDisable
   }
 }
