@@ -102,15 +102,15 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _, _ in},
+      send: { _, _ in
+        isSendCalled = true
+      },
       cancel: {
         isCancelCalled = true
       }
     )
     
-    viewModel.updateSendButtonAction(send: {
-      isSendCalled = true
-    })
+    viewModel.updateSendButtonAction(message: "test")
     
     XCTAssertTrue(isSendCalled)
     XCTAssertFalse(isCancelCalled)
@@ -122,15 +122,15 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: true,
       isShowLoading: false,
-      send: { _, _ in},
+      send: { _, _ in
+        isSendCalled = true
+      },
       cancel: {
         isCancelCalled = true
       }
     )
     
-    viewModel.updateSendButtonAction(send: {
-      isSendCalled = true
-    })
+    viewModel.updateSendButtonAction(message: "test")
     
     XCTAssertFalse(isSendCalled)
     XCTAssertTrue(isCancelCalled)
