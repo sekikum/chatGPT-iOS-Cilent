@@ -21,19 +21,19 @@ struct InputViewModel {
     isStreaming ? "stop.circle.fill" : "paperplane.circle.fill"
   }
   
-  func updateSendButtonAction(send: () -> Void) {
-    if isStreaming {
-      cancel()
-    } else {
-      send()
-    }
-  }
-  
   func sendButtonDisable() -> Bool {
     return isShowLoading || messageTextFieldDisable()
   }
   
   func messageTextFieldDisable() -> Bool {
     return StorageManager.restoreUser().apiKeyList.isEmpty
+  }
+  
+  func updateSendButtonAction(message: String) {
+    if isStreaming {
+      cancel()
+    } else {
+      send(message, StorageManager.restoreUser().modelSelect)
+    }
   }
 }

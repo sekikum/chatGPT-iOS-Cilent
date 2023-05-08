@@ -42,14 +42,10 @@ struct InputView: View {
     }
   }
   
-  func sendMessage() {
-    viewModel.send(textfieldText, StorageManager.restoreUser().modelSelect)
+  func setButtonAction() {
+    viewModel.updateSendButtonAction(message: textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-  }
-  
-  func setButtonAction() {
-    viewModel.updateSendButtonAction(send: sendMessage)
   }
 }
 
