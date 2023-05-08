@@ -104,7 +104,7 @@ struct ProfileMainView: View {
         .labelsHidden()
         .pickerStyle(.inline)
         .onChange(of: viewModel.user.apiKeySelect) { _ in
-          ClientManager.shared.openAI.updateAPIKey(viewModel.user.apiKeySelect)
+          ClientManager.shared.updateOpenAI(viewModel.user.apiKeySelect)
           Task {
             await StorageManager.storeUser(viewModel.user)
           }

@@ -63,7 +63,7 @@ class ChatMainViewModel: ObservableObject {
       model = .chat(.chatgpt)
     }
 
-    ClientManager.shared.openAI.sendChat(with: sendMessageItems, model: model) { result in
+    ClientManager.shared.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
       case .failure(let failure):
         self.setErrorData(errorMessage: failure.message)
@@ -76,7 +76,7 @@ class ChatMainViewModel: ObservableObject {
             return
           }
           if !self.isStreamingMessage {
-            ClientManager.shared.openAI.streamRequest?.cancel()
+            ClientManager.shared.cancelStreamRequest()
             self.saveLineToGroup()
           }
           if success.choices?.first?.finishReason != nil {
