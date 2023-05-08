@@ -11,11 +11,11 @@ import SwiftUI
 class ChatGroupViewModel: ObservableObject {
   @Published var chatGroups: [ChatGroup] = []
   var groupCount: Int = 0
-  let dataRespository: DataRespository
+  let dataRepository: DataRepository
 
-  init(respository: DataRespository = CoreDataRespository()) {
-    self.dataRespository = respository
-    self.chatGroups = self.dataRespository.fetchData()
+  init(repository: DataRepository = CoreDataRepository()) {
+    self.dataRepository = repository
+    self.chatGroups = self.dataRepository.fetchData()
     
     groupCount = self.chatGroups.count
 
@@ -26,13 +26,13 @@ class ChatGroupViewModel: ObservableObject {
 
   func addGroup() {
     groupCount += 1
-    let _ = dataRespository.saveChatGroup("Chat \(groupCount)")
-    chatGroups = dataRespository.fetchData()
+    let _ = dataRepository.saveChatGroup("Chat \(groupCount)")
+    chatGroups = dataRepository.fetchData()
   }
   
   func deleteGroup(_ index: Int) {
     if index >= 0 && index < chatGroups.count {
-      dataRespository.deleteGroup(chatGroups[index])
+      dataRepository.deleteGroup(chatGroups[index])
       chatGroups.remove(at: index)
     }
   }

@@ -1,5 +1,5 @@
 //
-//  DataRespository.swift
+//  DataRepository.swift
 //  ChatGPT
 //
 //  Created by cai dongyu on 2023/4/19.
@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-protocol DataRespository {
+protocol DataRepository {
   func fetchData() -> [ChatGroup]
   func saveChatGroup(_ content: String) -> ChatGroup
   func saveChatLine(_ group: ChatGroup, content: MessageModel)
@@ -18,7 +18,7 @@ protocol DataRespository {
   func deleteGroupContains(_ group: ChatGroup)
 }
 
-class CoreDataRespository: DataRespository {
+class CoreDataRepository: DataRepository {
   let container: NSPersistentContainer
 
   init() {
