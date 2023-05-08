@@ -27,7 +27,7 @@ class ImageChatMainViewModel: ObservableObject {
       return
     }
     isShowLoading = true
-    ClientManager.shared.openAI.sendChatImage(with: prompt, number: imageSet.number, size: imageSet.size) { result in
+    ClientManager.shared.sendChatImage(with: prompt, number: imageSet.number, size: imageSet.size) { result in
       switch(result) {
       case .failure(let failure):
         self.isShowLoading = false
