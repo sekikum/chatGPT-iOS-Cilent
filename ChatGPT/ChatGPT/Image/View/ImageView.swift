@@ -43,7 +43,7 @@ struct ImageView: View {
             isShowBrowser = true
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
           }
-        } else if urlImages.count <= 6 {
+        } else {
           ImageMultipleView(select: $selectImage, isShowBrowser: $isShowBrowser, imagesURL: $urlImages, images: $images)
         }
         Spacer()

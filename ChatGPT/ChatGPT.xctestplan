@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "7C4708EE-4661-48E2-AD33-E5B7968D976F",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ChatGPT.xcodeproj",
+      "identifier" : "8492CD7029B1D93C00187E3C",
+      "name" : "ChatGPT"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ChatGPT.xcodeproj",
+        "identifier" : "849C654429C0137100AC8E68",
+        "name" : "ChatGPTTests"
+      }
+    }
+  ],
+  "version" : 1
+}

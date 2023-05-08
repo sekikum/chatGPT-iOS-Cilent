@@ -1,5 +1,5 @@
 //
-//  ImageViewModel.swift
+//  ImageChatMainViewModel.swift
 //  ChatGPT
 //
 //  Created by Wenyan Zhao on 2023/3/24.
@@ -7,21 +7,17 @@
 
 import Foundation
 
-class ImageViewModel: ObservableObject {
+class ImageChatMainViewModel: ObservableObject {
   @Published var imageSet: ImageSetModel
   @Published var imagesURL: [String] = []
   @Published var isShowAlert: Bool = false
   @Published var alertInfo: String = ""
   @Published var isShowLoading: Bool = false
-  var openAI = OpenAIServer(authAPIKey: "")
+  @Published var imageTextFieldDisable: Bool = false
   
   init() {
     imageSet = StorageManager.restoreImageSet()
-    initOpenAI(StorageManager.restoreUser().apiKeySelect)
-  }
-  
-  func initOpenAI(_ apiKey: String) {
-    openAI = OpenAIServer(authAPIKey: apiKey)
+    setImageTextFieldDisable()
   }
   
   func sendPrompt(_ prompt: String) {
@@ -31,7 +27,7 @@ class ImageViewModel: ObservableObject {
       return
     }
     isShowLoading = true
-    openAI.sendChatImage(with: prompt, number: imageSet.number, size: imageSet.size) { result in
+    ClientManager.shared.openAI.sendChatImage(with: prompt, number: imageSet.number, size: imageSet.size) { result in
       switch(result) {
       case .failure(let failure):
         self.isShowLoading = false
@@ -51,5 +47,17 @@ class ImageViewModel: ObservableObject {
         }
       }
     }
+  }
+  
+  func setImageTextFieldDisable() {
+    imageTextFieldDisable = StorageManager.restoreUser().apiKeyList.isEmpty
+  }
+  
+  func imagePlaceholderText() -> String {
+    return imageTextFieldDisable ? "Please add APIKey on 'me'" : "Input your message"
+  }
+  
+  func sendButtonDisable() -> Bool {
+    return isShowLoading || imageTextFieldDisable
   }
 }

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ChatGroupView: View {
-  @StateObject var viewModel: MessageViewModel
+  @StateObject var viewModel: ChatGroupViewModel = ChatGroupViewModel()
+  @State private var navigateToNewGroup = false
   let avatar: String
   let listPadding: CGFloat = 8
   
@@ -18,11 +19,11 @@ struct ChatGroupView: View {
         ForEach(viewModel.chatGroups, id: \.self) { group in
           if let flag = group.flag {
             NavigationLink {
-              ChatMainView(viewModel: viewModel, prompt: $viewModel.prompt, avatar: avatar, group: group)
+              ChatMainView(viewModel: ChatMainViewModel(group: group, repository: viewModel.dataRepository), avatar: avatar)
             } label: {
               Label(flag, systemImage: "bubble.left")
             }
-            .padding(.vertical, 8)
+            .padding(.vertical, listPadding)
           }
         }
         .onDelete { indexSet in
@@ -33,9 +34,15 @@ struct ChatGroupView: View {
       }
       .navigationTitle("Chat")
       .navigationBarTitleDisplayMode(.inline)
+      .navigationDestination(isPresented: $navigateToNewGroup) {
+        ChatMainView(viewModel: ChatMainViewModel(group: viewModel.chatGroups.last!, repository: viewModel.dataRepository), avatar: avatar)
+      }
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
-          NavigationLink(destination: ChatMainView(viewModel: viewModel, prompt: $viewModel.prompt, avatar: avatar, group: nil, isCreateGroup: true)) {
+          Button(action: {
+            navigateToNewGroup = true
+            viewModel.addGroup()
+          }) {
             Image(systemName: "plus")
               .resizable()
           }
@@ -47,6 +54,6 @@ struct ChatGroupView: View {
 
 struct ChatGroupView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatGroupView(viewModel: MessageViewModel(), avatar: "1")
+    ChatGroupView(viewModel: ChatGroupViewModel(), avatar: "Profile-User")
   }
 }
