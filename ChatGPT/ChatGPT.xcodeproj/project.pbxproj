@@ -57,7 +57,7 @@
 		84F9670B29C3FD68006DD8A3 /* TextOutputFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9670A29C3FD68006DD8A3 /* TextOutputFormat.swift */; };
 		8A12A99B29E5059200261070 /* ChatLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A12A99929E5059200261070 /* ChatLog.xcdatamodeld */; };
 		8A1711DD29EECBB30027F70A /* ChatGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1711DC29EECBB30027F70A /* ChatGroupView.swift */; };
-		8A5301C529F032E700C3BBA4 /* DataRespository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5301C429F032E700C3BBA4 /* DataRespository.swift */; };
+		8A5301C529F032E700C3BBA4 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5301C429F032E700C3BBA4 /* DataRepository.swift */; };
 		8ADD4E1229DE9825003206C2 /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADD4E1129DE9825003206C2 /* ChatBubbleView.swift */; };
 /* End PBXBuildFile section */
 
@@ -124,7 +124,7 @@
 		84F9670A29C3FD68006DD8A3 /* TextOutputFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOutputFormat.swift; sourceTree = "<group>"; };
 		8A12A99A29E5059200261070 /* ChatLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatLog.xcdatamodel; sourceTree = "<group>"; };
 		8A1711DC29EECBB30027F70A /* ChatGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGroupView.swift; sourceTree = "<group>"; };
-		8A5301C429F032E700C3BBA4 /* DataRespository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRespository.swift; sourceTree = "<group>"; };
+		8A5301C429F032E700C3BBA4 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		8ADD4E1129DE9825003206C2 /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -507,7 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				8A12A99929E5059200261070 /* ChatLog.xcdatamodeld */,
-				8A5301C429F032E700C3BBA4 /* DataRespository.swift */,
+				8A5301C429F032E700C3BBA4 /* DataRepository.swift */,
 			);
 			path = Respository;
 			sourceTree = "<group>";
@@ -664,7 +664,7 @@
 				8492CD7529B1D93C00187E3C /* ChatGPTApp.swift in Sources */,
 				849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */,
 				847A26F729B9B592006F6B34 /* ProfileMainView.swift in Sources */,
-				8A5301C529F032E700C3BBA4 /* DataRespository.swift in Sources */,
+				8A5301C529F032E700C3BBA4 /* DataRepository.swift in Sources */,
 				84C7B74B29CD7D68003FAD02 /* ImageView.swift in Sources */,
 				847A26FF29B9BCEB006F6B34 /* UserModel.swift in Sources */,
 				84E8458229C981420049D5FA /* OpenAI.swift in Sources */,

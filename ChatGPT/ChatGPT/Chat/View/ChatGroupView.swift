@@ -19,7 +19,7 @@ struct ChatGroupView: View {
         ForEach(viewModel.chatGroups, id: \.self) { group in
           if let flag = group.flag {
             NavigationLink {
-              ChatMainView(viewModel: ChatMainViewModel(group: group, respository: viewModel.dataRespository), avatar: avatar)
+              ChatMainView(viewModel: ChatMainViewModel(group: group, repository: viewModel.dataRepository), avatar: avatar)
             } label: {
               Label(flag, systemImage: "bubble.left")
             }
@@ -35,7 +35,7 @@ struct ChatGroupView: View {
       .navigationTitle("Chat")
       .navigationBarTitleDisplayMode(.inline)
       .navigationDestination(isPresented: $navigateToNewGroup) {
-        ChatMainView(viewModel: ChatMainViewModel(group: viewModel.chatGroups.last!, respository: viewModel.dataRespository), avatar: avatar)
+        ChatMainView(viewModel: ChatMainViewModel(group: viewModel.chatGroups.last!, repository: viewModel.dataRepository), avatar: avatar)
       }
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {

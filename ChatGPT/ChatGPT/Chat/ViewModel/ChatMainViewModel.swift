@@ -17,12 +17,12 @@ class ChatMainViewModel: ObservableObject {
   @Published var prompt: String = ""
   var sendMessageItems: [ChatMessage] = []
   var group: ChatGroup
-  let dataRespository: DataRespository
+  let dataRepository: DataRepository
 
-  init(group: ChatGroup, respository: DataRespository) {
+  init(group: ChatGroup, repository: DataRepository) {
     self.sendMessageItems = []
     self.group = group
-    self.dataRespository = respository
+    self.dataRepository = repository
     setCurrentChat(group)
   }
 
@@ -132,18 +132,18 @@ class ChatMainViewModel: ObservableObject {
   func clearContext() {
     sendMessageItems = []
     messageItems = []
-    dataRespository.deleteGroupContains(group)
+    dataRepository.deleteGroupContains(group)
   }
 
   func saveLineToGroup() {
     guard let content = messageItems.last else {
       return
     }
-    dataRespository.saveChatLine(group, content: content)
+    dataRepository.saveChatLine(group, content: content)
   }
 
   func savePrompt() {
-    dataRespository.savePrompt(group, content: prompt)
+    dataRepository.savePrompt(group, content: prompt)
   }
   
   func cancelStreaming() {
