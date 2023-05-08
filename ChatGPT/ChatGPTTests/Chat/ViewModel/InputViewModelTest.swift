@@ -7,7 +7,6 @@
 
 @testable import ChatGPT
 import XCTest
-import SwiftUI
 
 final class InputViewModelTest: XCTestCase {
   override func setUp() {
