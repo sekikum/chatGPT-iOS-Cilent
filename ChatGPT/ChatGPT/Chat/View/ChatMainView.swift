@@ -26,7 +26,7 @@ struct ChatMainView: View {
     .toolbar {
       ToolbarItem(placement: .principal) {
         VStack {
-          Text(viewModel.group.flag ?? "unkown")
+          Text(viewModel.getGroupTitle())
             .font(.headline)
           if !viewModel.prompt.isEmpty {
             Text(viewModel.prompt)

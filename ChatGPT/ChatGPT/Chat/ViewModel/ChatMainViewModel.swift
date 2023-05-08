@@ -149,4 +149,8 @@ class ChatMainViewModel: ObservableObject {
   func cancelStreaming() {
     isStreamingMessage = false
   }
+  
+  func getGroupTitle() -> String {
+    return group.flag ?? "unkown"
+  }
 }
