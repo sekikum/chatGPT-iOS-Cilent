@@ -11,10 +11,11 @@ import XCTest
 final class ChatGroupViewModelTest: XCTestCase {
   
   var viewModel: ChatGroupViewModel!
-  var dataRepository: DataRepository = DataRepositoryMock()
+  var dataRepositoryMock: DataRepository = DataRepositoryMock()
   
   override func setUpWithError() throws {
-    viewModel = ChatGroupViewModel(repository: dataRepository)
+    viewModel = ChatGroupViewModel(dataRepository: dataRepositoryMock)
+    viewModel.setChatGroups()
   }
   
   override func tearDownWithError() throws {
@@ -35,10 +36,10 @@ final class ChatGroupViewModelTest: XCTestCase {
   }
 
   func test_given_chat_group_view_model_when_initialized_then_chat_group_count_is_one() throws {
-    XCTAssertEqual(viewModel.groupCount, 1)
+    XCTAssertEqual(viewModel.chatGroupCount, 1)
     viewModel.addChatGroup()
-    XCTAssertEqual(viewModel.groupCount, 2)
+    XCTAssertEqual(viewModel.chatGroupCount, 2)
     viewModel.addChatGroup()
-    XCTAssertEqual(viewModel.groupCount, 3)
+    XCTAssertEqual(viewModel.chatGroupCount, 3)
   }
 }
