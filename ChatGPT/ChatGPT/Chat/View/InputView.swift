@@ -27,7 +27,7 @@ struct InputView: View {
         .keyboardType(.default)
         .disableAutocorrection(true)
         .autocapitalization(.none)
-      Button(action: setButtonAction) {
+      Button(action: sendAction) {
         Image(systemName: viewModel.sendButtonImage())
           .resizable()
           .frame(width: buttonSize, height: buttonSize)
@@ -42,8 +42,8 @@ struct InputView: View {
     }
   }
   
-  func setButtonAction() {
-    viewModel.updateSendButtonAction(message: textfieldText)
+  func sendAction() {
+    viewModel.sendButtonAction(message: textfieldText)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
