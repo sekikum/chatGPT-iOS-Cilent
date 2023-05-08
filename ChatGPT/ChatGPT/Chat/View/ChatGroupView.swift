@@ -37,6 +37,9 @@ struct ChatGroupView: View {
       .navigationDestination(isPresented: $navigateToNewGroup) {
         ChatMainView(viewModel: ChatMainViewModel(group: viewModel.chatGroups.last!, repository: viewModel.dataRepository), avatar: avatar)
       }
+      .onAppear {
+        viewModel.setChatGroups()
+      }
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
           Button(action: {
