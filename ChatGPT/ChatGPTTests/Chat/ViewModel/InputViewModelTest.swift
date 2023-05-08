@@ -20,6 +20,32 @@ final class InputViewModelTest: XCTestCase {
     StorageManager.defaultStand.removeObject(forKey: StorageManager.USER_KEY)
   }
   
+  func test_given_api_key_list_empty_when_is_text_field_disable_then_return_true() async {
+    let user = UserModel(apiKeyList: [])
+    await StorageManager.storeUser(user)
+    let viewModel = InputViewModel(
+      isStreaming: false,
+      isShowLoading: false,
+      send: { _,_ in },
+      cancel: {}
+    )
+    
+    XCTAssertTrue(viewModel.getTextFieldDisable())
+  }
+  
+  func test_given_api_key_list_not_empty_when_is_text_field_disable_then_return_false() async {
+    let user = UserModel(apiKeyList: ["APIKey"])
+    await StorageManager.storeUser(user)
+    let viewModel = InputViewModel(
+      isStreaming: false,
+      isShowLoading: false,
+      send: { _,_ in },
+      cancel: {}
+    )
+    
+    XCTAssertFalse(viewModel.getTextFieldDisable())
+  }
+  
   func test_given_no_api_key_when_make_placeholder_then_return_expected_placeholder() {
     let viewModel = InputViewModel(
       isStreaming: false,

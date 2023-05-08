@@ -12,10 +12,9 @@ struct InputViewModel {
   let isShowLoading: Bool
   let send: (String, String) -> Void
   let cancel: () -> Void
-  let isTextFieldDisable: Bool = StorageManager.restoreUser().apiKeyList.isEmpty
   
   func makePlaceholder() -> String {
-    return isTextFieldDisable ? "Please add APIKey on 'me'" : "Input your message"
+    return getTextFieldDisable() ? "Please add APIKey on 'me'" : "Input your message"
   }
   
   func makeButtonImage() -> String {
@@ -31,6 +30,10 @@ struct InputViewModel {
   }
   
   func isButtonDisable() -> Bool {
-    return isShowLoading || isTextFieldDisable
+    return isShowLoading || getTextFieldDisable()
+  }
+  
+  func getTextFieldDisable() -> Bool {
+    return StorageManager.restoreUser().apiKeyList.isEmpty
   }
 }

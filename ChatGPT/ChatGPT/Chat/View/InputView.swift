@@ -19,7 +19,7 @@ struct InputView: View {
     HStack {
       Spacer()
       TextField(viewModel.makePlaceholder(), text: $textfieldText, axis: .vertical)
-        .disabled(viewModel.isTextFieldDisable)
+        .disabled(viewModel.getTextFieldDisable())
         .lineLimit(textFieldLimit)
         .padding(padding)
         .background(Color("Gray"))
