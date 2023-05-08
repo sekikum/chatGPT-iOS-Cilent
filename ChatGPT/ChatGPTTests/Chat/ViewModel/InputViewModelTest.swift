@@ -20,7 +20,7 @@ final class InputViewModelTest: XCTestCase {
     StorageManager.defaultStand.removeObject(forKey: StorageManager.USER_KEY)
   }
   
-  func test_given_api_key_list_empty_when_is_text_field_disable_then_return_true() async {
+  func test_given_api_key_list_empty_when_message_text_field_disable_then_return_true() async {
     let user = UserModel(apiKeyList: [])
     await StorageManager.storeUser(user)
     let viewModel = InputViewModel(
@@ -30,10 +30,10 @@ final class InputViewModelTest: XCTestCase {
       cancel: {}
     )
     
-    XCTAssertTrue(viewModel.getTextFieldDisable())
+    XCTAssertTrue(viewModel.messageTextFieldDisable())
   }
   
-  func test_given_api_key_list_not_empty_when_is_text_field_disable_then_return_false() async {
+  func test_given_api_key_list_not_empty_when_message_text_field_disable_then_return_false() async {
     let user = UserModel(apiKeyList: ["APIKey"])
     await StorageManager.storeUser(user)
     let viewModel = InputViewModel(
@@ -43,10 +43,10 @@ final class InputViewModelTest: XCTestCase {
       cancel: {}
     )
     
-    XCTAssertFalse(viewModel.getTextFieldDisable())
+    XCTAssertFalse(viewModel.messageTextFieldDisable())
   }
   
-  func test_given_no_api_key_when_make_placeholder_then_return_expected_placeholder() {
+  func test_given_no_api_key_when_message_placeholder_text_then_return_expected_placeholder() {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
@@ -55,10 +55,10 @@ final class InputViewModelTest: XCTestCase {
     )
     let expectedPlaceholder = "Please add APIKey on 'me'"
 
-    XCTAssertEqual(viewModel.makePlaceholder(), expectedPlaceholder)
+    XCTAssertEqual(viewModel.messagePlaceholderText(), expectedPlaceholder)
   }
   
-  func test_given_api_key_when_make_placeholder_then_return_expected_placeholder() async {
+  func test_given_api_key_when_message_placeholder_text_then_return_expected_placeholder() async {
     let user = UserModel(apiKeyList: ["abc123"])
     await StorageManager.storeUser(user)
     let viewModel = InputViewModel(
@@ -69,10 +69,10 @@ final class InputViewModelTest: XCTestCase {
     )
     let expectedPlaceholder = "Input your message"
 
-    XCTAssertEqual(viewModel.makePlaceholder(), expectedPlaceholder)
+    XCTAssertEqual(viewModel.messagePlaceholderText(), expectedPlaceholder)
   }
   
-  func test_given_streaming_state_when_make_button_image_then_return_expected_image_name() {
+  func test_given_streaming_state_when_send_button_image_then_return_expected_image_name() {
     let viewModel = InputViewModel(
       isStreaming: true,
       isShowLoading: false,
@@ -81,10 +81,10 @@ final class InputViewModelTest: XCTestCase {
     )
     let expectedImageName = "stop.circle.fill"
     
-    XCTAssertEqual(viewModel.makeButtonImage(), expectedImageName)
+    XCTAssertEqual(viewModel.sendButtonImage(), expectedImageName)
   }
   
-  func test_given_not_streaming_state_when_make_button_image_then_return_expected_image_name() {
+  func test_given_not_streaming_state_when_send_button_image_then_return_expected_image_name() {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
@@ -93,10 +93,10 @@ final class InputViewModelTest: XCTestCase {
     )
     let expectedImageName = "paperplane.circle.fill"
     
-    XCTAssertEqual(viewModel.makeButtonImage(), expectedImageName)
+    XCTAssertEqual(viewModel.sendButtonImage(), expectedImageName)
   }
   
-  func test_given_not_is_streaming_when_update_button_action_then_call_send() {
+  func test_given_not_is_streaming_when_update_send_button_action_then_call_send() {
     var isSendCalled = false
     var isCancelCalled = false
     let viewModel = InputViewModel(
@@ -108,7 +108,7 @@ final class InputViewModelTest: XCTestCase {
       }
     )
     
-    viewModel.updateButtonAction(send: {
+    viewModel.updateSendButtonAction(send: {
       isSendCalled = true
     })
     
@@ -116,7 +116,7 @@ final class InputViewModelTest: XCTestCase {
     XCTAssertFalse(isCancelCalled)
   }
   
-  func test_given_not_streaming_state_when_update_button_action_then_toggle_streaming_state() {
+  func test_given_not_streaming_state_when_update_send_button_action_then_toggle_streaming_state() {
     var isSendCalled = false
     var isCancelCalled = false
     let viewModel = InputViewModel(
@@ -128,7 +128,7 @@ final class InputViewModelTest: XCTestCase {
       }
     )
     
-    viewModel.updateButtonAction(send: {
+    viewModel.updateSendButtonAction(send: {
       isSendCalled = true
     })
     
@@ -136,17 +136,18 @@ final class InputViewModelTest: XCTestCase {
     XCTAssertTrue(isCancelCalled)
   }
   
-  func test_given_not_loading_and_not_text_field_disabled_state_when_is_button_disabled_then_return_false() {
+  func test_given_not_loading_and_not_text_field_disabled_state_when_send_button_disabled_then_return_false() {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
       send: { _, _ in },
       cancel: {}
     )
-    XCTAssertTrue(viewModel.isButtonDisable())
+    
+    XCTAssertTrue(viewModel.sendButtonDisable())
   }
   
-  func test_given_loading_state_when_is_button_disabled_then_return_true() {
+  func test_given_loading_state_when_send_button_disabled_then_return_true() {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: true,
@@ -154,10 +155,10 @@ final class InputViewModelTest: XCTestCase {
       cancel: {}
     )
     
-    XCTAssertTrue(viewModel.isButtonDisable())
+    XCTAssertTrue(viewModel.sendButtonDisable())
   }
   
-  func test_given_text_field_disabled_state_when_is_button_disabled_then_return_true() async {
+  func test_given_text_field_disabled_state_when_send_button_disabled_then_return_true() async {
     let user = UserModel(apiKeyList: ["abc123"])
     await StorageManager.storeUser(user)
     let viewModel = InputViewModel(
@@ -166,6 +167,7 @@ final class InputViewModelTest: XCTestCase {
       send: { _, _ in },
       cancel: {}
     )
-    XCTAssertFalse(viewModel.isButtonDisable())
+    
+    XCTAssertFalse(viewModel.sendButtonDisable())
   }
 }

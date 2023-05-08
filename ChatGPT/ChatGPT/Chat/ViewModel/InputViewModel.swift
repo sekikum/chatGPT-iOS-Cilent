@@ -13,15 +13,15 @@ struct InputViewModel {
   let send: (String, String) -> Void
   let cancel: () -> Void
   
-  func makePlaceholder() -> String {
-    return getTextFieldDisable() ? "Please add APIKey on 'me'" : "Input your message"
+  func messagePlaceholderText() -> String {
+    return messageTextFieldDisable() ? "Please add APIKey on 'me'" : "Input your message"
   }
   
-  func makeButtonImage() -> String {
+  func sendButtonImage() -> String {
     isStreaming ? "stop.circle.fill" : "paperplane.circle.fill"
   }
   
-  func updateButtonAction(send: () -> Void) {
+  func updateSendButtonAction(send: () -> Void) {
     if isStreaming {
       cancel()
     } else {
@@ -29,11 +29,11 @@ struct InputViewModel {
     }
   }
   
-  func isButtonDisable() -> Bool {
-    return isShowLoading || getTextFieldDisable()
+  func sendButtonDisable() -> Bool {
+    return isShowLoading || messageTextFieldDisable()
   }
   
-  func getTextFieldDisable() -> Bool {
+  func messageTextFieldDisable() -> Bool {
     return StorageManager.restoreUser().apiKeyList.isEmpty
   }
 }

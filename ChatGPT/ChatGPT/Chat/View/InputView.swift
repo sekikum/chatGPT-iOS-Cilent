@@ -18,8 +18,8 @@ struct InputView: View {
   var body: some View {
     HStack {
       Spacer()
-      TextField(viewModel.makePlaceholder(), text: $textfieldText, axis: .vertical)
-        .disabled(viewModel.getTextFieldDisable())
+      TextField(viewModel.messagePlaceholderText(), text: $textfieldText, axis: .vertical)
+        .disabled(viewModel.messageTextFieldDisable())
         .lineLimit(textFieldLimit)
         .padding(padding)
         .background(Color("Gray"))
@@ -28,7 +28,7 @@ struct InputView: View {
         .disableAutocorrection(true)
         .autocapitalization(.none)
       Button(action: setButtonAction) {
-        Image(systemName: viewModel.makeButtonImage())
+        Image(systemName: viewModel.sendButtonImage())
           .resizable()
           .frame(width: buttonSize, height: buttonSize)
       }
@@ -37,19 +37,19 @@ struct InputView: View {
           ProgressView()
         }
       }
-      .disabled(viewModel.isButtonDisable())
+      .disabled(viewModel.sendButtonDisable())
       Spacer()
     }
   }
   
-  func sendMessageAction() {
+  func sendMessage() {
     viewModel.send(textfieldText, StorageManager.restoreUser().modelSelect)
     textfieldText = ""
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
   
   func setButtonAction() {
-    viewModel.updateButtonAction(send: sendMessageAction)
+    viewModel.updateSendButtonAction(send: sendMessage)
   }
 }
 
