@@ -4,12 +4,12 @@
         <attribute name="flag" attributeType="String"/>
         <attribute name="prompt" optional="YES" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="contains" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ChatLine" inverseName="belongs" inverseEntity="ChatLine"/>
+        <relationship name="contains" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="belongs" inverseEntity="Message"/>
     </entity>
     <entity name="ChatGroupCount" representedClassName="ChatGroupCount" syncable="YES" codeGenerationType="class">
         <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
-    <entity name="ChatLine" representedClassName="ChatLine" syncable="YES" codeGenerationType="class">
+    <entity name="Message" representedClassName="Message" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isUser" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="message" attributeType="String"/>

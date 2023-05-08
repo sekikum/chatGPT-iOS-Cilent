@@ -32,7 +32,7 @@ class ChatMainViewModel: ObservableObject {
 
     if let contains = group.contains {
       for line in contains.array {
-        if let line = line as? ChatLine {
+        if let line = line as? Message {
           messageItems.append(MessageModel(message: line.message ?? "", isUser: line.isUser))
           sendMessageItems.append(ChatMessage(role: line.isUser ? .user : .system, content: line.message ?? ""))
         }
@@ -132,14 +132,14 @@ class ChatMainViewModel: ObservableObject {
   func clearContext() {
     sendMessageItems = []
     messageItems = []
-    dataRepository.deleteGroupContains(group)
+    dataRepository.clearChatGroupContext(group)
   }
 
   func saveLineToGroup() {
     guard let content = messageItems.last else {
       return
     }
-    dataRepository.saveChatLine(group, content: content)
+    dataRepository.saveMessage(group, content: content)
   }
 
   func savePrompt() {

@@ -21,8 +21,8 @@ class DataRepositoryMock: DataRepository {
     return group
   }
   
-  func saveChatLine(_ group: ChatGroup, content: MessageModel) {
-    let line = ChatLine(context: .init(concurrencyType: .mainQueueConcurrencyType), content: content)
+  func saveMessage(_ group: ChatGroup, content: MessageModel) {
+    let line = Message(context: .init(concurrencyType: .mainQueueConcurrencyType), content: content)
     group.addToContains(line)
   }
   
@@ -30,13 +30,13 @@ class DataRepositoryMock: DataRepository {
     group.prompt = content
   }
   
-  func deleteGroup(_ group: ChatGroup) {
+  func deleteChatGroup(_ group: ChatGroup) {
     if let index = chatGroups.firstIndex(of: group) {
       chatGroups.remove(at: index)
     }
   }
   
-  func deleteGroupContains(_ group: ChatGPT.ChatGroup) {
+  func clearChatGroupContext(_ group: ChatGPT.ChatGroup) {
     if let lines = group.contains {
       let mutableLines = lines.mutableCopy() as! NSMutableSet
       mutableLines.forEach { line in
