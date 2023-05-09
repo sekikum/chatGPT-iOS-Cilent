@@ -16,7 +16,7 @@ class ChatGroupViewModel: ObservableObject {
   init(dataRepository: DataRepository = CoreDataRepository()) {
     self.dataRepository = dataRepository
   }
-  
+
   func addChatGroup() {
     chatGroupCount += 1
     let _ = dataRepository.saveChatGroup("Chat \(chatGroupCount)")
