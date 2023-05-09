@@ -78,6 +78,6 @@ struct ChatMainView: View {
 
 struct ChatMainView_Previews: PreviewProvider {
   static var previews: some View {
-    ChatMainView(viewModel: ChatMainViewModel(group: ChatGroup(), repository: CoreDataRepository()), avatar: "")
+    ChatMainView(viewModel: ChatMainViewModel(chatGroup: ChatGroup(), dataRepository: CoreDataRepository()), avatar: "")
   }
 }
