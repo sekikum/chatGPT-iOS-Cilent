@@ -17,7 +17,6 @@ class ImageChatMainViewModel: ObservableObject {
   
   init() {
     imageSet = StorageManager.restoreImageSet()
-    setImageTextFieldDisable()
   }
   
   func sendPrompt(_ prompt: String) {
