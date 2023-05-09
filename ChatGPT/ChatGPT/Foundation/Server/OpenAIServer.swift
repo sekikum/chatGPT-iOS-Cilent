@@ -126,4 +126,8 @@ extension OpenAIServer {
   func updateAPIKey(_ apiKey: String) {
     self.apiKey = apiKey
   }
+  
+  func cancelStreamRequest() {
+    streamRequest?.cancel()
+  }
 }

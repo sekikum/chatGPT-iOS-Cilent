@@ -12,10 +12,10 @@ import SwiftUI
 protocol DataRepository {
   func fetchData() -> [ChatGroup]
   func saveChatGroup(_ content: String) -> ChatGroup
-  func saveChatLine(_ group: ChatGroup, content: MessageModel)
+  func saveMessage(_ group: ChatGroup, content: MessageModel)
   func savePrompt(_ group: ChatGroup, content: String)
-  func deleteGroup(_ group: ChatGroup)
-  func deleteGroupContains(_ group: ChatGroup)
+  func deleteChatGroup(_ group: ChatGroup)
+  func clearChatGroupContext(_ group: ChatGroup)
 }
 
 class CoreDataRepository: DataRepository {
@@ -45,8 +45,8 @@ class CoreDataRepository: DataRepository {
     return group
   }
 
-  func saveChatLine(_ group: ChatGroup, content: MessageModel) {
-    let entity = ChatLine(context: container.viewContext, content: content)
+  func saveMessage(_ group: ChatGroup, content: MessageModel) {
+    let entity = Message(context: container.viewContext, content: content)
     group.addToContains(entity)
     saveContext()
   }
@@ -70,12 +70,12 @@ class CoreDataRepository: DataRepository {
     }
   }
 
-  func deleteGroup(_ group: ChatGroup) {
+  func deleteChatGroup(_ group: ChatGroup) {
     container.viewContext.delete(group)
     saveContext()
   }
 
-  func deleteGroupContains(_ group: ChatGroup) {
+  func clearChatGroupContext(_ group: ChatGroup) {
     if let contains = group.contains {
       group.removeFromContains(contains)
       saveContext()
@@ -91,7 +91,7 @@ extension ChatGroup {
   }
 }
 
-extension ChatLine {
+extension Message {
   convenience init(context: NSManagedObjectContext, content: MessageModel) {
     self.init(context: context)
     self.isUser = content.isUser

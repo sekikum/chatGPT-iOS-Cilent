@@ -28,7 +28,7 @@ struct ChatGroupView: View {
         }
         .onDelete { indexSet in
           for index in indexSet {
-            viewModel.deleteGroup(index)
+            viewModel.deleteChatGroup(index)
           }
         }
       }
@@ -37,11 +37,14 @@ struct ChatGroupView: View {
       .navigationDestination(isPresented: $navigateToNewGroup) {
         ChatMainView(viewModel: ChatMainViewModel(group: viewModel.chatGroups.last!, repository: viewModel.dataRepository), avatar: avatar)
       }
+      .onAppear {
+        viewModel.setChatGroups()
+      }
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
           Button(action: {
             navigateToNewGroup = true
-            viewModel.addGroup()
+            viewModel.addChatGroup()
           }) {
             Image(systemName: "plus")
               .resizable()

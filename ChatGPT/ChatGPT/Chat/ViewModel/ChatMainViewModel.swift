@@ -31,10 +31,10 @@ class ChatMainViewModel: ObservableObject {
     messageItems.removeAll()
 
     if let contains = group.contains {
-      for line in contains.array {
-        if let line = line as? ChatLine {
-          messageItems.append(MessageModel(message: line.message ?? "", isUser: line.isUser))
-          sendMessageItems.append(ChatMessage(role: line.isUser ? .user : .system, content: line.message ?? ""))
+      for message in contains.array {
+        if let message = message as? Message {
+          messageItems.append(MessageModel(message: message.message ?? "", isUser: message.isUser))
+          sendMessageItems.append(ChatMessage(role: message.isUser ? .user : .system, content: message.message ?? ""))
         }
       }
     }
@@ -63,7 +63,7 @@ class ChatMainViewModel: ObservableObject {
       model = .chat(.chatgpt)
     }
 
-    ClientManager.shared.openAI.sendChat(with: sendMessageItems, model: model) { result in
+    ClientManager.shared.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
       case .failure(let failure):
         self.setErrorData(errorMessage: failure.message)
@@ -76,12 +76,12 @@ class ChatMainViewModel: ObservableObject {
             return
           }
           if !self.isStreamingMessage {
-            ClientManager.shared.openAI.streamRequest?.cancel()
-            self.saveLineToGroup()
+            ClientManager.shared.cancelStreamRequest()
+            self.saveMessageToGroup()
           }
           if success.choices?.first?.finishReason != nil {
             self.isStreamingMessage = false
-            self.saveLineToGroup()
+            self.saveMessageToGroup()
           }
           self.updateSystemMessage(chatMessageSystem)
         }
@@ -106,7 +106,7 @@ class ChatMainViewModel: ObservableObject {
   func updateUserMessage(_ messageString: String) {
     messageItems.append(MessageModel(message: messageString, isUser: true))
     sendMessageItems = convertToChatMessages(from: messageItems)
-    saveLineToGroup()
+    saveMessageToGroup()
   }
 
   func convertToChatMessages(from messageModels: [MessageModel]) -> [ChatMessage] {
@@ -132,14 +132,14 @@ class ChatMainViewModel: ObservableObject {
   func clearContext() {
     sendMessageItems = []
     messageItems = []
-    dataRepository.deleteGroupContains(group)
+    dataRepository.clearChatGroupContext(group)
   }
 
-  func saveLineToGroup() {
+  func saveMessageToGroup() {
     guard let content = messageItems.last else {
       return
     }
-    dataRepository.saveChatLine(group, content: content)
+    dataRepository.saveMessage(group, content: content)
   }
 
   func savePrompt() {
