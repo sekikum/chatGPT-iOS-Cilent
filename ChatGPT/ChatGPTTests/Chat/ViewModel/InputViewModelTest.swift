@@ -109,7 +109,7 @@ final class InputViewModelTest: XCTestCase {
       }
     )
     
-    viewModel.updateSendButtonAction(message: "test")
+    viewModel.sendButtonAction(message: "test")
     
     XCTAssertTrue(isSendCalled)
     XCTAssertFalse(isCancelCalled)
@@ -129,7 +129,7 @@ final class InputViewModelTest: XCTestCase {
       }
     )
     
-    viewModel.updateSendButtonAction(message: "test")
+    viewModel.sendButtonAction(message: "test")
     
     XCTAssertFalse(isSendCalled)
     XCTAssertTrue(isCancelCalled)
