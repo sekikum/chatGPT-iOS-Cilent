@@ -1,0 +1,13 @@
+- ChatGPTAPP.swift
+- ClientManager.swift
+
+- .*View.swift
+
+- ChatGPT/Chat/Model/
+- ChatGPT/Profile/Model/
+- ChatGPT/Image/Model/
+- ChatGPT/Image/Server/Model/
+- ChatGPT/Foundation/Server/Model
+- ChatGPT/Foundation/View
+- ChatGPT/Foundation/Store
+- ChatGPT/Chat/Repository
