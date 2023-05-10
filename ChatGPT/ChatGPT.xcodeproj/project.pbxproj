@@ -220,7 +220,7 @@
 		847A26F029B9B165006F6B34 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				8A5301C329F032B900C3BBA4 /* Respository */,
+				8A5301C329F032B900C3BBA4 /* Repository */,
 				84F9670729C3FD30006DD8A3 /* SyntaxHighlighter */,
 				846729EA29B57ECD00B85594 /* View */,
 				846729F229B5B60800B85594 /* Model */,
@@ -517,13 +517,13 @@
 			path = SyntaxHighlighter;
 			sourceTree = "<group>";
 		};
-		8A5301C329F032B900C3BBA4 /* Respository */ = {
+		8A5301C329F032B900C3BBA4 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				8A12A99929E5059200261070 /* ChatLog.xcdatamodeld */,
 				8A5301C429F032E700C3BBA4 /* DataRepository.swift */,
 			);
-			path = Respository;
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
