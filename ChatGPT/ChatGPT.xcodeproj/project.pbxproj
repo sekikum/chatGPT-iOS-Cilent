@@ -31,6 +31,7 @@
 		849C654029C00C4800AC8E68 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C653F29C00C4800AC8E68 /* ProfileViewModel.swift */; };
 		849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */; };
 		849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C655729C078CA00AC8E68 /* StoreManager.swift */; };
+		84A0C2D82A0B710700F2D005 /* ChatMainViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0C2D72A0B710700F2D005 /* ChatMainViewModelTest.swift */; };
 		84C7B72029CC4837003FAD02 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C7B72229CC4837003FAD02 /* Localizable.strings */; };
 		84C7B72929CD367E003FAD02 /* ImageChatMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B72829CD367E003FAD02 /* ImageChatMainView.swift */; };
 		84C7B74729CD7546003FAD02 /* ImageChatMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B74629CD7546003FAD02 /* ImageChatMainViewModel.swift */; };
@@ -102,6 +103,7 @@
 		849C654529C0137100AC8E68 /* ChatGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTest.swift; sourceTree = "<group>"; };
 		849C655729C078CA00AC8E68 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		84A0C2D72A0B710700F2D005 /* ChatMainViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMainViewModelTest.swift; sourceTree = "<group>"; };
 		84C7B72129CC4837003FAD02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84C7B72329CC483F003FAD02 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		84C7B72529CC5284003FAD02 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 		84D3752A2A04D48600A404FD /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				84A0C2D72A0B710700F2D005 /* ChatMainViewModelTest.swift */,
 				84D3752D2A04D50C00A404FD /* InputViewModelTest.swift */,
 				84D375352A08CDF700A404FD /* ChatGroupViewModelTest.swift */,
 			);
@@ -694,6 +697,7 @@
 				84D375362A08CDF700A404FD /* ChatGroupViewModelTest.swift in Sources */,
 				84D3752E2A04D50C00A404FD /* InputViewModelTest.swift in Sources */,
 				84D375392A08D80500A404FD /* DataRepositoryMock.swift in Sources */,
+				84A0C2D82A0B710700F2D005 /* ChatMainViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

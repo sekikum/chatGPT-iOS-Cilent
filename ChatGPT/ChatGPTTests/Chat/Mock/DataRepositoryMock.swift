@@ -10,6 +10,7 @@ import Foundation
 
 class DataRepositoryMock: DataRepository {
   private var chatGroups: [ChatGroup] = []
+  public var isSaveMessageCalled = false
   
   func fetchData() -> [ChatGroup] {
     return chatGroups
@@ -24,6 +25,8 @@ class DataRepositoryMock: DataRepository {
   func saveMessage(_ group: ChatGroup, content: MessageModel) {
     let message = Message(context: .init(concurrencyType: .mainQueueConcurrencyType), content: content)
     group.addToContains(message)
+    
+    isSaveMessageCalled = true
   }
   
   func savePrompt(_ group: ChatGroup, content: String) {
