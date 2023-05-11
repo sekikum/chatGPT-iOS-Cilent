@@ -40,8 +40,18 @@ class ChatMainViewModel: ObservableObject {
     }
   }
 
+  func convertToOpenAIModel(modelString: String) -> OpenAIModel {
+    switch(modelString) {
+    case "gpt-3.5-0310":
+      return .chat(.chatgpt0301)
+    case "gpt-4":
+      return .chat(.chatgpt4)
+    default:
+      return .chat(.chatgpt)
+    }
+  }
+  
   func sendMessage(_ message: String, _ modelString: String) {
-    var model: OpenAIModel
     if message.isEmpty {
       isShowAlert = true
       alertInfo = NSLocalizedString("Message cannot be empty", comment: "")
@@ -51,17 +61,7 @@ class ChatMainViewModel: ObservableObject {
     updateUserMessage(message)
     isShowLoading = true
     isStreamingMessage = true
-
-    switch(modelString) {
-    case "gpt-3.5-0310":
-      model = .chat(.chatgpt0301)
-    case "gpt-3.5":
-      model = .chat(.chatgpt)
-    case "gpt-4":
-      model = .chat(.chatgpt4)
-    default:
-      model = .chat(.chatgpt)
-    }
+    let model = convertToOpenAIModel(modelString: modelString)
 
     ClientManager.shared.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {

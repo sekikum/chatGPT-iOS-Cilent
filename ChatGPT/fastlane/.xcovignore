@@ -3,6 +3,7 @@
 - SplashCodeSyntaxHighlighter.swift
 - TextOutputFormat.swift
 - KeyBoardPublisher.swift
+- OpenAIEndpoint.swift
 
 - .*View.swift
 - .*Modifier.swift
