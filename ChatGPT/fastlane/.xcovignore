@@ -1,7 +1,11 @@
 - ChatGPTAPP.swift
 - ClientManager.swift
+- SplashCodeSyntaxHighlighter.swift
+- TextOutputFormat.swift
+- KeyBoardPublisher.swift
 
 - .*View.swift
+- .*Modifier.swift
 
 - ChatGPT/Chat/Model/
 - ChatGPT/Profile/Model/
