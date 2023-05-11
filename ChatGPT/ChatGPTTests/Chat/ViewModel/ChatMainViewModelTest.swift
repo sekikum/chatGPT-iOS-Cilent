@@ -19,6 +19,19 @@ final class ChatMainViewModelTest: XCTestCase {
     viewModel = ChatMainViewModel(chatGroup: chatGroup, dataRepository: dataRepositoryMock)
   }
   
+  func test_given_nil_chat_group_when_set_current_chat_then_message_items_empty() {
+    chatGroup.contains = nil
+    chatGroup.prompt = nil
+    viewModel.messageItems = [
+      MessageModel(message: "1+1=?", isUser: true)
+    ]
+    
+    viewModel.setCurrentChat(chatGroup)
+    
+    XCTAssertEqual(viewModel.prompt, "")
+    XCTAssertEqual(viewModel.messageItems, [])
+  }
+  
   func test_given_empty_message_when_call_sendMessage_then_show_except_alert() throws {
     viewModel.sendMessage("", "gpt-3.5")
 
