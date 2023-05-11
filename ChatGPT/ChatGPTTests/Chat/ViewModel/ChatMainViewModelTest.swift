@@ -142,11 +142,11 @@ final class ChatMainViewModelTest: XCTestCase {
   }
   
   func test_given_prompt_when_save_prompt_then_get_except_chat_group_prompt() {
-    viewModel.prompt = "calculate"
+    viewModel.prompt = "test prompt"
     
     viewModel.savePrompt()
     
-    XCTAssertEqual(viewModel.chatGroup.prompt, "calculate")
+    XCTAssertTrue(dataRepositoryMock.isSavePromptCalled)
   }
   
   func test_given_is_streaming_message_true_when_cancel_streaming_then_get_true() {
