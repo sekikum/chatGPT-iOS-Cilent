@@ -23,7 +23,7 @@ class ClientManager {
     openAI.sendChatImage(with: prompt, number: number, size: size, completionHandler: completionHandler)
   }
   
-  func sendChat(with messages: [ChatMessage], model: OpenAIModel, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
+  func sendChat(with messages: [ChatMessage], model: String, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
     openAI.sendChat(with: messages, model: model, completionHandler: completionHandler)
   }
   

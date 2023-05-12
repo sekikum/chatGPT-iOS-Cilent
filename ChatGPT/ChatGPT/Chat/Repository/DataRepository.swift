@@ -86,7 +86,7 @@ class CoreDataRepository: DataRepository {
 extension ChatGroup {
   convenience init(context: NSManagedObjectContext, content: String) {
     self.init(context: context)
-    self.flag = content
+    self.title = content
     self.timestamp = Date()
   }
 }

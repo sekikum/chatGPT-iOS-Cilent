@@ -25,7 +25,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _,_ in },
+      send: { _ in },
       cancel: {}
     )
     
@@ -38,7 +38,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _,_ in },
+      send: { _ in },
       cancel: {}
     )
     
@@ -49,7 +49,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _, _ in },
+      send: { _ in },
       cancel: {}
     )
     let expectedPlaceholder = "Please add APIKey on 'me'"
@@ -63,7 +63,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _, _ in },
+      send: { _ in },
       cancel: {}
     )
     let expectedPlaceholder = "Input your message"
@@ -75,7 +75,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: true,
       isShowLoading: false,
-      send: { _, _ in },
+      send: { _ in },
       cancel: {}
     )
     let expectedImageName = "stop.circle.fill"
@@ -87,7 +87,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _, _ in },
+      send: { _ in },
       cancel: {}
     )
     let expectedImageName = "paperplane.circle.fill"
@@ -101,7 +101,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _, _ in
+      send: { _ in
         isSendCalled = true
       },
       cancel: {
@@ -121,7 +121,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: true,
       isShowLoading: false,
-      send: { _, _ in
+      send: { _ in
         isSendCalled = true
       },
       cancel: {
@@ -139,7 +139,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _, _ in },
+      send: { _ in },
       cancel: {}
     )
     
@@ -150,7 +150,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: true,
-      send: { _, _ in },
+      send: { _ in },
       cancel: {}
     )
     
@@ -163,7 +163,7 @@ final class InputViewModelTest: XCTestCase {
     let viewModel = InputViewModel(
       isStreaming: false,
       isShowLoading: false,
-      send: { _, _ in },
+      send: { _ in },
       cancel: {}
     )
     
