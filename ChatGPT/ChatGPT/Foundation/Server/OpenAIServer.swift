@@ -66,7 +66,7 @@ extension OpenAIServer {
     }
   }
   
-  private func extractJSONData(from line: String) -> Data? {
+  internal func extractJSONData(from line: String) -> Data? {
     let jsonString = line.replacingOccurrences(of: "data: ", with: "")
     return jsonString.data(using: .utf8, allowLossyConversion: false)
   }
