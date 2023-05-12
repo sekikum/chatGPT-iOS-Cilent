@@ -10,7 +10,7 @@ import SwiftUI
 struct InputViewModel {
   let isStreaming: Bool
   let isShowLoading: Bool
-  let send: (String, String) -> Void
+  let send: (String) -> Void
   let cancel: () -> Void
   
   func messagePlaceholderText() -> String {
@@ -33,7 +33,7 @@ struct InputViewModel {
     if isStreaming {
       cancel()
     } else {
-      send(message, StorageManager.restoreUser().modelSelect)
+      send(message)
     }
   }
 }

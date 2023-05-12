@@ -33,7 +33,7 @@ final class ChatMainViewModelTest: XCTestCase {
   }
   
   func test_given_empty_message_when_call_sendMessage_then_show_except_alert() throws {
-    viewModel.sendMessage("", "gpt-3.5")
+    viewModel.sendMessage("")
 
     XCTAssertTrue(viewModel.isShowAlert)
     XCTAssertEqual(viewModel.alertInfo, NSLocalizedString("Message cannot be empty", comment: ""))
