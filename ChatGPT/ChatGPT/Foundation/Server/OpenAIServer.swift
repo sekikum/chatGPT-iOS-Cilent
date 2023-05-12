@@ -18,9 +18,9 @@ public class OpenAIServer {
 }
 
 extension OpenAIServer {
-  func sendChat(with messages: [ChatMessage], model: OpenAIModel, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
+  func sendChat(with messages: [ChatMessage], model: String, maxTokens: Int? = nil, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
     let endpoint = OpenAIEndpoint.chat
-    let body = ChatConversation(messages: messages, model: model.modelName, maxTokens: maxTokens)
+    let body = ChatConversation(messages: messages, model: model, maxTokens: maxTokens)
     let request = prepareRequest(endpoint, body: body)
     
     makeStreamRequest(request: request) { response in

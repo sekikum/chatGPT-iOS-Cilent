@@ -16,14 +16,14 @@ class ChatMainViewModel: ObservableObject {
   @Published var isStreamingMessage: Bool = false
   @Published var prompt: String = ""
   var sendMessageItems: [ChatMessage] = []
-  var group: ChatGroup
+  var chatGroup: ChatGroup
   let dataRepository: DataRepository
 
-  init(group: ChatGroup, repository: DataRepository) {
+  init(chatGroup: ChatGroup, dataRepository: DataRepository) {
     self.sendMessageItems = []
-    self.group = group
-    self.dataRepository = repository
-    setCurrentChat(group)
+    self.chatGroup = chatGroup
+    self.dataRepository = dataRepository
+    setCurrentChat(chatGroup)
   }
 
   func setCurrentChat(_ group: ChatGroup) {
@@ -39,9 +39,8 @@ class ChatMainViewModel: ObservableObject {
       }
     }
   }
-
-  func sendMessage(_ message: String, _ modelString: String) {
-    var model: OpenAIModel
+  
+  func sendMessage(_ message: String) {
     if message.isEmpty {
       isShowAlert = true
       alertInfo = NSLocalizedString("Message cannot be empty", comment: "")
@@ -51,17 +50,7 @@ class ChatMainViewModel: ObservableObject {
     updateUserMessage(message)
     isShowLoading = true
     isStreamingMessage = true
-
-    switch(modelString) {
-    case "gpt-3.5-0310":
-      model = .chat(.chatgpt0301)
-    case "gpt-3.5":
-      model = .chat(.chatgpt)
-    case "gpt-4":
-      model = .chat(.chatgpt4)
-    default:
-      model = .chat(.chatgpt)
-    }
+    let model = StorageManager.restoreUser().modelSelect
 
     ClientManager.shared.sendChat(with: sendMessageItems, model: model) { result in
       switch(result) {
@@ -132,18 +121,18 @@ class ChatMainViewModel: ObservableObject {
   func clearContext() {
     sendMessageItems = []
     messageItems = []
-    dataRepository.clearChatGroupContext(group)
+    dataRepository.clearChatGroupContext(chatGroup)
   }
 
   func saveMessageToGroup() {
     guard let content = messageItems.last else {
       return
     }
-    dataRepository.saveMessage(group, content: content)
+    dataRepository.saveMessage(chatGroup, content: content)
   }
 
   func savePrompt() {
-    dataRepository.savePrompt(group, content: prompt)
+    dataRepository.savePrompt(chatGroup, content: prompt)
   }
   
   func cancelStreaming() {
@@ -151,6 +140,6 @@ class ChatMainViewModel: ObservableObject {
   }
   
   func getGroupTitle() -> String {
-    return group.flag ?? "unkown"
+    return chatGroup.title ?? "unkown"
   }
 }

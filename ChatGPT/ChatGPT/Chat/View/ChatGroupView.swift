@@ -16,12 +16,12 @@ struct ChatGroupView: View {
   var body: some View {
     NavigationStack {
       List {
-        ForEach(viewModel.chatGroups, id: \.self) { group in
-          if let flag = group.flag {
+        ForEach(viewModel.chatGroups, id: \.self) { chatGroup in
+          if let title = chatGroup.title {
             NavigationLink {
-              ChatMainView(viewModel: ChatMainViewModel(group: group, repository: viewModel.dataRepository), avatar: avatar)
+              ChatMainView(viewModel: ChatMainViewModel(chatGroup: chatGroup, dataRepository: viewModel.dataRepository), avatar: avatar)
             } label: {
-              Label(flag, systemImage: "bubble.left")
+              Label(title, systemImage: "bubble.left")
             }
             .padding(.vertical, listPadding)
           }
@@ -35,7 +35,7 @@ struct ChatGroupView: View {
       .navigationTitle("Chat")
       .navigationBarTitleDisplayMode(.inline)
       .navigationDestination(isPresented: $navigateToNewGroup) {
-        ChatMainView(viewModel: ChatMainViewModel(group: viewModel.chatGroups.last!, repository: viewModel.dataRepository), avatar: avatar)
+        ChatMainView(viewModel: ChatMainViewModel(chatGroup: viewModel.chatGroups.last!, dataRepository: viewModel.dataRepository), avatar: avatar)
       }
       .onAppear {
         viewModel.setChatGroups()
