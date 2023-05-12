@@ -12,6 +12,6 @@ struct UserModel: Codable {
   var nickname: String = "sekikum"
   var apiKeyList: [String] = []
   var apiKeySelect: String = ""
-  var modelSelect: String = "gpt-3.5"
+  var modelSelect: String = OpenAIModel.Chat.chatgpt.rawValue
   var baseURL: String = ""
 }

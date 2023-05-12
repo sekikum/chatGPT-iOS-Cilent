@@ -17,7 +17,7 @@ struct ProfileMainView: View {
   @State var deletedAPIKey: String = ""
   @State var urlAlertText: String = ""
   @State var isToggleOn: Bool = false
-  let models: [String] = ["gpt-3.5", "gpt-3.5-0310", "gpt-4"]
+  let models: [String] = OpenAIModel.Chat.allCases.map { $0.rawValue }
   let apiKeyLineLimit: Int = 1
   let toggleWidth: CGFloat = 50
   let buttonSize: CGFloat = 30
