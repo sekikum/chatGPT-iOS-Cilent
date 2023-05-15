@@ -119,7 +119,7 @@ extension OpenAIServer {
     }
   }
   
-  private func prepareRequest<BodyType: Encodable>(_ endpoint: OpenAIEndpoint, body: BodyType) -> URLRequest {
+  internal func prepareRequest<BodyType: Encodable>(_ endpoint: OpenAIEndpoint, body: BodyType) -> URLRequest {
     var urlComponents = URLComponents(url: URL(string: endpoint.baseURL())!, resolvingAgainstBaseURL: true)
     urlComponents?.path = endpoint.path
     var request = URLRequest(url: urlComponents!.url!)
