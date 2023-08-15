@@ -1,4 +1,4 @@
-#ChatGPT-iOS-Cilent
+# ChatGPT-iOS-Cilent
 
 This project integrates ChatGPT and Open AI image generation on iOS.
 
