@@ -22,11 +22,11 @@ final class OpenAIServerTests: XCTestCase {
     XCTAssertEqual(extractedData, expectedData)
   }
   
-  func test_given_api_key_when_prepare_request_then_return_except_request() {
+  func test_given_api_key_when_prepare_request_then_return_except_request() async {
+    await StorageManager.storeUser(UserModel())
     let endpoint: OpenAIEndpoint = .completions
-    
     let requestBody: SomeRequest = SomeRequest()
-
+    
     let request = OpenAIServer(authAPIKey: "YOUR_API_KEY").prepareRequest(endpoint, body: requestBody)
 
     XCTAssertEqual(request.httpMethod, "POST")

@@ -8,7 +8,14 @@
 import Foundation
 import Alamofire
 
-public class OpenAIServer {
+protocol OpenAIServerProtocol {
+  func updateAPIKey(_ apiKey: String)
+  func sendChatImage(with prompt: String, number: Int, size: String, completionHandler: @escaping (Result<OpenAIImage<ImageResult>, ClientError>) -> Void)
+  func sendChat(with messages: [ChatMessage], model: String, maxTokens: Int?, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void)
+  func cancelStreamRequest()
+}
+
+public class OpenAIServer: OpenAIServerProtocol {
   fileprivate(set) var apiKey: String?
   var streamRequest: DataStreamRequest?
   
