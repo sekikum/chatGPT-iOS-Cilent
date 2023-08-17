@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ClientManager {
+class ClientManager: OpenAIServerProtocol {
   static let shared = ClientManager()
   var openAI: OpenAIServer
   
@@ -15,7 +15,7 @@ class ClientManager {
     self.openAI = OpenAIServer(authAPIKey: StorageManager.restoreUser().apiKeySelect)
   }
   
-  func updateOpenAI(_ apiKey: String) {
+  func updateAPIKey(_ apiKey: String) {
     openAI.updateAPIKey(apiKey)
   }
   

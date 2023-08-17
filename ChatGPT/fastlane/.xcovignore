@@ -16,3 +16,5 @@
 - ChatGPT/Foundation/View
 - ChatGPT/Foundation/Store
 - ChatGPT/Chat/Repository
+
+- OpenAIServer\.swift:.*updateAPIKey.*

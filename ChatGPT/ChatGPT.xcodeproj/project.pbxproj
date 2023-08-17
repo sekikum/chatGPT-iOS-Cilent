@@ -34,6 +34,8 @@
 		849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */; };
 		849C655829C078CA00AC8E68 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C655729C078CA00AC8E68 /* StoreManager.swift */; };
 		84A0C2D82A0B710700F2D005 /* ChatMainViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0C2D72A0B710700F2D005 /* ChatMainViewModelTest.swift */; };
+		84BFA43C2A12172F00C39511 /* ImageChatMainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA43B2A12172F00C39511 /* ImageChatMainViewModelTests.swift */; };
+		84BFA43F2A12245F00C39511 /* OpenAIServerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA43E2A12245F00C39511 /* OpenAIServerMock.swift */; };
 		84C7B72029CC4837003FAD02 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C7B72229CC4837003FAD02 /* Localizable.strings */; };
 		84C7B72929CD367E003FAD02 /* ImageChatMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B72829CD367E003FAD02 /* ImageChatMainView.swift */; };
 		84C7B74729CD7546003FAD02 /* ImageChatMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7B74629CD7546003FAD02 /* ImageChatMainViewModel.swift */; };
@@ -108,6 +110,8 @@
 		849C654729C0137100AC8E68 /* ProfileViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTest.swift; sourceTree = "<group>"; };
 		849C655729C078CA00AC8E68 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		84A0C2D72A0B710700F2D005 /* ChatMainViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMainViewModelTest.swift; sourceTree = "<group>"; };
+		84BFA43B2A12172F00C39511 /* ImageChatMainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageChatMainViewModelTests.swift; sourceTree = "<group>"; };
+		84BFA43E2A12245F00C39511 /* OpenAIServerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIServerMock.swift; sourceTree = "<group>"; };
 		84C7B72129CC4837003FAD02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		84C7B72329CC483F003FAD02 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		84C7B72529CC5284003FAD02 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -385,6 +389,7 @@
 		849C654629C0137100AC8E68 /* ChatGPTTests */ = {
 			isa = PBXGroup;
 			children = (
+				84BFA4382A1216F500C39511 /* Image */,
 				84522C392A0B93F8003CF5D1 /* Foundation */,
 				84D375292A04D45A00A404FD /* Chat */,
 				849C654E29C0138E00AC8E68 /* Profile */,
@@ -425,6 +430,31 @@
 				849C655729C078CA00AC8E68 /* StoreManager.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		84BFA4382A1216F500C39511 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA43D2A1220B700C39511 /* Mock */,
+				84BFA4392A12170600C39511 /* ViewModel */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		84BFA4392A12170600C39511 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA43B2A12172F00C39511 /* ImageChatMainViewModelTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		84BFA43D2A1220B700C39511 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA43E2A12245F00C39511 /* OpenAIServerMock.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		84C7B72429CC4FC4003FAD02 /* Resources */ = {
@@ -724,9 +754,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				84522C592A0E1E17003CF5D1 /* OpenAIServerTests.swift in Sources */,
+				84BFA43C2A12172F00C39511 /* ImageChatMainViewModelTests.swift in Sources */,
 				849C654829C0137100AC8E68 /* ProfileViewModelTest.swift in Sources */,
 				84D375362A08CDF700A404FD /* ChatGroupViewModelTest.swift in Sources */,
 				84D3752E2A04D50C00A404FD /* InputViewModelTest.swift in Sources */,
+				84BFA43F2A12245F00C39511 /* OpenAIServerMock.swift in Sources */,
 				84D375392A08D80500A404FD /* DataRepositoryMock.swift in Sources */,
 				84522C3C2A0B9421003CF5D1 /* StringTests.swift in Sources */,
 				84A0C2D82A0B710700F2D005 /* ChatMainViewModelTest.swift in Sources */,
