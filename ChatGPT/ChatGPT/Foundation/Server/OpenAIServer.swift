@@ -8,7 +8,14 @@
 import Foundation
 import Alamofire
 
-public class OpenAIServer {
+protocol OpenAIServerProtocol {
+  func updateAPIKey(_ apiKey: String)
+  func sendChatImage(with prompt: String, number: Int, size: String, completionHandler: @escaping (Result<OpenAIImage<ImageResult>, ClientError>) -> Void)
+  func sendChat(with messages: [ChatMessage], model: String, maxTokens: Int?, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void)
+  func cancelStreamRequest()
+}
+
+public class OpenAIServer: OpenAIServerProtocol {
   fileprivate(set) var apiKey: String?
   var streamRequest: DataStreamRequest?
   
@@ -26,33 +33,49 @@ extension OpenAIServer {
     makeStreamRequest(request: request) { response in
       switch response {
       case .success(let success):
-        do {
-          let string = String(decoding: success, as: UTF8.self)
-          if string.hasPrefix("{\n    \"error\":") {
-            let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
-            completionHandler(.success(res))
-          }
-          let lines = string.components(separatedBy: "\n")
-          for line in lines {
-            if line.hasPrefix("data: [DONE]") {
-              return
-            }
-            if line.hasPrefix("data: ") {
-              let jsonString = line.replacingOccurrences(of: "data: ", with: "")
-              guard let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-                return
-              }
-              let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: jsonData)
-              completionHandler(.success(res))
-            }
-          }
-        } catch {
-          completionHandler(.failure(ClientError(type: "unknown_error", message: "Unknown Error")))
-        }
+        self.handleSuccessResponse(success, completionHandler: completionHandler)
       case .failure:
         completionHandler(.failure(ClientError(type: "network_error", message: "Check Your Network")))
       }
     }
+  }
+  
+  private func handleSuccessResponse(_ success: Data, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
+    do {
+      let string = String(decoding: success, as: UTF8.self)
+      if string.hasPrefix("{\n    \"error\":") {
+        let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: success)
+        completionHandler(.success(res))
+      } else {
+        handleMessageResponse(string, completionHandler: completionHandler)
+      }
+    } catch {
+      completionHandler(.failure(ClientError(type: "unknown_error", message: "Unknown Error")))
+    }
+  }
+  
+  private func handleMessageResponse(_ string: String, completionHandler: @escaping (Result<OpenAI<MessageResult>, ClientError>) -> Void) {
+    let lines = string.components(separatedBy: "\n")
+    for line in lines {
+      if line.hasPrefix("data: [DONE]") {
+        return
+      }
+      if line.hasPrefix("data: ") {
+        if let jsonData = extractJSONData(from: line) {
+          do {
+            let res = try JSONDecoder().decode(OpenAI<MessageResult>.self, from: jsonData)
+            completionHandler(.success(res))
+          } catch {
+            completionHandler(.failure(ClientError(type: "json_decoding_error", message: "JSON Decoding Error")))
+          }
+        }
+      }
+    }
+  }
+  
+  internal func extractJSONData(from line: String) -> Data? {
+    let jsonString = line.replacingOccurrences(of: "data: ", with: "")
+    return jsonString.data(using: .utf8, allowLossyConversion: false)
   }
   
   private func makeStreamRequest(request: URLRequest, completionHandler: @escaping (Result<Data, Error>) -> Void) {
@@ -103,7 +126,7 @@ extension OpenAIServer {
     }
   }
   
-  private func prepareRequest<BodyType: Encodable>(_ endpoint: OpenAIEndpoint, body: BodyType) -> URLRequest {
+  internal func prepareRequest<BodyType: Encodable>(_ endpoint: OpenAIEndpoint, body: BodyType) -> URLRequest {
     var urlComponents = URLComponents(url: URL(string: endpoint.baseURL())!, resolvingAgainstBaseURL: true)
     urlComponents?.path = endpoint.path
     var request = URLRequest(url: urlComponents!.url!)

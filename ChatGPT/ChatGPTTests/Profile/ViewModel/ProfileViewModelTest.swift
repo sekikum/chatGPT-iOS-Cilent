@@ -89,20 +89,20 @@ final class ProfileViewModelTests: XCTestCase {
     XCTAssertEqual(viewModel.user.apiKeySelect, "abc123")
   }
   
-  func test_given_url_string_when_call_addBaseURL_then_update_user_baseURL() throws {
+  func test_given_url_string_when_call_addBaseURL_then_update_user_baseURL() async throws {
     let url = "https://example.com"
     viewModel.user = UserModel(baseURL: "")
-    
+
     viewModel.addBaseURL(url)
-    
+
     XCTAssertEqual(viewModel.user.baseURL, url)
   }
-  
-  func test_given_clearBaseURL_when_call_clearBaseURL_then_update_user_baseURL_to_empty_string() throws {
+
+  func test_given_clearBaseURL_when_call_clearBaseURL_then_update_user_baseURL_to_empty_string() async throws {
     viewModel.user = UserModel(baseURL: "https://example.com")
-    
+
     viewModel.clearBaseURL()
-    
+
     XCTAssertEqual(viewModel.user.baseURL, "")
   }
   
