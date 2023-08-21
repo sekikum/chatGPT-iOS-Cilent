@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ChatGroupView: View {
+  @Environment(\.scenePhase) var scenePhase
+  @EnvironmentObject var quickActionSettings: QuickActionSettings
   @StateObject var viewModel: ChatGroupViewModel = ChatGroupViewModel()
   @State private var navigateToNewGroup = false
   let avatar: String
@@ -43,15 +45,37 @@ struct ChatGroupView: View {
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
           Button(action: {
-            navigateToNewGroup = true
-            viewModel.addChatGroup()
+            addNewChat()
           }) {
             Image(systemName: "plus")
               .resizable()
           }
         }
       }
+      .onChange(of: scenePhase) { newScene in
+        switch newScene {
+        case .active:
+          performActionIfNeeded()
+        default:
+          break
+        }
+      }
     }
+  }
+  
+  func addNewChat() {
+    navigateToNewGroup = true
+    viewModel.addChatGroup()
+  }
+  
+  func performActionIfNeeded() {
+    guard let action = quickActionSettings.quickAction else { return }
+    
+    switch action {
+    case .newChat:
+      addNewChat()
+    }
+    quickActionSettings.quickAction = nil
   }
 }
 
