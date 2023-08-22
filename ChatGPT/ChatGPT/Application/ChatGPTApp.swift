@@ -6,15 +6,12 @@
 //
 
 import SwiftUI
-import UIKit
-
-let quickActionSettings = QuickActionSettings()
-var shortcutItemToProcess: UIApplicationShortcutItem?
 
 @main
 struct ChatGPTApp: App {
   @Environment(\.scenePhase) var phase
   @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+  private let quickActionSettings = QuickActionSettings.shared
   
   var body: some Scene {
     WindowGroup {
@@ -24,7 +21,7 @@ struct ChatGPTApp: App {
     .onChange(of: phase) { (newPhase) in
       switch newPhase {
       case .active:
-        guard let name = shortcutItemToProcess?.userInfo?["name"] as? String else {
+        guard let name = quickActionSettings.shortcutItemToProcess?.userInfo?["name"] as? String else {
           return
         }
         switch name {
@@ -33,7 +30,7 @@ struct ChatGPTApp: App {
         default:
           break
         }
-        shortcutItemToProcess = nil
+        quickActionSettings.shortcutItemToProcess = nil
       case .inactive:
         break
       case .background:
@@ -42,24 +39,5 @@ struct ChatGPTApp: App {
         break
       }
     }
-  }
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-    if let shortcutItem = options.shortcutItem {
-      shortcutItemToProcess = shortcutItem
-    }
-    
-    let sceneConfiguration = UISceneConfiguration(name: "Custom Configuration", sessionRole: connectingSceneSession.role)
-    sceneConfiguration.delegateClass = CustomSceneDelegate.self
-    
-    return sceneConfiguration
-  }
-}
-
-class CustomSceneDelegate: UIResponder, UIWindowSceneDelegate {
-  func windowScene(_ windowScene: UIWindowScene, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-    shortcutItemToProcess = shortcutItem
   }
 }
