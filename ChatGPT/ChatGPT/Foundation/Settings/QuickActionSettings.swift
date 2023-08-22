@@ -8,11 +8,14 @@
 import UIKit
 
 class QuickActionSettings: ObservableObject {
+  static let shared = QuickActionSettings()
+  
   enum QuickAction: Hashable {
     case newChat
   }
   
   @Published var quickAction: QuickAction? = nil
+  var shortcutItemToProcess: UIApplicationShortcutItem? = nil
   
   func addQuickActions() {
     var newChatUserInfo: [String: NSSecureCoding] {

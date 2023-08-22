@@ -129,4 +129,3 @@ struct PinchToZoom: ViewModifier {
       }
   }
 }
-
